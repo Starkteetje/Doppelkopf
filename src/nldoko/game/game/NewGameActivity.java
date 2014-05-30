@@ -1,44 +1,25 @@
 package nldoko.game.game;
 
-import java.util.ArrayList;
-
+import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.*;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.*;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import nldoko.game.R;
 import nldoko.game.XML.DokoXMLClass;
 import nldoko.game.data.DokoData;
 import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
 import nldoko.game.information.AboutActivity;
 import nldoko.game.information.InfoSettingsDialog;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class NewGameActivity extends Activity {
 	private Context mContext;
@@ -59,6 +40,7 @@ public class NewGameActivity extends Activity {
 	private Spinner mSpBockLimit;
 	private Spinner mSpGameCntVariant;
 	private CheckBox mCbSuspendMark;
+    private CheckBox mCbAutoBockCalc;
 	
 	private Button mBtnStart;
 	
@@ -111,6 +93,7 @@ public class NewGameActivity extends Activity {
     	mSpBockLimit 		= (Spinner)findViewById(R.id.sp_bock_cnt);
     	mSpGameCntVariant	= (Spinner)findViewById(R.id.sp_game_cnt_variant);
     	mCbSuspendMark		= (CheckBox)findViewById(R.id.cb_suspend);
+        mCbAutoBockCalc     = (CheckBox)findViewById(R.id.cb_bock_auto_calc);
     	
     	mLayout = (LinearLayout)findViewById(R.id.categorie_settings_header);
     	mTv = (TextView)mLayout.findViewById(R.id.fragment_game_round_str_prim);
@@ -132,7 +115,11 @@ public class NewGameActivity extends Activity {
         if (mCbSuspendMark != null) {
         	mCbSuspendMark.setOnCheckedChangeListener(new markSuspendChangeListener());
         }
-    	
+
+        if (mCbAutoBockCalc != null) {
+            mCbAutoBockCalc.setChecked(true); // default on
+        }
+
     	mBtnStart = (Button)findViewById(R.id.btn_change_game_settings);
     	mBtnStart.setOnClickListener(new startBtnClickListener());
     	
@@ -257,6 +244,7 @@ public class NewGameActivity extends Activity {
 			i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
 			i.putExtra(DokoData.GAME_CNT_VARIANT_KEY, GAME_CNT_VARIANT.values()[mSpGameCntVariant.getSelectedItemPosition()]);
+            i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mCbAutoBockCalc.isChecked());
 
 			startActivity(i);
 		}

@@ -14,6 +14,8 @@ public class GameClass  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private GAME_CNT_VARIANT cntVariant;
+
+    private boolean mAutoBockCalculation;
 	
 	private ArrayList<PlayerClass> mPlayers;
 	private ArrayList<RoundClass> mRoundList;
@@ -32,7 +34,7 @@ public class GameClass  implements Serializable{
 		this.mCurrentFilename = fromFile;
 	}
 	
-	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant, boolean markSuspendedPlayers){
+	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant, boolean markSuspendedPlayers, boolean autoBockCalculation){
 		this.mPlayers = new ArrayList<PlayerClass>();
 		this.mRoundList = new ArrayList<RoundClass>();
 		this.mPreRoundList = new ArrayList<RoundClass>();
@@ -48,6 +50,8 @@ public class GameClass  implements Serializable{
     	}
 
         this.createDate = new Timestamp(System.currentTimeMillis());
+
+        this.mAutoBockCalculation = autoBockCalculation;
 
 	}
 	
@@ -67,7 +71,15 @@ public class GameClass  implements Serializable{
 		this.mPreRoundList = preRoundList;
 
 	}
-	
+
+    public void setAutoBockCalculation(boolean autoBockCalculation) {
+        this.mAutoBockCalculation = autoBockCalculation;
+    }
+
+    public boolean isAutoBockCalculationOn() {
+        return this.mAutoBockCalculation;
+    }
+
 	public void setGameCntVariant(GAME_CNT_VARIANT variant){
 		this.cntVariant = variant;
 	}

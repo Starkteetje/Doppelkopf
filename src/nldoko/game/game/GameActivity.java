@@ -77,6 +77,8 @@ public class GameActivity extends FragmentActivity  {
 	
 	private TextView mTvPlayerCnt;
 	private static TextView mTvAddRoundBockPoints;
+    private static LinearLayout mTvRoundBockPointsContainer;
+    private static TextView mTvRoundBockPointsAutoCalcOnOff;
 	private static LayoutInflater mInflater;
 	private int mPlayerCnt;
 	private Spinner mSpActivePlayer;
@@ -156,7 +158,7 @@ public class GameActivity extends FragmentActivity  {
         @Override
         public void onPageSelected(int position) {
             mFocusedPage = position;
-            String mStr = null;
+            String mStr = "";
             switch (mFocusedPage) {
 			case mIndexGameMain:
 				mActionBar.setTitle(getResources().getString(R.string.str_game)); return;
@@ -166,8 +168,18 @@ public class GameActivity extends FragmentActivity  {
 	  				mStr = getResources().getString(R.string.str_bockround)+" ";
 	  				mStr += Functions.getBockCountAsRom(mGame.getPreRoundList().get(0).getBockCount()); 
 	  				mTvAddRoundBockPoints.setText(mStr);
+
+                    mTvRoundBockPointsContainer.setVisibility(View.VISIBLE);
+                    if(mGame.isAutoBockCalculationOn()){
+                        mTvRoundBockPointsAutoCalcOnOff.setText(mContext.getResources().getString(R.string.str_yes));
+                    } else {
+                        mTvRoundBockPointsAutoCalcOnOff.setText(mContext.getResources().getString(R.string.str_no));
+                    }
 	  			}
-	  			else mTvAddRoundBockPoints.setText(mStr);
+	  			else {
+                    mTvAddRoundBockPoints.setText(mStr);
+                    mTvRoundBockPointsContainer.setVisibility(View.INVISIBLE);
+                }
 	  			
 	  			return;
 			default:
@@ -184,6 +196,7 @@ public class GameActivity extends FragmentActivity  {
     	int mActivePlayers,mBockLimit,mPlayerCnt;
     	GAME_CNT_VARIANT mGameCntVaraint;
     	String mTmp = "";
+        boolean mAutoBockCalc = true;
     	
     	//Log.d(TAG,"getgame");
         //Check if a game exists else try to create one 
@@ -205,13 +218,14 @@ public class GameActivity extends FragmentActivity  {
         	mBockLimit		= extras.getInt(DokoData.BOCKLIMIT_KEY,0);
         	mMarkSuspendedPlayers = extras.getBoolean(DokoData.MARK_SUSPEND_OPTION_KEY,false);
         	mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
+            mAutoBockCalc = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY,true);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
         			|| (mPlayerCnt == 0 || mActivePlayers == 0))
         		return null;
         	Log.d(TAG,"ng:"+mMarkSuspendedPlayers);
-        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint,mMarkSuspendedPlayers);
+        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint,mMarkSuspendedPlayers, mAutoBockCalc);
         	Log.d(TAG,"bl:"+mBockLimit+" - prercnt"+mGame.getPreRoundList().size());
         	for(int k=0;k<mPlayerCnt;k++){
         		//Log.d(TAG,mTmp+"k:"+k);
@@ -222,7 +236,7 @@ public class GameActivity extends FragmentActivity  {
         	}
         }
         else{
-        	mGame = new GameClass(5, 4, 1, GAME_CNT_VARIANT.CNT_VARIANT_NORMAL,false);
+        	mGame = new GameClass(5, 4, 1, GAME_CNT_VARIANT.CNT_VARIANT_NORMAL,false,true);
 	    	
         	mGame.getPlayer(0).setName("Johannes");
         	mGame.getPlayer(1).setName("Christoph");
@@ -365,8 +379,13 @@ public class GameActivity extends FragmentActivity  {
 		
 		mTvAddRoundBockPoints = (TextView)rootView.findViewById(R.id.game_add_round_bock_points);
 
-		
-		mNewRoundBockRadioGroup = (RadioGroup)rootView.findViewById(R.id.game_add_round_bock_radio);
+
+        mTvRoundBockPointsContainer = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_info_container);
+        mTvRoundBockPointsAutoCalcOnOff = (TextView)rootView.findViewById(R.id.game_add_round_bock_auto_calc_onoff);
+
+
+
+        mNewRoundBockRadioGroup = (RadioGroup)rootView.findViewById(R.id.game_add_round_bock_radio);
 		mRNewRoundBockYes = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_yes);
 		mRNewRoundBockNo = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_no);
 		
@@ -381,8 +400,9 @@ public class GameActivity extends FragmentActivity  {
 			mTv.setText(rootView.getResources().getString(R.string.str_game_points_choose_winner_and_suspend));
 		else
 			mTv.setText(rootView.getResources().getString(R.string.str_game_points_choose_winner));
-	
-		mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_container);
+
+
+        mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_container);
 		if(mGame.getBockRoundLimit() == 0) mLayout.setVisibility(View.INVISIBLE);
 		else mLayout.setVisibility(View.VISIBLE);
 		
@@ -522,7 +542,7 @@ public class GameActivity extends FragmentActivity  {
 				Log.d(TAG,"i:"+i+" win: "+mWinnerList[i]+"~ suspend: "+mSuspendList[i]);
 			}
 			
-			Log.d(TAG,mGame.toString());
+			Log.d(TAG,getNewRoundPoints()+"-"+mGame.toString());
 			mGame.addNewRound(getNewRoundPoints(),isNewBockRoundSet(),mWinnerList,mSuspendList);
 			Log.d(TAG,mGame.toString());		
 			notifyDataSetChanged();
@@ -644,17 +664,21 @@ public class GameActivity extends FragmentActivity  {
 		}
 		return false;
 	}
-	
-	private int getNewRoundPoints(){
-		int mPoints;
-		try{
-			mPoints = Integer.valueOf(mEtNewRoundPoints.getText().toString());
-			return mPoints;
-		}
-		catch(Exception e){
-			return -1;
-		}
-	}
+
+    private int getNewRoundPoints(){
+        int mPoints;
+        try{
+            mPoints = Integer.valueOf(mEtNewRoundPoints.getText().toString());
+            if (!mGame.isAutoBockCalculationOn()) {
+                Log.d(TAG,"hrre");
+                mPoints /= (mGame.getPreRoundList().get(0).getBockCount() * 2);
+            }
+            return mPoints;
+        }
+        catch(Exception e){
+            return -1;
+        }
+    }
 	
 
 	
@@ -820,6 +844,7 @@ public class GameActivity extends FragmentActivity  {
     			i.putExtra(DokoData.PLAYER_CNT_KEY, mGame.getPlayerCount());
     			i.putExtra(DokoData.BOCKLIMIT_KEY, mGame.getBockRoundLimit());
     			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mGame.getActivePlayerCount());
+                i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mGame.isAutoBockCalculationOn());
     			startActivityForResult(i,DokoData.CHANGE_GAME_SETTINGS_ACTIVITY_CODE);
     		break;
     		
@@ -910,12 +935,14 @@ public class GameActivity extends FragmentActivity  {
     	Bundle extras = null;
     	int mActivePlayers,mBockLimit,mPlayerCnt,mOldPlayerCnt;
     	String mName = "";
+        boolean mBockAutoCalc = true;
     	    	   	
     	if(data != null) extras = data.getExtras();
     	if(extras != null && extras.getBoolean(DokoData.CHANGE_GAME_SETTINGS_KEY,false)){
     		mPlayerCnt = extras.getInt(DokoData.PLAYER_CNT_KEY,0);
         	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
+            mBockAutoCalc = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY, true);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
@@ -927,6 +954,7 @@ public class GameActivity extends FragmentActivity  {
         	mGame.setPlayerCount(mPlayerCnt);
         	mGame.setActivePlayerCount(mActivePlayers);
         	mGame.setBockRoundLimit(mBockLimit);
+            mGame.setAutoBockCalculation(mBockAutoCalc);
         	
         	for(int k=mOldPlayerCnt;k<mPlayerCnt;k++){
         		mName = extras.getString(DokoData.PLAYERS_KEY[k],"");

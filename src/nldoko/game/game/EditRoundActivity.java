@@ -1,10 +1,5 @@
 package nldoko.game.game;
 
-import java.util.ArrayList;
-import nldoko.android.Functions;
-import nldoko.game.R;
-import nldoko.game.data.DokoData;
-import nldoko.game.data.DokoData.PLAYER_ROUND_RESULT_STATE;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,16 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
+import nldoko.android.Functions;
+import nldoko.game.R;
+import nldoko.game.data.DokoData;
+import nldoko.game.data.DokoData.PLAYER_ROUND_RESULT_STATE;
+
+import java.util.ArrayList;
 
 public class EditRoundActivity extends Activity {
 	private Context mContext;
@@ -41,6 +33,7 @@ public class EditRoundActivity extends Activity {
 	private static LinearLayout mLayout;
 	private static LayoutInflater mInflater;
 	private static TextView mTvAddRoundBockPoints;
+    private static TextView mTvRoundBockPointsAutoCalc;
 	private static RadioGroup mNewRoundBockRadioGroup; 
 	private static Button mBtnEditRound;
 	private static Button mBtnAbort;
@@ -68,6 +61,7 @@ public class EditRoundActivity extends Activity {
 	private static int mPlayerCnt;
 	private static int mRoundPoints = 0;
 	private static int mBockRound = 0;
+    private static boolean mBockAutoCalcEnable = true;
 	private static PLAYER_ROUND_RESULT_STATE mPlayerState = PLAYER_ROUND_RESULT_STATE.LOSE_STATE;
 	
 	@Override
@@ -98,6 +92,7 @@ public class EditRoundActivity extends Activity {
         	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockRound = extras.getInt(DokoData.BOCKROUND_KEY,0);
         	mRoundPoints = extras.getInt(DokoData.ROUND_POINTS_KEY,0);
+            mBockAutoCalcEnable = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY, true);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER || 
@@ -151,6 +146,14 @@ public class EditRoundActivity extends Activity {
 			mTvAddRoundBockPoints.setText(mStr);
 			mTvAddRoundBockPoints.setVisibility(View.VISIBLE);
 		}
+
+
+        mTvRoundBockPointsAutoCalc = (TextView)rootView.findViewById(R.id.game_add_round_bock_auto_calc_onoff);
+        if(mBockAutoCalcEnable){
+            mTvRoundBockPointsAutoCalc.setText(rootView.getResources().getString(R.string.str_yes));
+        } else {
+            mTvRoundBockPointsAutoCalc.setText(rootView.getResources().getString(R.string.str_no));
+        }
 		
 		/*mNewRoundBockRadioGroup = (RadioGroup)rootView.findViewById(R.id.game_add_round_bock_radio);
 		mRNewRoundBockYes = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_yes);
@@ -406,6 +409,9 @@ public class EditRoundActivity extends Activity {
 		int mPoints;
 		try{
 			mPoints = Integer.valueOf(mEtNewRoundPoints.getText().toString());
+            if (mBockAutoCalcEnable) {
+                mPoints *= mBockRound;
+            }
 			return mPoints;
 		}
 		catch(Exception e){

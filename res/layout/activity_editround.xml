@@ -53,14 +53,41 @@
 	            
 	        </LinearLayout>
 
-	        <TextView
-	            android:id="@+id/game_add_round_bock_points"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
-	            android:textColor="@color/gray_dark" />
-	
-	        <GridView
+            <LinearLayout
+                    android:id="@+id/edit_round_round_bock_container"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/game_add_round_bock_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/gray_dark" />
+
+                <TextView
+                        android:id="@+id/game_add_round_bock_auto_calc_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/str_bock_auto_calc"
+                        android:textColor="@color/gray_dark"
+                        android:layout_marginLeft="10dp"/>
+
+                <TextView
+                        android:id="@+id/game_add_round_bock_auto_calc_onoff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="4dp"/>
+
+
+            </LinearLayout>
+
+            <GridView
 	            android:id="@+id/game_add_round_point_grid"
 	            android:layout_width="fill_parent"
 	            android:layout_height="100dp"

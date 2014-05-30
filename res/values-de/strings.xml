@@ -40,6 +40,7 @@
     <string name="str_bockrounds">Bockrunden</string>
     <string name="str_bock_preview_on_off">Bockvorschau an/aus</string>
     <string name="str_bock_preview_not_posible">Bockvorschau nicht vorhanden da das Bocklimit \"0\" ist</string>
+    <string name="str_bock_auto_calc">Auto. Bock Berechnung</string>
     <string name="str_mark_suspend">Markiere ausgesetzte</string>
     <string name="str_solo">Solo</string>
     <string name="str_solo_special">*Solo*</string>
@@ -100,9 +101,10 @@
     <string name="str_info_cnt_cnt_variant_standard">Die Verlierer bekommen Punkte abgezogen, die Gewinner bekommen Punkte hinzu.</string>   
     <string name="str_info_cnt_cnt_variant_lose">Nur die Verlierer bekommen Punkte abgezogen. Die Punkte der Gewinner &amp; evtl. ausgesetzte Spieler bleiben unverändert. (Umgekehrte Variante Gewinner).</string> 
     <string name="str_info_cnt_cnt_variant_win">Nur die Gewinner bekommen Punkte dazu. Die Punkte der Verlierer &amp; evtl. ausgesetzte Spieler bleiben unverändert. (Umgekehrte Variante Verlierer).</string>
-    <string name="str_info_active_players_info">Aktive Spieler: Ein Spiel kann mit 5 Spieler gestartet werden und nur 4 aktive Spieler gebene. D.h. jede Runde gibt es einen Spieler der ausetzt (Dieser kann jede Runde frei festgelegt werden).</string> 
-    <string name="str_info_bock_cnt_info">Bei einer Bockrunde werden die Punkte verdoppelt. Bockrundenlimit von 0&#8211;4 einstellbar (0=keine Verdopplung, I = Punkte x2, II = Punkte x4,III = Punkte x8 usw.).</string> 
-    
+    <string name="str_info_active_players_info">Aktive Spieler: Ein Spiel kann mit 5 Spieler gestartet werden und nur 4 aktive Spieler gebene. D.h. jede Runde gibt es einen Spieler der ausetzt (Dieser kann jede Runde frei festgelegt werden).</string>
+    <string name="str_info_bock_cnt_info">Bei einer Bockrunde werden die Punkte verdoppelt. Bockrundenlimit von 0&#8211;4 einstellbar (0=keine Verdopplung, I = Punkte x2, II = Punkte x4,III = Punkte x8 usw.).</string>
+    <string name="str_info_bock_auto_calc">Ist für das aktuelle Spiel eine Verdopplung durch Bock gegeben, kann die Verdopplung automatisch mitberechnet werden, sodass diese nicht vom Nutzer berechnet und eingeben werden muss</string>
+
     <string-array name="infoSettingsDialogEntry1">
     	<item name="title">@string/str_game_cnt_variant_normal</item>
     	<item name="text">@string/str_info_cnt_cnt_variant_standard</item>

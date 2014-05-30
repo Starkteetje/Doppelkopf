@@ -53,12 +53,43 @@
 	            
 	        </LinearLayout>
 
-	        <TextView
-	            android:id="@+id/game_add_round_bock_points"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
-	            android:textColor="@color/gray_dark" />
+            <LinearLayout
+                    android:id="@+id/game_add_round_bock_info_container"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1.0">
+
+                <TextView
+                        android:id="@+id/game_add_round_bock_points"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.40"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/gray_dark" />
+
+                <TextView
+                        android:id="@+id/game_add_round_bock_auto_calc_text"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/str_bock_auto_calc"
+                        android:textColor="@color/gray_dark"
+                        android:layout_weight="0.45"
+                        android:gravity="right"/>
+
+                <TextView
+                        android:id="@+id/game_add_round_bock_auto_calc_onoff"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=""
+                        android:layout_weight="0.15"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="4dp"/>
+
+
+            </LinearLayout>
 	
 	        <GridView
 	            android:id="@+id/game_add_round_point_grid"

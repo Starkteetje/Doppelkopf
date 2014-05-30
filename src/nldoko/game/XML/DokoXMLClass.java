@@ -68,6 +68,11 @@ public class DokoXMLClass {
     	        serializer.startTag("", "BockRoundLimit");
     	        serializer.text(Integer.toString(game.getBockRoundLimit()));
     	        serializer.endTag("", "BockRoundLimit");
+
+                serializer.text("\n\t");
+                serializer.startTag("", "BockAutoCalc");
+                serializer.text(Boolean.valueOf(game.isAutoBockCalculationOn()).toString());
+                serializer.endTag("", "BockAutoCalc");
     	        
     	        serializer.text("\n\t");
     	        serializer.startTag("", "GameCntVariant");
@@ -159,6 +164,7 @@ public class DokoXMLClass {
         String mCreateDate = "";
 		GAME_CNT_VARIANT mGameCntVariant = GAME_CNT_VARIANT.CNT_VARIANT_NORMAL;
 		boolean mMarkSuspendedPlayers = false; // default
+        boolean mBockAutoCalc = true; // default
 		Float mPoints = (float) 0.0;
 		String mName = "";
 		
@@ -200,6 +206,7 @@ public class DokoXMLClass {
 				else if(mNode.getNodeName().equalsIgnoreCase("PlayerCnt")) mPlayerCnt = Integer.valueOf(mNode.getTextContent());
 				else if(mNode.getNodeName().equalsIgnoreCase("ActivePlayers")) mActivePlayers = Integer.valueOf(mNode.getTextContent());
 				else if(mNode.getNodeName().equalsIgnoreCase("BockRoundLimit")) mBockRoundLimit = Integer.valueOf(mNode.getTextContent());
+                else if(mNode.getNodeName().equalsIgnoreCase("BockAutoCalc")) mBockAutoCalc = Boolean.valueOf(mNode.getTextContent());
 				else if(mNode.getNodeName().equalsIgnoreCase("GameCntVariant")) mGameCntVariant = GAME_CNT_VARIANT.valueOf(mNode.getTextContent());
 				else if(mNode.getNodeName().equalsIgnoreCase("MarkSuspendedPlayers")) mMarkSuspendedPlayers = Boolean.valueOf(mNode.getTextContent());
 				else if(mNode.getNodeName().equalsIgnoreCase("Players")){
@@ -273,6 +280,7 @@ public class DokoXMLClass {
 		mGame.setActivePlayerCount(mActivePlayers);
 		mGame.setPlayerCount(mPlayerCnt);
 		mGame.setBockRoundLimit(mBockRoundLimit);
+        mGame.setAutoBockCalculation(mBockAutoCalc);
 		mGame.setGameDataFromRestore(mPlayers, mPreRounds);
 		mGame.setGameCntVariant(mGameCntVariant);
 

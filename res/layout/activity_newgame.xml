@@ -79,6 +79,11 @@
                 layout="@layout/set_bock_cnt_with_icon" />
 
             <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/set_auto_bock_calc_with_icon" />
+
+            <include
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/set_game_cnt_variant_icon" />

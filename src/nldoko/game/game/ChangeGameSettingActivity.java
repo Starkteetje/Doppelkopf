@@ -1,12 +1,5 @@
 package nldoko.game.game;
 
-import java.util.ArrayList;
-
-import nldoko.game.R;
-import nldoko.game.XML.DokoXMLClass;
-import nldoko.game.classes.GameClass;
-import nldoko.game.data.DokoData;
-import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,16 +14,15 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import nldoko.game.R;
+import nldoko.game.XML.DokoXMLClass;
+import nldoko.game.classes.GameClass;
+import nldoko.game.data.DokoData;
+import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
+
+import java.util.ArrayList;
 
 public class ChangeGameSettingActivity extends Activity {
 	private Context mContext;
@@ -41,12 +33,14 @@ public class ChangeGameSettingActivity extends Activity {
 	private LinearLayout mLayout;
 	private ImageView mIv;
 	private TextView mTv;
+    private CheckBox mCb;
 	private TextView mTvPlayerCnt;
 	private LayoutInflater inflater;
 	private int mPlayerCnt = DokoData.MIN_PLAYER;
 	private Spinner mSpActivePlayer;
 	private Spinner mSpBockLimit;
-	
+    private CheckBox mCbBockAutoCalc;
+
 	private Button mBtnChangeGameSettings;
 	
 	private ArrayList<Integer> mActivePlayerArrayList = new ArrayList<Integer>();
@@ -97,21 +91,24 @@ public class ChangeGameSettingActivity extends Activity {
     	int mActivePlayers,mBockLimit,mPlayerCnt;
     	GAME_CNT_VARIANT mGameCntVaraint;
     	String mTmp = "";
+        boolean mBockAutoCalc;
 
 
     	if(extras != null){
         	mPlayerCnt = extras.getInt(DokoData.PLAYER_CNT_KEY,0);
         	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
+
         	boolean mMarkSuspendedPlayers = extras.getBoolean(DokoData.MARK_SUSPEND_OPTION_KEY,false);
         	mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
+            boolean mAutoBockCalc = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY,true);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER || 
         			(mPlayerCnt == 0 || mActivePlayers == 0))
         		return null;
         	
-        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit,mGameCntVaraint,mMarkSuspendedPlayers);
+        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint, mMarkSuspendedPlayers, mAutoBockCalc);
         	for(int k=0;k<mPlayerCnt;k++){
         		Log.d(TAG,mTmp+"k:"+k);
         		mTmp = extras.getString(DokoData.PLAYERS_KEY[k],"");
@@ -157,6 +154,11 @@ public class ChangeGameSettingActivity extends Activity {
     	mTv.setText(getResources().getString(R.string.str_game_settings));
     	mIv = (ImageView)mLayout.findViewById(R.id.icon);
     	mIv.setImageDrawable(getResources().getDrawable(R.drawable.action_settings));
+
+        mCbBockAutoCalc = (CheckBox)findViewById(R.id.cb_bock_auto_calc);
+        if (mCbBockAutoCalc != null) {
+            mCbBockAutoCalc.setChecked(mGameHolder.isAutoBockCalculationOn());
+        }
     	
     	mBtnChangeGameSettings = (Button)findViewById(R.id.btn_change_game_settings);
     	mBtnChangeGameSettings.setOnClickListener(new changeGameSettingsBtnClickListener());
@@ -391,6 +393,7 @@ public class ChangeGameSettingActivity extends Activity {
 		i.putExtra(DokoData.PLAYER_CNT_KEY, mPlayerCnt);
 		i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 		i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
+        i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mCbBockAutoCalc.isChecked());
 		
 		ArrayList<String> mPlayerNames = getPlayerNames();
 		for(int k=0;k<mPlayerCnt && k<mPlayerNames.size();k++){

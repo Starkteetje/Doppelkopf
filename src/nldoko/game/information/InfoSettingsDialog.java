@@ -68,7 +68,21 @@ public class InfoSettingsDialog extends CustomDialog {
 	    	tV = (TextView)v.findViewById(R.id.info_settings_dialog_entry_text);
 	    	tV.setText(mContext.getResources().getString(R.string.str_info_bock_cnt_info));
 	    	mContent.addView(v);
-	    	
+
+
+            // auto bock calc
+            v = mInflater.inflate(R.layout.info_settings_dialog_entry_header, null);
+            tV = (TextView)v.findViewById(R.id.info_settings_dialog_entry_header);
+            tV.setText(mContext.getResources().getString(R.string.str_bock_auto_calc));
+            mContent.addView(v);
+
+            v = mInflater.inflate(R.layout.info_settings_dialog_entry, null);
+            tV = (TextView)v.findViewById(R.id.info_settings_dialog_entry_title);
+            tV.setVisibility(View.GONE);
+            tV = (TextView)v.findViewById(R.id.info_settings_dialog_entry_text);
+            tV.setText(mContext.getResources().getString(R.string.str_info_bock_auto_calc));
+            mContent.addView(v);
+
 	    	// count varraints
 	    	v = mInflater.inflate(R.layout.info_settings_dialog_entry_header, null);
 	    	tV = (TextView)v.findViewById(R.id.info_settings_dialog_entry_header);

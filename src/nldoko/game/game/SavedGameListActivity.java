@@ -102,7 +102,7 @@ public class SavedGameListActivity extends Activity {
             	if (mGame != null) {
             		// if success delete old file
 
-                    String createDate =  mGame.getCreateDate("dd.MM.yyyy - hh:mm");
+                    String createDate =  mGame.getCreateDate("dd.MM.yyyy - HH:mm");
                     Log.d(TAG,"cd:"+createDate);
                     if (createDate.length() > 0) {
                         l = (LinearLayout)v.findViewById(R.id.saved_game_entry_create_date_layout);

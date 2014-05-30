@@ -1,9 +1,8 @@
 package nldoko.game.data;
 
-import java.util.ArrayList;
-
 import nldoko.game.R;
-import nldoko.game.data.DokoData.PLAYER_ROUND_RESULT_STATE;
+
+import java.util.ArrayList;
 
 public class DokoData {
 	
@@ -81,6 +80,7 @@ public class DokoData {
 	public static final String ACTIVE_PLAYER_KEY 		= "ACTIVE_PLAYER";
 	public static final String GAME_CNT_VARIANT_KEY 	= "GAME_CNT_VARIANT";
 	public static final String ROUND_POINTS_KEY 		= "ROUND_POINTS";
+    public static final String AUTO_BOCK_CALC_KEY 		= "AUTO_BOCK_CALC_KEY";
 	
 	public static final String[] PLAYERS_KEY  = {"PLAYER_1","PLAYER_2","PLAYER_3","PLAYER_4",
 												 "PLAYER_5","PLAYER_6","PLAYER_7","PLAYER_8"};
