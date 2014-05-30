@@ -43,8 +43,39 @@
 	                android:layout_height="match_parent"
 	                android:textAppearance="?android:attr/textAppearanceMedium"
 	                android:textStyle="bold" />
-	
-	            <TextView
+
+
+                <LinearLayout
+                        android:id="@+id/saved_game_entry_create_date_layout"
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginBottom="8dp">
+                    <TextView
+                            android:id="@+id/saved_game_entry_create_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_file_create_date"
+                            android:textColor="@color/gray_dark"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <TextView
+                            android:id="@+id/saved_game_entry_create_date_spacer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_dp_seperator"
+                            android:textColor="@color/gray_dark"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                            android:id="@+id/saved_game_entry_create_date_date"
+                            android:layout_marginLeft="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray_dark"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <TextView
 	                android:id="@+id/saved_game_entry_text"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
@@ -59,7 +90,7 @@
             android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_remove" />
+            android:src="@drawable/ic_action_remove"/>
         
     </LinearLayout>
     

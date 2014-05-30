@@ -1,13 +1,14 @@
 package nldoko.game.classes;
 
-import java.io.File;
+import android.util.Log;
+import nldoko.game.data.DokoData;
+import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
+
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import nldoko.game.data.DokoData;
-import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
 
 public class GameClass  implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -24,10 +25,8 @@ public class GameClass  implements Serializable{
 	private boolean mMarkSuspendedPlayers;
 	private String mCurrentFilename;
 
-	public GameClass(){
-		setDefaults();
-	}
-	
+    private java.sql.Timestamp createDate;
+
 	public GameClass(String fromFile){
 		setDefaults();
 		this.mCurrentFilename = fromFile;
@@ -41,12 +40,14 @@ public class GameClass  implements Serializable{
     	this.mActivePlayerCount = activePlayer;    
     	this.mBockRoundLimit = bockLimit;
     	this.setMarkSuspendedPlayers(markSuspendedPlayers);
-    	
+
     	this.cntVariant = cntVariant;
     	
     	for(int i=0;i<getMAXPlayerCount();i++){
     		this.mPlayers.add(new PlayerClass(i));
-    	} 	
+    	}
+
+        this.createDate = new Timestamp(System.currentTimeMillis());
 
 	}
 	
@@ -351,5 +352,33 @@ public class GameClass  implements Serializable{
         return currentFilename();
 	}
 
-		
+    public String getCreateDate(String format) {
+        if (this.createDate == null) {
+            return "";
+        }
+
+        String f = "MM/dd/yyyy"; // default
+        if (format.length() > 0 ) {
+            f = format;
+        }
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(f);
+            return sdf.format(this.createDate);
+        } catch (Exception e) {
+            Log.d("GameClass", e.toString());
+            return "";
+        }
+
+    }
+
+    public java.sql.Timestamp getCreateDateTimestamp() {
+        return this.createDate;
+    }
+
+    public void setCreateDate(java.sql.Timestamp timestamp) {
+        this.createDate = timestamp;
+    }
+
+
 }

@@ -1,39 +1,30 @@
 package nldoko.game.XML;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+import android.util.Xml;
 import nldoko.game.R;
 import nldoko.game.classes.GameClass;
 import nldoko.game.classes.PlayerClass;
 import nldoko.game.classes.RoundClass;
 import nldoko.game.data.DokoData;
 import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.os.Environment;
-import android.util.Log;
-import android.util.Xml;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 
 public class DokoXMLClass {
@@ -53,6 +44,14 @@ public class DokoXMLClass {
     	        serializer.startDocument("UTF-8", false);
     	        serializer.text("\n");
     	        serializer.startTag("", "Game");
+
+                // only @ version > 2.5
+                if (game.getCreateDateTimestamp() != null) {
+                    serializer.text("\n\t");
+                    serializer.startTag("", "CreateDate");
+                    serializer.text(game.getCreateDateTimestamp().toString());
+                    serializer.endTag("", "CreateDate");
+                }
     	        
     	        serializer.text("\n\t");
     	        serializer.startTag("", "PlayerCnt");
@@ -157,6 +156,7 @@ public class DokoXMLClass {
 		int mPID = 0;
 		int mPreID = 1; // 0 = show state
 		int mPlayerCnt = 0, mPreRoundCnt = 0, mBockCount = -1, mActivePlayers = 0, mBockRoundLimit = 0;
+        String mCreateDate = "";
 		GAME_CNT_VARIANT mGameCntVariant = GAME_CNT_VARIANT.CNT_VARIANT_NORMAL;
 		boolean mMarkSuspendedPlayers = false; // default
 		Float mPoints = (float) 0.0;
@@ -196,8 +196,8 @@ public class DokoXMLClass {
 				if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
 				
 				//Log.d(TAG,i+"#"+mNode.getTextContent());
-				
-				if(mNode.getNodeName().equalsIgnoreCase("PlayerCnt")) mPlayerCnt = Integer.valueOf(mNode.getTextContent());
+                if(mNode.getNodeName().equalsIgnoreCase("CreateDate")) mCreateDate = mNode.getTextContent();
+				else if(mNode.getNodeName().equalsIgnoreCase("PlayerCnt")) mPlayerCnt = Integer.valueOf(mNode.getTextContent());
 				else if(mNode.getNodeName().equalsIgnoreCase("ActivePlayers")) mActivePlayers = Integer.valueOf(mNode.getTextContent());
 				else if(mNode.getNodeName().equalsIgnoreCase("BockRoundLimit")) mBockRoundLimit = Integer.valueOf(mNode.getTextContent());
 				else if(mNode.getNodeName().equalsIgnoreCase("GameCntVariant")) mGameCntVariant = GAME_CNT_VARIANT.valueOf(mNode.getTextContent());
@@ -275,6 +275,21 @@ public class DokoXMLClass {
 		mGame.setBockRoundLimit(mBockRoundLimit);
 		mGame.setGameDataFromRestore(mPlayers, mPreRounds);
 		mGame.setGameCntVariant(mGameCntVariant);
+
+        // only version > 2.5
+        if (mCreateDate.length() > 0) {
+            DateFormat formatter ;
+            Date date ;
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+                java.util.Date parsedDate = dateFormat.parse(mCreateDate);
+                java.sql.Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+                mGame.setCreateDate(timestamp);
+            } catch (Exception e) {
+                Log.d(TAG,"create date error: "+ e.toString());
+            }
+        }
+
 		
 		return mGame;
 	}

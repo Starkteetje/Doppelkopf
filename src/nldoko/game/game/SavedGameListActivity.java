@@ -1,14 +1,5 @@
 package nldoko.game.game;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import nldoko.game.R;
-import nldoko.game.XML.DokoXMLClass;
-import nldoko.game.classes.GameClass;
-import nldoko.game.classes.PlayerClass;
-import nldoko.game.data.DokoData;
-import nldoko.game.information.AboutActivity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +7,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +18,14 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import nldoko.game.R;
+import nldoko.game.XML.DokoXMLClass;
+import nldoko.game.classes.GameClass;
+import nldoko.game.classes.PlayerClass;
+import nldoko.game.data.DokoData;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class SavedGameListActivity extends Activity {
 	private Context mContext;
@@ -78,6 +78,7 @@ public class SavedGameListActivity extends Activity {
     		ImageView mIv;
     	    for (String savedGameFile : fileList){
     	    	Log.d("e",savedGameFile);
+
     	    	if (!savedGameFile.endsWith(DokoData.SAVED_GAME_FILE_POSTFIX)) {
     	    		tagCnt++;
     	    		continue;
@@ -100,12 +101,27 @@ public class SavedGameListActivity extends Activity {
             	GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,savedGameFile);
             	if (mGame != null) {
             		// if success delete old file
+
+                    String createDate =  mGame.getCreateDate("dd.MM.yyyy - hh:mm");
+                    Log.d(TAG,"cd:"+createDate);
+                    if (createDate.length() > 0) {
+                        l = (LinearLayout)v.findViewById(R.id.saved_game_entry_create_date_layout);
+                        l.setVisibility(View.VISIBLE);
+                        mTv = (TextView)v.findViewById(R.id.saved_game_entry_create_date_date);
+                        mTv.setText(createDate);
+                    } else {
+                        l = (LinearLayout)v.findViewById(R.id.saved_game_entry_create_date_layout);
+                        l.setVisibility(View.GONE);
+                    }
+
+
             		String gameStats = "";
             		for(PlayerClass p : mGame.getPlayers()) {
             			if (p.getName().length() > 0) {
             				gameStats += p.getName()+" ("+p.getPoints()+"), ";
             			}
-            		}	
+            		}
+
                     mTv = (TextView)v.findViewById(R.id.saved_game_entry_text);
         			mTv.setText(gameStats);
             	}
@@ -113,6 +129,7 @@ public class SavedGameListActivity extends Activity {
             	mIv = (ImageView)v.findViewById(R.id.saved_game_entry_delete);
             	mIv.setTag(SAVED_GAME_TAG_DELETE + tagCnt);
             	mIv.setOnClickListener(mFileDeleteClickListerner);
+                mIv.setColorFilter(mContext.getResources().getColor(R.color.red_dark), PorterDuff.Mode.SRC_ATOP);
             	
             	Log.d(TAG,"set tagcnt:"+tagCnt);
     			mEntriesLayout.addView(v);  

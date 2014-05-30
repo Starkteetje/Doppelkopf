@@ -74,6 +74,7 @@
     <string name="str_delete_file">Datei löschen</string>
     <string name="str_delete_files">Dateien löschen</string>
     <string name="str_filename">Dateiname</string>
+    <string name="str_file_create_date">Erstellt</string>
     <string name="str_file">Datei</string>
     <string name="str_error_exit">Schwere Fehler</string>
     <string name="str_exit_game">Spiel beenden</string>
