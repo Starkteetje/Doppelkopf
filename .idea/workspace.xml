@@ -24,19 +24,14 @@
   <component name="ChangeListManager">
     <list default="true" id="325dfe0a-3aa4-4ae1-802a-386c7953a3f4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/game/ChangeGameSettingActivity.java" afterPath="$PROJECT_DIR$/src/nldoko/game/game/ChangeGameSettingActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/data/DokoData.java" afterPath="$PROJECT_DIR$/src/nldoko/game/data/DokoData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/XML/DokoXMLClass.java" afterPath="$PROJECT_DIR$/src/nldoko/game/XML/DokoXMLClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/game/EditRoundActivity.java" afterPath="$PROJECT_DIR$/src/nldoko/game/game/EditRoundActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/game/GameActivity.java" afterPath="$PROJECT_DIR$/src/nldoko/game/game/GameActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/classes/GameClass.java" afterPath="$PROJECT_DIR$/src/nldoko/game/classes/GameClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/information/InfoSettingsDialog.java" afterPath="$PROJECT_DIR$/src/nldoko/game/information/InfoSettingsDialog.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/game/NewGameActivity.java" afterPath="$PROJECT_DIR$/src/nldoko/game/game/NewGameActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nldoko/game/game/SavedGameListActivity.java" afterPath="$PROJECT_DIR$/src/nldoko/game/game/SavedGameListActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_editround.xml" afterPath="$PROJECT_DIR$/res/layout/activity_editround.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_newgame.xml" afterPath="$PROJECT_DIR$/res/layout/activity_newgame.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/fragment_game_add_round.xml" afterPath="$PROJECT_DIR$/res/layout/fragment_game_add_round.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/fragment_game_main.xml" afterPath="$PROJECT_DIR$/res/layout/fragment_game_main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/fragment_game_settings.xml" afterPath="$PROJECT_DIR$/res/layout/fragment_game_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/set_auto_bock_calc_with_icon.xml" afterPath="$PROJECT_DIR$/res/layout/set_auto_bock_calc_with_icon.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/set_bock_cnt_with_icon.xml" afterPath="$PROJECT_DIR$/res/layout/set_bock_cnt_with_icon.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values-de/strings.xml" afterPath="$PROJECT_DIR$/res/values-de/strings.xml" />
     </list>
     <ignored path="doko_android_.iws" />
@@ -60,93 +55,121 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name=".classpath" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.classpath">
+      <file leaf-file-name="NewGameActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/NewGameActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="255">
+            <state vertical-scroll-proportion="-6.071429" vertical-offset="2975" max-vertical-offset="5610">
+              <caret line="208" column="4" selection-start-line="208" selection-start-column="4" selection-end-line="208" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="arrow_right_up.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/drawable-hdpi/arrow_right_up.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChangeGameSettingActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/ChangeGameSettingActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-42.57143" vertical-offset="678" max-vertical-offset="6902">
+              <caret line="132" column="74" selection-start-line="132" selection-start-column="74" selection-end-line="132" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_newgame.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/activity_newgame.xml">
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1070" max-vertical-offset="2091">
+              <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
+              <folding>
+                <element signature="e#3998#4022#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="set_auto_bock_calc_with_icon.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/set_auto_bock_calc_with_icon.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.703704" vertical-offset="401" max-vertical-offset="1054">
+              <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="set_bock_cnt_with_icon.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/res/layout/set_bock_cnt_with_icon.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.502439" vertical-offset="388" max-vertical-offset="1122">
+              <caret line="41" column="48" selection-start-line="41" selection-start-column="48" selection-end-line="41" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="set_active_player_with_icon.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/set_active_player_with_icon.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.6666665" vertical-offset="408" max-vertical-offset="1122">
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="37" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_game.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/activity_game.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="374">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SavedGameListActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/SavedGameListActivity.java">
+      <file leaf-file-name="fragment_game_main.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/fragment_game_main.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.197092" vertical-offset="0" max-vertical-offset="3536">
-              <caret line="105" column="46" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
+            <state vertical-scroll-proportion="-13.259259" vertical-offset="237" max-vertical-offset="1938">
+              <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlayerClass.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nldoko/game/classes/PlayerClass.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="1717">
-              <caret line="65" column="16" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="16" />
-              <folding />
-            </state>
+      <file leaf-file-name="set_y_n_suspend_mark_with_icon.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/set_y_n_suspend_mark_with_icon.xml">
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/GameActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.535714" vertical-offset="5467" max-vertical-offset="15827">
-              <caret line="395" column="17" selection-start-line="395" selection-start-column="14" selection-end-line="395" selection-end-column="17" />
-              <folding>
-                <element signature="e#4593#4636#0" expanded="true" />
-                <element signature="e#4751#4806#0" expanded="true" />
-                <element signature="e#6079#6122#0" expanded="true" />
-                <element signature="e#6187#6240#0" expanded="true" />
-                <element signature="e#6374#6422#0" expanded="true" />
-                <element signature="e#6763#6814#0" expanded="true" />
-                <element signature="e#6910#6960#0" expanded="true" />
-                <element signature="e#7217#7260#0" expanded="true" />
-                <element signature="e#15395#15480#0" expanded="true" />
-                <element signature="e#15505#15578#0" expanded="true" />
-                <element signature="e#19994#20024#0" expanded="true" />
-                <element signature="e#20601#20639#0" expanded="true" />
-                <element signature="e#28343#28365#0" expanded="true" />
-                <element signature="e#28386#28410#0" expanded="true" />
-                <element signature="e#28438#28454#0" expanded="true" />
-                <element signature="e#28613#28628#0" expanded="true" />
-                <element signature="e#30672#30735#0" expanded="true" />
-                <element signature="e#30974#31028#0" expanded="true" />
-                <element signature="e#32533#32588#0" expanded="true" />
-                <element signature="e#33447#33503#0" expanded="true" />
-                <element signature="e#35143#35209#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DokoXMLClass.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nldoko/game/XML/DokoXMLClass.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7786">
-              <caret line="73" column="90" selection-start-line="73" selection-start-column="90" selection-end-line="73" selection-end-column="90" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewGameActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/NewGameActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.535714" vertical-offset="163" max-vertical-offset="5746">
-              <caret line="41" column="14" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EditRoundActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/EditRoundActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6205" max-vertical-offset="6902">
-              <caret line="407" column="0" selection-start-line="407" selection-start-column="0" selection-end-line="419" selection-end-column="5" />
+            <state vertical-scroll-proportion="-3.148148" vertical-offset="0" max-vertical-offset="1071">
+              <caret line="5" column="57" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -711,20 +734,22 @@
         <option value="$PROJECT_DIR$/res/layout/saved_game_entry.xml" />
         <option value="$PROJECT_DIR$/src/nldoko/game/data/DokoData.java" />
         <option value="$PROJECT_DIR$/src/nldoko/game/classes/GameClass.java" />
-        <option value="$PROJECT_DIR$/res/layout/activity_newgame.xml" />
-        <option value="$PROJECT_DIR$/src/nldoko/game/game/NewGameActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/set_auto_bock_calc_with_icon.xml" />
-        <option value="$PROJECT_DIR$/res/values-de/strings.xml" />
         <option value="$PROJECT_DIR$/src/nldoko/game/information/InfoSettingsDialog.java" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/nldoko/game/game/EditRoundActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/activity_editround.xml" />
         <option value="$PROJECT_DIR$/res/layout/fragment_game_add_round.xml" />
-        <option value="$PROJECT_DIR$/res/layout/fragment_game_settings.xml" />
         <option value="$PROJECT_DIR$/src/nldoko/game/XML/DokoXMLClass.java" />
-        <option value="$PROJECT_DIR$/src/nldoko/game/game/ChangeGameSettingActivity.java" />
-        <option value="$PROJECT_DIR$/src/nldoko/game/game/GameActivity.java" />
         <option value="$PROJECT_DIR$/src/nldoko/game/game/SavedGameListActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/activity_editround.xml" />
+        <option value="$PROJECT_DIR$/res/values-de/strings.xml" />
+        <option value="$PROJECT_DIR$/src/nldoko/game/game/GameActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/fragment_game_settings.xml" />
+        <option value="$PROJECT_DIR$/res/layout/set_auto_bock_calc_with_icon.xml" />
+        <option value="$PROJECT_DIR$/src/nldoko/game/game/ChangeGameSettingActivity.java" />
+        <option value="$PROJECT_DIR$/src/nldoko/game/game/NewGameActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/fragment_game_main.xml" />
+        <option value="$PROJECT_DIR$/res/layout/activity_newgame.xml" />
+        <option value="$PROJECT_DIR$/res/layout/set_bock_cnt_with_icon.xml" />
       </list>
     </option>
   </component>
@@ -1209,7 +1234,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17447917" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17430703" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1219,7 +1244,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2312073" sideWeight="0.74635416" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23690204" sideWeight="0.74635416" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16614583" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1313,8 +1338,6 @@
           <caret line="352" column="0" selection-start-line="352" selection-start-column="0" selection-end-line="352" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2959#2960#0" expanded="true" />
-            <element signature="e#2992#2993#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1355,8 +1378,6 @@
           <caret line="122" column="17" selection-start-line="122" selection-start-column="17" selection-end-line="122" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2959#2960#0" expanded="true" />
-            <element signature="e#2992#2993#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1432,14 +1453,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nldoko/game/data/DokoData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="986" max-vertical-offset="1649">
-          <caret line="76" column="31" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nldoko/game/information/InfoSettingsDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="782" max-vertical-offset="2176">
@@ -1454,30 +1467,6 @@
             <element signature="e#4099#4151#0" expanded="true" />
             <element signature="e#4241#4294#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/set_bock_cnt_with_icon.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17138365" vertical-offset="384" max-vertical-offset="1020">
-          <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
-          <folding>
-            <element signature="e#1391#1415#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/fragment_game_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="24.555555" vertical-offset="663" max-vertical-offset="1938">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1530,87 +1519,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_game.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="636">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_editround.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.08647799" vertical-offset="1109" max-vertical-offset="2312">
-          <caret line="62" column="63" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values-de/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="498" max-vertical-offset="2567">
-          <caret line="42" column="18" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/fragment_game_settings.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.37037" vertical-offset="639" max-vertical-offset="1513">
-          <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
-          <folding>
-            <element signature="e#2745#2779#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/set_auto_bock_calc_with_icon.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.740741" vertical-offset="401" max-vertical-offset="1054">
-          <caret line="47" column="50" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/ChangeGameSettingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.0701756" vertical-offset="5837" max-vertical-offset="6800">
-          <caret line="390" column="60" selection-start-line="390" selection-start-column="60" selection-end-line="390" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_newgame.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="1148" max-vertical-offset="2040">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="83" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/EditRoundActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6205" max-vertical-offset="6902">
-          <caret line="407" column="0" selection-start-line="407" selection-start-column="0" selection-end-line="419" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nldoko/game/classes/PlayerClass.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="1717">
@@ -1630,64 +1538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nldoko/game/XML/DokoXMLClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="7786">
-          <caret line="73" column="90" selection-start-line="73" selection-start-column="90" selection-end-line="73" selection-end-column="90" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nldoko/game/classes/GameClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-145.82143" vertical-offset="1391" max-vertical-offset="6120">
-          <caret line="360" column="65" selection-start-line="360" selection-start-column="63" selection-end-line="360" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2959#2960#0" expanded="true" />
-            <element signature="e#2992#2993#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/GameActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.535714" vertical-offset="5467" max-vertical-offset="15827">
-          <caret line="395" column="17" selection-start-line="395" selection-start-column="14" selection-end-line="395" selection-end-column="17" />
-          <folding>
-            <element signature="e#4593#4636#0" expanded="true" />
-            <element signature="e#4751#4806#0" expanded="true" />
-            <element signature="e#6079#6122#0" expanded="true" />
-            <element signature="e#6187#6240#0" expanded="true" />
-            <element signature="e#6374#6422#0" expanded="true" />
-            <element signature="e#6763#6814#0" expanded="true" />
-            <element signature="e#6910#6960#0" expanded="true" />
-            <element signature="e#7217#7260#0" expanded="true" />
-            <element signature="e#15395#15480#0" expanded="true" />
-            <element signature="e#15505#15578#0" expanded="true" />
-            <element signature="e#19994#20024#0" expanded="true" />
-            <element signature="e#20601#20639#0" expanded="true" />
-            <element signature="e#28343#28365#0" expanded="true" />
-            <element signature="e#28386#28410#0" expanded="true" />
-            <element signature="e#28438#28454#0" expanded="true" />
-            <element signature="e#28613#28628#0" expanded="true" />
-            <element signature="e#30672#30735#0" expanded="true" />
-            <element signature="e#30974#31028#0" expanded="true" />
-            <element signature="e#32533#32588#0" expanded="true" />
-            <element signature="e#33447#33503#0" expanded="true" />
-            <element signature="e#35143#35209#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/NewGameActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.535714" vertical-offset="163" max-vertical-offset="5746">
-          <caret line="41" column="14" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.classpath">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
@@ -1698,8 +1548,192 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/SavedGameListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.197092" vertical-offset="0" max-vertical-offset="3536">
+        <state vertical-scroll-proportion="-48.57143" vertical-offset="0" max-vertical-offset="3536">
           <caret line="105" column="46" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/activity_editround.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-81.22222" vertical-offset="0" max-vertical-offset="2312">
+          <caret line="129" column="17" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
+          <folding>
+            <element signature="e#4857#4877#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values-de/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.428572" vertical-offset="1179" max-vertical-offset="2567">
+          <caret line="103" column="216" selection-start-line="103" selection-start-column="216" selection-end-line="103" selection-end-column="216" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/GameMainListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6120">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nldoko/game/classes/GameClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="14.571428" vertical-offset="1887" max-vertical-offset="6086">
+          <caret line="99" column="58" selection-start-line="99" selection-start-column="37" selection-end-line="99" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/EditRoundActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5236" max-vertical-offset="6902">
+          <caret line="408" column="20" selection-start-line="408" selection-start-column="20" selection-end-line="408" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nldoko/game/data/DokoData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1007" max-vertical-offset="1649">
+          <caret line="76" column="54" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/GameActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-44.32143" vertical-offset="13923" max-vertical-offset="15929">
+          <caret line="960" column="64" selection-start-line="960" selection-start-column="64" selection-end-line="960" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nldoko/game/XML/DokoXMLClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="7786">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/fragment_game_settings.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8406504" vertical-offset="639" max-vertical-offset="1615">
+          <caret line="68" column="66" selection-start-line="68" selection-start-column="66" selection-end-line="68" selection-end-column="66" />
+          <folding>
+            <element signature="e#2951#2985#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/set_y_n_suspend_mark_with_icon.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.148148" vertical-offset="0" max-vertical-offset="1071">
+          <caret line="5" column="57" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/ChangeGameSettingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-42.57143" vertical-offset="678" max-vertical-offset="6902">
+          <caret line="132" column="74" selection-start-line="132" selection-start-column="74" selection-end-line="132" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nldoko/game/game/NewGameActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.071429" vertical-offset="2975" max-vertical-offset="5610">
+          <caret line="208" column="4" selection-start-line="208" selection-start-column="4" selection-end-line="208" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable-hdpi/arrow_right_up.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/fragment_game_main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.259259" vertical-offset="237" max-vertical-offset="1938">
+          <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/activity_game.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="636">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/activity_newgame.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1070" max-vertical-offset="2091">
+          <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
+          <folding>
+            <element signature="e#3998#4022#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/set_auto_bock_calc_with_icon.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.703704" vertical-offset="401" max-vertical-offset="1054">
+          <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/set_active_player_with_icon.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.6666665" vertical-offset="408" max-vertical-offset="1122">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="37" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/set_bock_cnt_with_icon.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.502439" vertical-offset="388" max-vertical-offset="1122">
+          <caret line="41" column="48" selection-start-line="41" selection-start-column="48" selection-end-line="41" selection-end-column="48" />
           <folding />
         </state>
       </provider>

@@ -845,6 +845,7 @@ public class GameActivity extends FragmentActivity  {
     			i.putExtra(DokoData.BOCKLIMIT_KEY, mGame.getBockRoundLimit());
     			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mGame.getActivePlayerCount());
                 i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mGame.isAutoBockCalculationOn());
+                i.putExtra(DokoData.MARK_SUSPEND_OPTION_KEY, mGame.isMarkSuspendedPlayersEnable());
     			startActivityForResult(i,DokoData.CHANGE_GAME_SETTINGS_ACTIVITY_CODE);
     		break;
     		
@@ -935,7 +936,8 @@ public class GameActivity extends FragmentActivity  {
     	Bundle extras = null;
     	int mActivePlayers,mBockLimit,mPlayerCnt,mOldPlayerCnt;
     	String mName = "";
-        boolean mBockAutoCalc = true;
+        boolean mBockAutoCalc;
+        boolean mMarkSuspendedPlayers;
     	    	   	
     	if(data != null) extras = data.getExtras();
     	if(extras != null && extras.getBoolean(DokoData.CHANGE_GAME_SETTINGS_KEY,false)){
@@ -943,6 +945,7 @@ public class GameActivity extends FragmentActivity  {
         	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
             mBockAutoCalc = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY, true);
+            mMarkSuspendedPlayers = extras.getBoolean(DokoData.MARK_SUSPEND_OPTION_KEY, true);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
@@ -955,6 +958,9 @@ public class GameActivity extends FragmentActivity  {
         	mGame.setActivePlayerCount(mActivePlayers);
         	mGame.setBockRoundLimit(mBockLimit);
             mGame.setAutoBockCalculation(mBockAutoCalc);
+            mGame.setMarkSuspendedPlayers(mMarkSuspendedPlayers);
+
+
         	
         	for(int k=mOldPlayerCnt;k<mPlayerCnt;k++){
         		mName = extras.getString(DokoData.PLAYERS_KEY[k],"");

@@ -40,6 +40,7 @@ public class ChangeGameSettingActivity extends Activity {
 	private Spinner mSpActivePlayer;
 	private Spinner mSpBockLimit;
     private CheckBox mCbBockAutoCalc;
+    private CheckBox mCbMarkSuspendedPlayers;
 
 	private Button mBtnChangeGameSettings;
 	
@@ -91,7 +92,6 @@ public class ChangeGameSettingActivity extends Activity {
     	int mActivePlayers,mBockLimit,mPlayerCnt;
     	GAME_CNT_VARIANT mGameCntVaraint;
     	String mTmp = "";
-        boolean mBockAutoCalc;
 
 
     	if(extras != null){
@@ -158,6 +158,11 @@ public class ChangeGameSettingActivity extends Activity {
         mCbBockAutoCalc = (CheckBox)findViewById(R.id.cb_bock_auto_calc);
         if (mCbBockAutoCalc != null) {
             mCbBockAutoCalc.setChecked(mGameHolder.isAutoBockCalculationOn());
+        }
+
+        mCbMarkSuspendedPlayers  = (CheckBox)findViewById(R.id.cb_suspend);
+        if (mCbMarkSuspendedPlayers != null) {
+            mCbMarkSuspendedPlayers.setChecked(mGameHolder.isMarkSuspendedPlayersEnable());
         }
     	
     	mBtnChangeGameSettings = (Button)findViewById(R.id.btn_change_game_settings);
@@ -394,6 +399,7 @@ public class ChangeGameSettingActivity extends Activity {
 		i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 		i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
         i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mCbBockAutoCalc.isChecked());
+        i.putExtra(DokoData.MARK_SUSPEND_OPTION_KEY, mCbMarkSuspendedPlayers.isChecked());
 		
 		ArrayList<String> mPlayerNames = getPlayerNames();
 		for(int k=0;k<mPlayerCnt && k<mPlayerNames.size();k++){

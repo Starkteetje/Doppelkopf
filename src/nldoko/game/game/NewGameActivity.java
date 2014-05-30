@@ -11,7 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import nldoko.game.R;
 import nldoko.game.XML.DokoXMLClass;
 import nldoko.game.data.DokoData;
@@ -94,6 +93,7 @@ public class NewGameActivity extends Activity {
     	mSpGameCntVariant	= (Spinner)findViewById(R.id.sp_game_cnt_variant);
     	mCbSuspendMark		= (CheckBox)findViewById(R.id.cb_suspend);
         mCbAutoBockCalc     = (CheckBox)findViewById(R.id.cb_bock_auto_calc);
+        mCbSuspendMark     = (CheckBox)findViewById(R.id.cb_suspend);
     	
     	mLayout = (LinearLayout)findViewById(R.id.categorie_settings_header);
     	mTv = (TextView)mLayout.findViewById(R.id.fragment_game_round_str_prim);
@@ -108,12 +108,8 @@ public class NewGameActivity extends Activity {
         if(mIv != null)mIv.setOnClickListener(new settingInfoClickListener());
         
         mMarkSuspendedLayout = (LinearLayout)findViewById(R.id.fragment_game_set_mark_suspend_entry);
-        if (mMarkSuspendedLayout != null) {
-        	mMarkSuspendedLayout.setVisibility(View.GONE);
-        }
-        
         if (mCbSuspendMark != null) {
-        	mCbSuspendMark.setOnCheckedChangeListener(new markSuspendChangeListener());
+        	mCbSuspendMark.setChecked(true);
         }
 
         if (mCbAutoBockCalc != null) {
@@ -240,7 +236,7 @@ public class NewGameActivity extends Activity {
 				i.putExtra(DokoData.PLAYERS_KEY[k], mPlayerNames.get(k).toString());
 			}
 			i.putExtra(DokoData.PLAYER_CNT_KEY, mPlayerCnt);
-			i.putExtra(DokoData.MARK_SUSPEND_OPTION_KEY, isMarkSuspendedPlayerSelected);
+			i.putExtra(DokoData.MARK_SUSPEND_OPTION_KEY, mCbSuspendMark.isChecked());
 			i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
 			i.putExtra(DokoData.GAME_CNT_VARIANT_KEY, GAME_CNT_VARIANT.values()[mSpGameCntVariant.getSelectedItemPosition()]);
@@ -326,13 +322,6 @@ public class NewGameActivity extends Activity {
 			infoDialog.show();
 		}
     }
-    
-    public class markSuspendChangeListener implements OnCheckedChangeListener{
-		public void onCheckedChanged(CompoundButton arg0, boolean selected) {
-			isMarkSuspendedPlayerSelected = selected;
-		}
-    }
-
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {

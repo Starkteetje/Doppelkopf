@@ -116,7 +116,7 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_marginTop="12dp"
-	            android:text="@string/str_edit_round" />
+	            android:text="@string/str_accept" />
 	        
 	       <Button
 	            android:id="@+id/btn_game_edit_round_abort"
