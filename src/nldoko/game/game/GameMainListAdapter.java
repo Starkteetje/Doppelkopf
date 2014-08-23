@@ -1,7 +1,19 @@
 package nldoko.game.game;
 
-import java.util.ArrayList;
-
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.*;
 import nldoko.android.Functions;
 import nldoko.game.R;
 import nldoko.game.classes.GameClass;
@@ -10,28 +22,8 @@ import nldoko.game.data.DokoData;
 import nldoko.game.data.DokoData.GAME_RESULT_TYPE;
 import nldoko.game.data.DokoData.GAME_VIEW_TYPE;
 import nldoko.game.data.DokoData.PLAYER_ROUND_RESULT_STATE;
-import nldoko.game.game.NewGameActivity.settingInfoClickListener;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnLongClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import java.util.ArrayList;
 
 public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 	 
@@ -352,6 +344,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 				i.putExtra(DokoData.PLAYER_CNT_KEY, mGame.getPlayerCount());
 				i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mGame.getActivePlayerCount());
 				i.putExtra(DokoData.ROUND_POINTS_KEY, mGame.getRoundList().get(roundNumber-1).getPointsWithoutBock());
+                i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mGame.isAutoBockCalculationOn());
 				((Activity) mContext).startActivityForResult(i,DokoData.EDIT_ROUND_ACTIVITY_CODE);
 				v.clearAnimation();
 			}
