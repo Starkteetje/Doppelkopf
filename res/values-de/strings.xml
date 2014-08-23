@@ -3,7 +3,7 @@
     <!-- german -->
 
     <string name="app_name">Doppelkopf</string>
-    <string name="app_version">v2.6</string>
+    <string name="app_version">v2.7</string>
     <string name="start_action_about">Über diese App</string>
     <string name="start_action_load_save_game">Vorheriges Spiel starten</string>
     <string name="str_saved_game">Gespeicherte Spiele</string>
