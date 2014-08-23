@@ -532,7 +532,7 @@ public class GameActivity extends FragmentActivity  {
 				}
 			}
 			
-			
+
 			if(!isNewRoundDataOK()){
 				Toast.makeText(v.getContext(), R.string.str_error_game_new_round_data, Toast.LENGTH_SHORT).show();
 				return;
@@ -669,9 +669,11 @@ public class GameActivity extends FragmentActivity  {
         int mPoints;
         try{
             mPoints = Integer.valueOf(mEtNewRoundPoints.getText().toString());
-            if (!mGame.isAutoBockCalculationOn()) {
-                Log.d(TAG,"hrre");
-                mPoints /= (mGame.getPreRoundList().get(0).getBockCount() * 2);
+            if (!mGame.isAutoBockCalculationOn() && mGame.getPreRoundList().size() > 0) {
+                int mBockCountRound = mGame.getPreRoundList().get(0).getBockCount();
+                if (mBockCountRound > 0) {
+                    mPoints /= (mGame.getPreRoundList().get(0).getBockCount() * 2);
+                }
             }
             return mPoints;
         }
