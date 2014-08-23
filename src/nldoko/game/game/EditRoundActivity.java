@@ -34,6 +34,7 @@ public class EditRoundActivity extends Activity {
 	private static LayoutInflater mInflater;
 	private static TextView mTvAddRoundBockPoints;
     private static TextView mTvRoundBockPointsAutoCalc;
+    private static TextView mTVRoundBockPointsAutoCalcText;
 	private static RadioGroup mNewRoundBockRadioGroup; 
 	private static Button mBtnEditRound;
 	private static Button mBtnAbort;
@@ -147,14 +148,20 @@ public class EditRoundActivity extends Activity {
 			mTvAddRoundBockPoints.setVisibility(View.VISIBLE);
 		}
 
-
+        mTVRoundBockPointsAutoCalcText = (TextView)rootView.findViewById(R.id.game_add_round_bock_auto_calc_text);
         mTvRoundBockPointsAutoCalc = (TextView)rootView.findViewById(R.id.game_add_round_bock_auto_calc_onoff);
         if(mBockAutoCalcEnable){
             mTvRoundBockPointsAutoCalc.setText(rootView.getResources().getString(R.string.str_yes));
         } else {
             mTvRoundBockPointsAutoCalc.setText(rootView.getResources().getString(R.string.str_no));
         }
-		
+		if (mBockRound == 0) {
+            mTVRoundBockPointsAutoCalcText.setVisibility(View.INVISIBLE);
+            mTvRoundBockPointsAutoCalc.setVisibility(View.INVISIBLE);
+        } else {
+            mTVRoundBockPointsAutoCalcText.setVisibility(View.VISIBLE);
+            mTvRoundBockPointsAutoCalc.setVisibility(View.VISIBLE);
+        }
 		/*mNewRoundBockRadioGroup = (RadioGroup)rootView.findViewById(R.id.game_add_round_bock_radio);
 		mRNewRoundBockYes = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_yes);
 		mRNewRoundBockNo = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_no);
@@ -415,6 +422,7 @@ public class EditRoundActivity extends Activity {
 			return mPoints;
 		}
 		catch(Exception e){
+            Log.e(TAG,"ERROR:"+e.toString());
 			return -1;
 		}
 	}
