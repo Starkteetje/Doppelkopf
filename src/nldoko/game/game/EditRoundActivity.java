@@ -409,7 +409,7 @@ public class EditRoundActivity extends Activity {
 		int mPoints;
 		try{
 			mPoints = Integer.valueOf(mEtNewRoundPoints.getText().toString());
-            if (mBockAutoCalcEnable) {
+            if (mBockAutoCalcEnable && mBockRound > 0) {
                 mPoints *= mBockRound;
             }
 			return mPoints;
