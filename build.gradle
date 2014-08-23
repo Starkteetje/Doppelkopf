@@ -38,5 +38,25 @@ android {
         // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
+
     }
+
+    buildTypes {
+
+        debug {
+            runProguard true
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+            debuggable true
+
+        }
+
+        release {
+            runProguard false
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+            debuggable false
+
+        }
+    }
+
 }
+
