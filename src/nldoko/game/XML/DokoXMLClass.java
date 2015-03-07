@@ -30,8 +30,29 @@ import java.util.Date;
 public class DokoXMLClass {
 	
 	private static final String TAG = "DokoXMLClass";
-	
-	
+    private static final String GAME_SETTINGS_TAG           = "game_settings";
+    private static final String GAME_SETTINGS_PLAYER_COUNT  = "PlayerCnt";
+    private static final String GAME_SETTINGS_ACTIVE_PLAYERS = "ActivePlayers";
+    private static final String GAME_SETTINGS_BOCK_ROUND_LIMIT = "BockRoundLimit";
+    private static final String GAME_SETTINGS_BOCK_AUTO_CALC = "BockAutoCalc";
+    private static final String GAME_SETTINGS_COUNT_VARIANT = "GameCntVariant";
+    private static final String GAME_SETTINGS_MARK_SUSPENDED_PLAYERS = "MarkSuspendedPlayers";
+
+    private static final String GAME_CREATE_DATE = "CreateDate";
+    private static final String GAME = "Game";
+
+    private static final String GAME_PLAYERS = "Players";
+    private static final String GAME_PLAYER = "Player";
+    private static final String GAME_PLAYER_NAME = "name";
+    private static final String GAME_PLAYER_POINTS = "points";
+
+    private static final String GAME_PRE_ROUNDS = "PreRounds";
+    private static final String GAME_PRE_ROUND = "PreRound";
+    private static final String GAME_PRE_ROUND_BOCK_COUNT = "bockCount";
+
+    private static final String PLAYER_NAMES_NAMES = "Names";
+    private static final String PLAYER_NAMES_NAME = "name";
+
 	public static boolean saveGameStateToXML(Context c, GameClass game){
 		if(game != null && DokoXMLClass.isAppDirOK(c)){
 			String oldFilename = game.currentFilename();
@@ -43,92 +64,56 @@ public class DokoXMLClass {
     	        serializer.setOutput(writer);
     	        serializer.startDocument("UTF-8", false);
     	        serializer.text("\n");
-    	        serializer.startTag("", "Game");
+    	        serializer.startTag("", GAME);
 
                 // only @ version > 2.5
-                if (game.getCreateDateTimestamp() != null) {
-                    serializer.text("\n\t");
-                    serializer.startTag("", "CreateDate");
-                    serializer.text(game.getCreateDateTimestamp().toString());
-                    serializer.endTag("", "CreateDate");
-                }
-    	        
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", "PlayerCnt");
-    	        serializer.text(Integer.toString(game.getPlayerCount()));
-    	        serializer.endTag("", "PlayerCnt");
-    	        
-    	        
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", "ActivePlayers");
-    	        serializer.text(Integer.toString(game.getActivePlayerCount()));
-    	        serializer.endTag("", "ActivePlayers");
-    	        
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", "BockRoundLimit");
-    	        serializer.text(Integer.toString(game.getBockRoundLimit()));
-    	        serializer.endTag("", "BockRoundLimit");
-
-                serializer.text("\n\t");
-                serializer.startTag("", "BockAutoCalc");
-                serializer.text(Boolean.valueOf(game.isAutoBockCalculationOn()).toString());
-                serializer.endTag("", "BockAutoCalc");
-    	        
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", "GameCntVariant");
-    	        serializer.text(game.getGameCntVariant().toString());
-    	        serializer.endTag("", "GameCntVariant");
-    	        
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", "MarkSuspendedPlayers");
-    	        Log.d(TAG,"boolstr:"+Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString()+" bool:"+game.isMarkSuspendedPlayersEnable());
-    	        serializer.text(Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString());
-    	        serializer.endTag("", "MarkSuspendedPlayers");
+                // add game settings
+                addGameSettingsToXML(serializer, game);
     	        
   
     	        serializer.text("\n\t");
-    	        serializer.startTag("", "Players");
+    	        serializer.startTag("", GAME_PLAYERS);
     	        for(int i=0;i<game.getMAXPlayerCount();i++){
     	        	
         	        serializer.text("\n\t\t");
-        	        serializer.startTag("", "Player");
+        	        serializer.startTag("", GAME_PLAYER);
 
         	        serializer.text("\n\t\t\t");
-    	            serializer.startTag("", "name");
+    	            serializer.startTag("", GAME_PLAYER_NAME);
     	            serializer.text(game.getPlayer(i).getName());
-    	            serializer.endTag("", "name");
+    	            serializer.endTag("", GAME_PLAYER_NAME);
     	            
     	            serializer.text("\n\t\t\t");
-    	            serializer.startTag("", "points");
+    	            serializer.startTag("", GAME_PLAYER_POINTS);
     	            serializer.text(Float.toString(game.getPlayer(i).getPoints()));
-    	            serializer.endTag("", "points");
+    	            serializer.endTag("", GAME_PLAYER_POINTS);
     	            
     	            serializer.text("\n\t\t");
-    	            serializer.endTag("", "Player");
+    	            serializer.endTag("", GAME_PLAYER);
     	        }
     	        serializer.text("\n\t");
-	            serializer.endTag("", "Players");
+	            serializer.endTag("", GAME_PLAYERS);
     	        
 	            
     	        serializer.text("\n\t");
-    	        serializer.startTag("", "PreRounds");
+    	        serializer.startTag("", GAME_PRE_ROUNDS);
 	            for (int t=0;t<game.getPreRoundList().size();t++){
 	            	serializer.text("\n\t\t");
-		            serializer.startTag("", "PreRound");
+		            serializer.startTag("", GAME_PRE_ROUND);
 		            
 		            serializer.text("\n\t\t\t");
-		            serializer.startTag("", "bockCount");
+		            serializer.startTag("", GAME_PRE_ROUND_BOCK_COUNT);
 		            serializer.text(Integer.toString(game.getPreRoundList().get(t).getBockCount()));
-		            serializer.endTag("", "bockCount");
+		            serializer.endTag("", GAME_PRE_ROUND_BOCK_COUNT);
 		            
 		            serializer.text("\n\t\t");
-		            serializer.endTag("", "PreRound");
+		            serializer.endTag("", GAME_PRE_ROUND);
 		        }
     	        serializer.text("\n\t");
-	            serializer.endTag("", "PreRounds");
+	            serializer.endTag("", GAME_PRE_ROUNDS);
 	            
     	        serializer.text("\n");
-    	        serializer.endTag("", "Game");
+    	        serializer.endTag("", GAME);
     	        serializer.endDocument();
     	        
     	        //Write to file
@@ -155,6 +140,62 @@ public class DokoXMLClass {
     	    } 
     	}
     	return false;
+    }
+
+    private static void addGameSettingsToXML(XmlSerializer serializer, GameClass game) {
+        if (serializer == NULL || game == NULL) {
+            return;
+        }
+
+        try{
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_SETTINGS_TAG);
+
+            if (game.getCreateDateTimestamp() != null) {
+                serializer.text("\n\t");
+                serializer.startTag("", GAME_CREATE_DATE);
+                serializer.text(game.getCreateDateTimestamp().toString());
+                serializer.endTag("", GAME_CREATE_DATE);
+            }
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_SETTINGS_PLAYER_COUNT);
+            serializer.text(Integer.toString(game.getPlayerCount()));
+            serializer.endTag("", GAME_SETTINGS_PLAYER_COUNT);
+
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_SETTINGS_ACTIVE_PLAYERS);
+            serializer.text(Integer.toString(game.getActivePlayerCount()));
+            serializer.endTag("", GAME_SETTINGS_ACTIVE_PLAYERS);
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_SETTINGS_BOCK_ROUND_LIMIT);
+            serializer.text(Integer.toString(game.getBockRoundLimit()));
+            serializer.endTag("", GAME_SETTINGS_BOCK_ROUND_LIMIT);
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_SETTINGS_BOCK_AUTO_CALC);
+            serializer.text(Boolean.valueOf(game.isAutoBockCalculationOn()).toString());
+            serializer.endTag("", GAME_SETTINGS_BOCK_AUTO_CALC);
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_SETTINGS_COUNT_VARIANT);
+            serializer.text(game.getGameCntVariant().toString());
+            serializer.endTag("", GAME_SETTINGS_COUNT_VARIANT);
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_SETTINGS_MARK_SUSPENDED_PLAYERS);
+            Log.d(TAG,"boolstr:"+Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString()+" bool:"+game.isMarkSuspendedPlayersEnable());
+            serializer.text(Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString());
+            serializer.endTag("", GAME_SETTINGS_MARK_SUSPENDED_PLAYERS);
+
+            serializer.text("\n");
+            serializer.endTag("", GAME_SETTINGS_TAG);
+
+        } catch (Exception e) {
+            Log.d(TAG,e.toString());
+        }
     }
 	
 	public static GameClass restoreGameStateFromXML(Context c,String filePath) {
@@ -187,7 +228,7 @@ public class DokoXMLClass {
 			doc = db.parse(in);
 			doc.getDocumentElement().normalize();
 			
-			NodeList nodeList = doc.getElementsByTagName("Game");
+			NodeList nodeList = doc.getElementsByTagName(GAME);
 			mNode = nodeList.item(0);
 			
 			if(mNode == null){
@@ -202,25 +243,25 @@ public class DokoXMLClass {
 				if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
 				
 				//Log.d(TAG,i+"#"+mNode.getTextContent());
-                if(mNode.getNodeName().equalsIgnoreCase("CreateDate")) mCreateDate = mNode.getTextContent();
-				else if(mNode.getNodeName().equalsIgnoreCase("PlayerCnt")) mPlayerCnt = Integer.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase("ActivePlayers")) mActivePlayers = Integer.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase("BockRoundLimit")) mBockRoundLimit = Integer.valueOf(mNode.getTextContent());
-                else if(mNode.getNodeName().equalsIgnoreCase("BockAutoCalc")) mBockAutoCalc = Boolean.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase("GameCntVariant")) mGameCntVariant = GAME_CNT_VARIANT.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase("MarkSuspendedPlayers")) mMarkSuspendedPlayers = Boolean.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase("Players")){
+                if(mNode.getNodeName().equalsIgnoreCase(GAME_CREATE_DATE)) mCreateDate = mNode.getTextContent();
+				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_PLAYER_COUNT)) mPlayerCnt = Integer.valueOf(mNode.getTextContent());
+				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_ACTIVE_PLAYERS)) mActivePlayers = Integer.valueOf(mNode.getTextContent());
+				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_BOCK_ROUND_LIMIT)) mBockRoundLimit = Integer.valueOf(mNode.getTextContent());
+                else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_BOCK_AUTO_CALC)) mBockAutoCalc = Boolean.valueOf(mNode.getTextContent());
+				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_COUNT_VARIANT)) mGameCntVariant = GAME_CNT_VARIANT.valueOf(mNode.getTextContent());
+				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_MARK_SUSPENDED_PLAYERS)) mMarkSuspendedPlayers = Boolean.valueOf(mNode.getTextContent());
+				else if(mNode.getNodeName().equalsIgnoreCase(GAME_PLAYERS)){
 					mNodesTmp = mNode.getChildNodes();
 					for(int t=0; t<mNodesTmp.getLength();t++) {
 						mNode = mNodesTmp.item(t);
 						if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-						if(mNode.getNodeName().equalsIgnoreCase("Player")){
+						if(mNode.getNodeName().equalsIgnoreCase(GAME_PLAYER)){
 							mNodesTmp2 =  mNode.getChildNodes();
 							for(int k=0;k<mNodesTmp2.getLength();k++){
 								mNode = mNodesTmp2.item(k);
 								if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-								if(mNode.getNodeName().equalsIgnoreCase("name")) mName = mNode.getTextContent();
-								else if(mNode.getNodeName().equalsIgnoreCase("points")) mPoints = Float.valueOf(mNode.getTextContent());
+								if(mNode.getNodeName().equalsIgnoreCase(GAME_PLAYER_NAME)) mName = mNode.getTextContent();
+								else if(mNode.getNodeName().equalsIgnoreCase(GAME_PLAYER_POINTS)) mPoints = Float.valueOf(mNode.getTextContent());
 														
 							}
 
@@ -228,17 +269,17 @@ public class DokoXMLClass {
 						}
 					}
 				} 
-				else if(mNode.getNodeName().equalsIgnoreCase("PreRounds")){
+				else if(mNode.getNodeName().equalsIgnoreCase(GAME_PRE_ROUNDS)){
 					mNodesTmp = mNode.getChildNodes();
 					for(int t=0; t<mNodesTmp.getLength();t++) {
 						mNode = mNodesTmp.item(t);
 						if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-						if(mNode.getNodeName().equalsIgnoreCase("PreRound")){
+						if(mNode.getNodeName().equalsIgnoreCase(GAME_PRE_ROUND)){
 							mNodesTmp2 =  mNode.getChildNodes();
 							for(int k=0;k<mNodesTmp2.getLength();k++){
 								mNode = mNodesTmp2.item(k);
 								if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-								if(mNode.getNodeName().equalsIgnoreCase("bockCount")) mBockCount = Integer.valueOf(mNode.getTextContent());
+								if(mNode.getNodeName().equalsIgnoreCase(GAME_PRE_ROUND_BOCK_COUNT)) mBockCount = Integer.valueOf(mNode.getTextContent());
 														
 							}
 							if(mBockCount != -1) mPreRounds.add(new RoundClass(mPreID++, 0, mBockCount));
@@ -396,7 +437,7 @@ public class DokoXMLClass {
 			doc.getDocumentElement().normalize();
 			//Log.d(TAG, ""+configs.getLength() );
 			//get MRF node
-			NodeList nodeList = doc.getElementsByTagName("Names");
+			NodeList nodeList = doc.getElementsByTagName(PLAYER_NAMES_NAMES);
 			node = nodeList.item(0);
 			
 			if(node == null){
@@ -406,7 +447,7 @@ public class DokoXMLClass {
 			names = node.getChildNodes();
 			playerNames.clear();
 			for (int i = 0; i < names.getLength(); i++) {	
-				if(names.item(i).getNodeType() != Node.ELEMENT_NODE && !names.item(i).getNodeName().equalsIgnoreCase("name")){
+				if(names.item(i).getNodeType() != Node.ELEMENT_NODE && !names.item(i).getNodeName().equalsIgnoreCase(PLAYER_NAMES_NAME)){
 					continue;
 				}
 				if(!names.item(i).getTextContent().isEmpty())
@@ -435,16 +476,16 @@ public class DokoXMLClass {
 		        serializer.setOutput(writer);
 		        serializer.startDocument("UTF-8", false);
 		        serializer.text("\n");
-		        serializer.startTag("", "Names");
+		        serializer.startTag("", PLAYER_NAMES_NAMES);
 		        for (String name: playerNames){
 		        	serializer.text("\n");
 		        	serializer.text("\t");
-		            serializer.startTag("", "name");
+		            serializer.startTag("", G);
 		            serializer.text(name);
-		            serializer.endTag("", "name");
+		            serializer.endTag("", PLAYER_NAMES_NAME);
 		        }
 		        serializer.text("\n");
-		        serializer.endTag("", "Names");
+		        serializer.endTag("", PLAYER_NAMES_NAMES);
 		        serializer.endDocument();
 		        try{
 	
