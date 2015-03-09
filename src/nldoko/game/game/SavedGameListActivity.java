@@ -87,6 +87,8 @@ public class SavedGameListActivity extends Activity {
         dir = new File(DokoXMLClass.getAppDir(this) + File.separatorChar + "files");
         addSavedGamesFromDir(dir, fileList);
 
+        dir = mContext.getFilesDir();
+        addSavedGamesFromDir(dir, fileList);
 
         return fileList.toArray(new String[fileList.size()]);
     }
