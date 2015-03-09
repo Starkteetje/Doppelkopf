@@ -76,6 +76,7 @@
     <string name="str_delete_files">Delete files</string>
     <string name="str_filename">Filename</string>
     <string name="str_file_create_date">Created</string>
+    <string name="str_file_absolute_path">Filepath</string>
     <string name="str_file">File</string>
     <string name="str_error_exit">Fatal Error</string>
     <string name="str_exit_game">Quit game</string>

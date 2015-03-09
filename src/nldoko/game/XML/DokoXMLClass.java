@@ -20,16 +20,22 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 
 public class DokoXMLClass {
-	
+
+    public static final String APP_DIR = "DokoApp";
+    public static final String APP_DIR_GAMES = "DokoApp/games";
+    public static final String SAVED_GAME_FILE_SUFFIX =  "_dokoSavedGame.xml";
+
 	private static final String TAG = "DokoXMLClass";
+
+    private static final String GAME_XML_STRUCT_VERSION = "2";
+    private static final String GAME_XML_STRUCT_VERSION_ATTR = "version";
+
     private static final String GAME_SETTINGS_TAG           = "game_settings";
     private static final String GAME_SETTINGS_PLAYER_COUNT  = "PlayerCnt";
     private static final String GAME_SETTINGS_ACTIVE_PLAYERS = "ActivePlayers";
@@ -54,9 +60,72 @@ public class DokoXMLClass {
     private static final String PLAYER_NAMES_NAME = "name";
 
 	public static boolean saveGameStateToXML(Context c, GameClass game){
-		if(game != null && DokoXMLClass.isAppDirOK(c)){
-			String oldFilename = game.currentFilename();
-			String newFilename = game.generateNewFilename();
+		if(game == null) {
+            // no game ?!
+            return false;
+        }
+
+        // prepare file handling
+        FileOutputStream fos = null;
+        OutputStreamWriter osw = null;
+        String oldGameFile = game.currentFilename();
+        String newFilename = game.generateNewFilename();
+
+        File finalFile = null;
+
+        // try to save on external storage
+        File externalStorage = getExternalStorageDir(true);
+
+        if (externalStorage != null) {
+            boolean dirReady = createAppDirsInStorage(externalStorage);
+
+            if (dirReady) {
+                finalFile = new File(externalStorage.getAbsolutePath() + File.separatorChar + APP_DIR_GAMES + File.separatorChar + newFilename);
+
+                try {
+
+                    fos = new FileOutputStream(finalFile);
+                    osw = new OutputStreamWriter(fos);
+
+                } catch (IOException e) {
+                    // Unable to create file, likely because external storage is
+                    // not currently mounted.
+                    Log.w("ExternalStorage", "Error external storage " + finalFile.getAbsolutePath(), e);
+                    fos = null;
+                    osw = null;
+                }
+            }
+        }
+
+        // if no external storage or error on external storage use app dir
+        if (fos == null || osw == null) {
+            //Log.d(TAG,writer.toString());
+            if (DokoXMLClass.isAppDirOK(c)) {
+                String appDir = getAppDir(c);
+                boolean dirReady = createAppDirsInStorage(new File(appDir));
+
+                if (dirReady) {
+                    try {
+
+                        finalFile = new File(appDir+newFilename);
+                        fos = new FileOutputStream(finalFile);
+                        osw = new OutputStreamWriter(fos);
+
+                    } catch (IOException e) {
+                        Log.w("ExternalStorage", "Error internal storage ", e);
+                        fos = null;
+                        osw = null;
+                    }
+                }
+            }
+        }
+
+        if (finalFile != null) {
+            game.setCurrentFilename(finalFile.getAbsolutePath());
+        }
+
+        // XML file content
+        if (fos != null && osw != null){
 			XmlSerializer serializer = Xml.newSerializer();
 		    StringWriter writer = new StringWriter();
 
@@ -65,6 +134,7 @@ public class DokoXMLClass {
     	        serializer.startDocument("UTF-8", false);
     	        serializer.text("\n");
     	        serializer.startTag("", GAME);
+                serializer.attribute("", GAME_XML_STRUCT_VERSION_ATTR, GAME_XML_STRUCT_VERSION);
 
                 // only @ version > 2.5
                 // add game settings
@@ -115,20 +185,21 @@ public class DokoXMLClass {
     	        serializer.text("\n");
     	        serializer.endTag("", GAME);
     	        serializer.endDocument();
+                serializer.flush();
     	        
     	        //Write to file
     	        try{
     	        	//Log.d(TAG,writer.toString());
-					FileOutputStream fos = c.openFileOutput(newFilename,Context.MODE_PRIVATE);
-					OutputStreamWriter osw = new OutputStreamWriter(fos); 
-					
 				    osw.write(writer.toString());
 				    osw.flush();
 	    		    fos.flush();
 	    		    osw.close();
 	    		    fos.close();
-	    		    if (oldFilename != null) {
-	    		    	c.deleteFile(oldFilename);
+	    		    if (oldGameFile != null) {
+                        File f = new File(oldGameFile);
+	    		    	if (f.exists() && !f.isDirectory()) {
+                            f.delete();
+                        }
 	    		    }
 	    		    return true;
     	         }	
@@ -143,7 +214,7 @@ public class DokoXMLClass {
     }
 
     private static void addGameSettingsToXML(XmlSerializer serializer, GameClass game) {
-        if (serializer == NULL || game == NULL) {
+        if (serializer == null || game == null) {
             return;
         }
 
@@ -199,92 +270,64 @@ public class DokoXMLClass {
     }
 	
 	public static GameClass restoreGameStateFromXML(Context c,String filePath) {
-		int mPID = 0;
-		int mPreID = 1; // 0 = show state
-		int mPlayerCnt = 0, mPreRoundCnt = 0, mBockCount = -1, mActivePlayers = 0, mBockRoundLimit = 0;
-        String mCreateDate = "";
-		GAME_CNT_VARIANT mGameCntVariant = GAME_CNT_VARIANT.CNT_VARIANT_NORMAL;
-		boolean mMarkSuspendedPlayers = false; // default
-        boolean mBockAutoCalc = true; // default
-		Float mPoints = (float) 0.0;
-		String mName = "";
-		
 		GameClass mGame = new GameClass(filePath);
-		
-		ArrayList<PlayerClass> mPlayers = new ArrayList<PlayerClass>();
-		ArrayList<RoundClass> mPreRounds = new ArrayList<RoundClass>();
-		
-		Node mNode;
-		NodeList mNodes,mNodesTmp,mNodesTmp2;
+        if (mGame == null) {
+            return null;
+        }
 
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db;
-		Document doc;
-		
 		try{
-			FileInputStream in = c.openFileInput(filePath);
-			
-			db = dbf.newDocumentBuilder();
-			doc = db.parse(in);
+			FileInputStream in = new FileInputStream(filePath);
+
+            //for debug
+            FileInputStream in2 = new FileInputStream(filePath);
+            String fileContent = convertStreamToString(in2);
+            Log.d(TAG,"File:"+filePath+" content:"+fileContent);
+
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(in);
 			doc.getDocumentElement().normalize();
 			
 			NodeList nodeList = doc.getElementsByTagName(GAME);
-			mNode = nodeList.item(0);
+            Node mNode = nodeList.item(0);
 			
 			if(mNode == null){
 				Log.d(TAG,"XML Parse Error 1");
 				return null;
 			}
-			
-			mNodes = mNode.getChildNodes();
 
-			for (int i = 0; i < mNodes.getLength(); i++) {
-				mNode = mNodes.item(i);
-				if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-				
-				//Log.d(TAG,i+"#"+mNode.getTextContent());
-                if(mNode.getNodeName().equalsIgnoreCase(GAME_CREATE_DATE)) mCreateDate = mNode.getTextContent();
-				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_PLAYER_COUNT)) mPlayerCnt = Integer.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_ACTIVE_PLAYERS)) mActivePlayers = Integer.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_BOCK_ROUND_LIMIT)) mBockRoundLimit = Integer.valueOf(mNode.getTextContent());
-                else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_BOCK_AUTO_CALC)) mBockAutoCalc = Boolean.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_COUNT_VARIANT)) mGameCntVariant = GAME_CNT_VARIANT.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_MARK_SUSPENDED_PLAYERS)) mMarkSuspendedPlayers = Boolean.valueOf(mNode.getTextContent());
-				else if(mNode.getNodeName().equalsIgnoreCase(GAME_PLAYERS)){
-					mNodesTmp = mNode.getChildNodes();
-					for(int t=0; t<mNodesTmp.getLength();t++) {
-						mNode = mNodesTmp.item(t);
-						if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-						if(mNode.getNodeName().equalsIgnoreCase(GAME_PLAYER)){
-							mNodesTmp2 =  mNode.getChildNodes();
-							for(int k=0;k<mNodesTmp2.getLength();k++){
-								mNode = mNodesTmp2.item(k);
-								if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-								if(mNode.getNodeName().equalsIgnoreCase(GAME_PLAYER_NAME)) mName = mNode.getTextContent();
-								else if(mNode.getNodeName().equalsIgnoreCase(GAME_PLAYER_POINTS)) mPoints = Float.valueOf(mNode.getTextContent());
-														
-							}
+            Log.v(TAG, nodeAsText(mNode));
 
-							if(mName.length() > 0) mPlayers.add(new PlayerClass(mPID++,mName,mPoints));
-						}
-					}
-				} 
-				else if(mNode.getNodeName().equalsIgnoreCase(GAME_PRE_ROUNDS)){
-					mNodesTmp = mNode.getChildNodes();
-					for(int t=0; t<mNodesTmp.getLength();t++) {
-						mNode = mNodesTmp.item(t);
-						if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-						if(mNode.getNodeName().equalsIgnoreCase(GAME_PRE_ROUND)){
-							mNodesTmp2 =  mNode.getChildNodes();
-							for(int k=0;k<mNodesTmp2.getLength();k++){
-								mNode = mNodesTmp2.item(k);
-								if(mNode.getNodeType() != Node.ELEMENT_NODE) continue;
-								if(mNode.getNodeName().equalsIgnoreCase(GAME_PRE_ROUND_BOCK_COUNT)) mBockCount = Integer.valueOf(mNode.getTextContent());
-														
-							}
-							if(mBockCount != -1) mPreRounds.add(new RoundClass(mPreID++, 0, mBockCount));
-						}
-					}
+            // check  xml struct version
+            String mXMLVersion = null; // null means v1
+            if (mNode.getAttributes().getLength() == 1) {
+                Node mAttr = mNode.getAttributes().getNamedItem(GAME_XML_STRUCT_VERSION_ATTR);
+
+                if (mAttr != null) {
+                    mXMLVersion = mAttr.getTextContent();
+                }
+            }
+
+            NodeList mMainNodes = mNode.getChildNodes();
+			for (int i = 0; i < mMainNodes.getLength(); i++) {
+                Node n =  mMainNodes.item(i);
+
+                if(n.getNodeType() != Node.ELEMENT_NODE) continue;
+
+                if (mXMLVersion == null || !mXMLVersion.equalsIgnoreCase( GAME_XML_STRUCT_VERSION)) {
+                    // old version
+                    DokoXMLClass.setGameSettingsFromNode(n, mGame);
+                }
+
+                if (n.getNodeName().equalsIgnoreCase(GAME_SETTINGS_TAG)) {
+                    // new xml
+                    DokoXMLClass.setGameSettingsFromNode(n, mGame);
+                }
+                else if(n.getNodeName().equalsIgnoreCase(GAME_PLAYERS)){
+					DokoXMLClass.setGamePlayersFromNode(n, mGame);
+				}
+                else if(n.getNodeName().equalsIgnoreCase(GAME_PRE_ROUNDS)){
+                    DokoXMLClass.setGamePreRoundsFromNode(n, mGame);
 				} 
 			}
 		}
@@ -292,58 +335,171 @@ public class DokoXMLClass {
 			Log.d(TAG,e.toString());
 			return null;
 		}
-		//fill inactive players
-		for(int i=mPlayers.size();i<DokoData.MAX_PLAYER;i++) mPlayers.add(new PlayerClass(i,"",0));
-		
-		//For Debug
-		//Log.d(TAG,mPlayers.size()+"-"+mActivePlayers+"-"+mBockRoundLimit+"-"+mPreRounds.size());
-		/*
-		for(int k=0;k<mPlayers.size();k++){
-			Log.d(TAG,"Player: "+mPlayers.get(k).getName()+" - points:"+mPlayers.get(k).getPoints());
-		}
-		
-		for(int k=0;k<mPreRounds.size();k++){
-			Log.d(TAG,"preRound: "+mPreRounds.get(k).getID()+" - bock:"+mPreRounds.get(k).getBockCount());
-		}*/
-		
-		//Log.d(TAG,mPreRounds.size()+"-"+mPlayers.size());*/
-		
-		if(mPlayers.size() != DokoData.MAX_PLAYER)  Log.d(TAG,"File incorecct (XML)");
-		
-		//Log.d(TAG,"XML OK");
-		
-		mGame.getRoundList().add(new RoundClass(0,0,0));
-		for(int i=0;i<mPlayers.size();i++){
-			mPlayers.get(i).updatePoints(0,(float)0);
-		}
-		
-		mGame.setMarkSuspendedPlayers(mMarkSuspendedPlayers);
-		mGame.setActivePlayerCount(mActivePlayers);
-		mGame.setPlayerCount(mPlayerCnt);
-		mGame.setBockRoundLimit(mBockRoundLimit);
-        mGame.setAutoBockCalculation(mBockAutoCalc);
-		mGame.setGameDataFromRestore(mPlayers, mPreRounds);
-		mGame.setGameCntVariant(mGameCntVariant);
 
-        // only version > 2.5
-        if (mCreateDate.length() > 0) {
-            DateFormat formatter ;
-            Date date ;
-            try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-                java.util.Date parsedDate = dateFormat.parse(mCreateDate);
-                java.sql.Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-                mGame.setCreateDate(timestamp);
-            } catch (Exception e) {
-                Log.d(TAG,"create date error: "+ e.toString());
-            }
+        if (mGame.getActivePlayerCount() == 0 || mGame.getPlayerCount() == 0) {
+            // invalid game
+            return null;
         }
 
-		
+		mGame.getRoundList().add(new RoundClass(0,0,0));
 		return mGame;
 	}
 
-   
+    private static  void setGameSettingsFromNode(Node n, GameClass mGame) {
+        if (n == null || mGame == null ) {
+            return;
+        }
+
+        int mPlayerCnt = 0, mActivePlayers = 0, mBockRoundLimit = 0;
+        String mCreateDate = "";
+        GAME_CNT_VARIANT mGameCntVariant = GAME_CNT_VARIANT.CNT_VARIANT_NORMAL;
+        boolean mMarkSuspendedPlayers = false; // default
+        boolean mBockAutoCalc = true; // default
+
+        NodeList mSettingsNodes = n.getChildNodes();
+
+        for (int sn = 0; sn < mSettingsNodes.getLength(); sn++) {
+            Node settingsSubNode = mSettingsNodes.item(sn);
+
+            if(settingsSubNode.getNodeType() != Node.ELEMENT_NODE) continue;
+
+            if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_CREATE_DATE))  {
+                mCreateDate = settingsSubNode.getTextContent();
+                // only version > 2.5
+                if (mCreateDate.length() > 0) {
+                    try {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+                        java.util.Date parsedDate = dateFormat.parse(mCreateDate);
+                        java.sql.Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+                        mGame.setCreateDate(timestamp);
+                    } catch (Exception e) {
+                        Log.d(TAG,"create date error: "+ e.toString());
+                    }
+                }
+            }
+            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_PLAYER_COUNT)) {
+                mPlayerCnt = Integer.valueOf(settingsSubNode.getTextContent());
+                mGame.setPlayerCount(mPlayerCnt);
+            }
+            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_ACTIVE_PLAYERS)) {
+                mActivePlayers = Integer.valueOf(settingsSubNode.getTextContent());
+                mGame.setActivePlayerCount(mActivePlayers);
+            }
+            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_BOCK_ROUND_LIMIT)) {
+                mBockRoundLimit = Integer.valueOf(settingsSubNode.getTextContent());
+                mGame.setBockRoundLimit(mBockRoundLimit);
+            }
+            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_BOCK_AUTO_CALC)) {
+                mBockAutoCalc = Boolean.valueOf(settingsSubNode.getTextContent());
+                mGame.setAutoBockCalculation(mBockAutoCalc);
+            }
+            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_COUNT_VARIANT)) {
+                mGameCntVariant = GAME_CNT_VARIANT.valueOf(settingsSubNode.getTextContent());
+                mGame.setGameCntVariant(mGameCntVariant);
+            }
+            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_MARK_SUSPENDED_PLAYERS)){
+                mMarkSuspendedPlayers = Boolean.valueOf(settingsSubNode.getTextContent());
+                mGame.setMarkSuspendedPlayers(mMarkSuspendedPlayers);
+            }
+        }
+
+    }
+
+    private static void setGamePlayersFromNode(Node n, GameClass mGame) {
+        if (n == null || mGame == null ) {
+            return;
+        }
+
+        int mPID = 0;
+        Float mPoints = 0.0f;
+        String mName = "";
+        ArrayList<PlayerClass> mPlayers = new ArrayList<PlayerClass>();
+        NodeList mPlayerNodes = n.getChildNodes();
+
+        for(int t=0; t<mPlayerNodes.getLength();t++) {
+            Node mPlayer = mPlayerNodes.item(t);
+            if(mPlayer.getNodeType() != Node.ELEMENT_NODE) continue;
+
+            if(mPlayer.getNodeName().equalsIgnoreCase(GAME_PLAYER)){
+                NodeList mPlayerValues =  mPlayer.getChildNodes();
+
+                mName = "";
+                mPoints = 0.0f;
+
+                for(int k=0;k<mPlayerValues.getLength();k++){
+
+                    Node mPlayerValue = mPlayerValues.item(k);
+                    if(mPlayerValue.getNodeType() != Node.ELEMENT_NODE) continue;
+                    if(mPlayerValue.getNodeName().equalsIgnoreCase(GAME_PLAYER_NAME)) {
+                        mName = mPlayerValue.getTextContent();
+                    }
+                    else if(mPlayerValue.getNodeName().equalsIgnoreCase(GAME_PLAYER_POINTS)) {
+                        mPoints = Float.valueOf(mPlayerValue.getTextContent());
+                    }
+
+                }
+
+                if(mName.length() > 0){
+                    //player found
+                    mPlayers.add(new PlayerClass(mPID++,mName,mPoints));
+                }
+            }
+        }
+
+        //fill inactive players
+        for(int i=mPlayers.size();i<DokoData.MAX_PLAYER;i++) {
+            mPlayers.add(new PlayerClass(i,"",0));
+        }
+
+        for(PlayerClass player : mPlayers){
+            player.updatePoints(0,(float)0);
+        }
+
+        // set players in game
+        mGame.setPlayers(mPlayers);
+    }
+
+
+    private static void setGamePreRoundsFromNode(Node n, GameClass mGame) {
+        if (n == null || mGame == null ) {
+            return;
+        }
+
+        int mPreID = 1; // 0 = show state
+        int mBockCount = -1;
+
+        ArrayList<RoundClass> mPreRounds = new ArrayList<RoundClass>();
+        NodeList mPreRoundList = n.getChildNodes();
+
+        for(int t=0; t<mPreRoundList.getLength();t++) {
+            Node mPreRound = mPreRoundList.item(t);
+            if(mPreRound.getNodeType() != Node.ELEMENT_NODE) continue;
+
+            if(mPreRound.getNodeName().equalsIgnoreCase(GAME_PRE_ROUND)){
+                NodeList mPreRoundValues =  mPreRound.getChildNodes();
+
+                for(int k=0;k<mPreRoundValues.getLength();k++){
+                    Node mPreRoundValue = mPreRoundValues.item(k);
+                    if(mPreRoundValue.getNodeType() != Node.ELEMENT_NODE) continue;
+                    if(mPreRoundValue.getNodeName().equalsIgnoreCase(GAME_PRE_ROUND_BOCK_COUNT)) {
+                        mBockCount = Integer.valueOf(mPreRoundValue.getTextContent());
+                    }
+
+                }
+                if(mBockCount != -1)  {
+                    mPreRounds.add(new RoundClass(mPreID++, 0, mBockCount));
+                }
+            }
+        }
+
+        // set pre rounds for game
+        mGame.setPreRoundList(mPreRounds);
+    }
+
+    private static String nodeAsText(Node n) {
+        return n.getNodeType()+" -"+n.getNodeName()+" - "+n.getNodeValue()+" - "+n.getTextContent();
+    }
+
 	public static String getAppDir(Context c){
 		return c.getApplicationInfo().dataDir+File.separatorChar;
 	}
@@ -386,12 +542,40 @@ public class DokoXMLClass {
 		}
 
 	}
-	
-	public static boolean isExternalStoragePresent() {
 
-        boolean mExternalStorageAvailable = false;
-        boolean mExternalStorageWriteable = false;
+    private static boolean createAppDirsInStorage(File dir) {
+        if (dir != null && dir.exists() && dir.isDirectory() && dir.canRead() && dir.canWrite()) {
+            // app dir
+
+            File appDir = new File(dir.getAbsolutePath() + File.separatorChar + APP_DIR + File.separatorChar);
+            if(!appDir.exists()) {
+                appDir.mkdirs();
+                if (!appDir.exists()) {
+                    return false;
+                }
+            }
+
+            // dir for saved games
+            File appDirGames = new File(dir.getAbsolutePath() + File.separatorChar + APP_DIR_GAMES + File.separatorChar);
+            if(!appDirGames.exists()) {
+                appDirGames.mkdirs();
+                if (!appDirGames.exists()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+	public static boolean isExternalStorageReady() {
+
+        boolean mExternalStorageAvailable;
+        boolean mExternalStorageWriteable;
         String state = Environment.getExternalStorageState();
+
 
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             // We can read and write the media
@@ -412,7 +596,35 @@ public class DokoXMLClass {
         }
         return (mExternalStorageAvailable) && (mExternalStorageWriteable);
     }
-	
+
+    public static String [] getPossibleExternalStorageDirs() {
+        String [] sdcardPath = {File.separatorChar + "sdcard1" + File.separatorChar,
+                File.separatorChar + "storage" + File.separatorChar + "sdcard1" + File.separatorChar,
+                File.separatorChar + "sdcard" + File.separatorChar,
+                File.separatorChar + "sdcard0" + File.separatorChar};
+
+        return sdcardPath;
+    }
+
+    private static File getExternalStorageDir(boolean mustBeWritable) {
+        for (String s : getPossibleExternalStorageDirs()) {
+            File sdcard = new File(s);
+
+            if (sdcard.exists() && sdcard.isDirectory() && sdcard.canRead()) {
+                if (mustBeWritable && sdcard.canWrite()) {
+                    return sdcard;
+                } else {
+                    return sdcard;
+                }
+            }
+        }
+
+        if (isExternalStorageReady()) {
+            return Environment.getExternalStorageDirectory();
+        }
+
+        return null;
+    }
    
 	public static boolean getPlayerNamesFromXML(Context c,String f, ArrayList<String> playerNames){
 		Log.d(TAG,"loadFromXML");
@@ -480,7 +692,7 @@ public class DokoXMLClass {
 		        for (String name: playerNames){
 		        	serializer.text("\n");
 		        	serializer.text("\t");
-		            serializer.startTag("", G);
+		            serializer.startTag("", PLAYER_NAMES_NAME);
 		            serializer.text(name);
 		            serializer.endTag("", PLAYER_NAMES_NAME);
 		        }
@@ -515,5 +727,14 @@ public class DokoXMLClass {
 		return false;
 	}
 	
-
+    public static String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        return sb.toString();
+    }
 }

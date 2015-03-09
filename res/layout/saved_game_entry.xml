@@ -75,6 +75,36 @@
                             android:textAppearance="?android:attr/textAppearanceSmall" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/saved_game_entry_path_layout"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/saved_game_entry_path"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_file_absolute_path"
+                        android:textColor="@color/gray_dark"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <TextView
+                        android:id="@+id/saved_game_entry_path_spacer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_dp_seperator"
+                        android:textColor="@color/gray_dark"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/saved_game_entry_path_filepath"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_dark"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
                 <TextView
 	                android:id="@+id/saved_game_entry_text"
 	                android:layout_width="match_parent"

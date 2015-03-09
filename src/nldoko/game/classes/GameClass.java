@@ -1,6 +1,8 @@
 package nldoko.game.classes;
 
 import android.util.Log;
+
+import nldoko.game.XML.DokoXMLClass;
 import nldoko.game.data.DokoData;
 import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
 
@@ -66,11 +68,14 @@ public class GameClass  implements Serializable{
     	this.setMarkSuspendedPlayers(false);
 	}
 	
-	public void setGameDataFromRestore(ArrayList<PlayerClass> playerList, ArrayList<RoundClass> preRoundList){
+	public void setPlayers(ArrayList<PlayerClass> playerList){
 		this.mPlayers = playerList;
-		this.mPreRoundList = preRoundList;
-
 	}
+
+
+    public void setPreRoundList(ArrayList<RoundClass> preRoundList){
+        this.mPreRoundList = preRoundList;
+    }
 
     public void setAutoBockCalculation(boolean autoBockCalculation) {
         this.mAutoBockCalculation = autoBockCalculation;
@@ -351,17 +356,20 @@ public class GameClass  implements Serializable{
 		}
 		return mStr;
 	}
-	
+
+
+    public void setCurrentFilename(String filepath) {
+        mCurrentFilename = filepath;
+    }
 	public String currentFilename() {
 		return mCurrentFilename;
 	}
 		
 	public String generateNewFilename(){
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss");
+		SimpleDateFormat df = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");
         String formattedDate = df.format(c.getTime());
-        mCurrentFilename = formattedDate+DokoData.SAVED_GAME_FILE_POSTFIX;
-        return currentFilename();
+        return formattedDate + DokoXMLClass.SAVED_GAME_FILE_SUFFIX;
 	}
 
     public String getCreateDate(String format) {

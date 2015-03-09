@@ -12,8 +12,7 @@ public class DokoData {
 	
 	public static ArrayList<String> PLAYER_NAMES = new ArrayList<String>();
 	public static final String PLAYER_NAMES_XML = "player_names.xml";
-	public static final String SAVED_GAME_FILE_POSTFIX =  "_dokoSavedGame.xml";
-	
+
 	
 	public static enum GAME_RESULT_TYPE {
 		NORMAL, 
