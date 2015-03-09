@@ -36,7 +36,7 @@ public class DokoXMLClass {
     private static final String GAME_XML_STRUCT_VERSION = "2";
     private static final String GAME_XML_STRUCT_VERSION_ATTR = "version";
 
-    private static final String GAME_SETTINGS_TAG           = "game_settings";
+    private static final String GAME_SETTINGS_TAG           = "GamSettings";
     private static final String GAME_SETTINGS_PLAYER_COUNT  = "PlayerCnt";
     private static final String GAME_SETTINGS_ACTIVE_PLAYERS = "ActivePlayers";
     private static final String GAME_SETTINGS_BOCK_ROUND_LIMIT = "BockRoundLimit";
@@ -223,45 +223,45 @@ public class DokoXMLClass {
             serializer.startTag("", GAME_SETTINGS_TAG);
 
             if (game.getCreateDateTimestamp() != null) {
-                serializer.text("\n\t");
+                serializer.text("\n\t\t");
                 serializer.startTag("", GAME_CREATE_DATE);
                 serializer.text(game.getCreateDateTimestamp().toString());
                 serializer.endTag("", GAME_CREATE_DATE);
             }
 
-            serializer.text("\n\t");
+            serializer.text("\n\t\t");
             serializer.startTag("", GAME_SETTINGS_PLAYER_COUNT);
             serializer.text(Integer.toString(game.getPlayerCount()));
             serializer.endTag("", GAME_SETTINGS_PLAYER_COUNT);
 
 
-            serializer.text("\n\t");
+            serializer.text("\n\t\t");
             serializer.startTag("", GAME_SETTINGS_ACTIVE_PLAYERS);
             serializer.text(Integer.toString(game.getActivePlayerCount()));
             serializer.endTag("", GAME_SETTINGS_ACTIVE_PLAYERS);
 
-            serializer.text("\n\t");
+            serializer.text("\n\t\t");
             serializer.startTag("", GAME_SETTINGS_BOCK_ROUND_LIMIT);
             serializer.text(Integer.toString(game.getBockRoundLimit()));
             serializer.endTag("", GAME_SETTINGS_BOCK_ROUND_LIMIT);
 
-            serializer.text("\n\t");
+            serializer.text("\n\t\t");
             serializer.startTag("", GAME_SETTINGS_BOCK_AUTO_CALC);
             serializer.text(Boolean.valueOf(game.isAutoBockCalculationOn()).toString());
             serializer.endTag("", GAME_SETTINGS_BOCK_AUTO_CALC);
 
-            serializer.text("\n\t");
+            serializer.text("\n\t\t");
             serializer.startTag("", GAME_SETTINGS_COUNT_VARIANT);
             serializer.text(game.getGameCntVariant().toString());
             serializer.endTag("", GAME_SETTINGS_COUNT_VARIANT);
 
-            serializer.text("\n\t");
+            serializer.text("\n\t\t");
             serializer.startTag("", GAME_SETTINGS_MARK_SUSPENDED_PLAYERS);
             Log.d(TAG,"boolstr:"+Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString()+" bool:"+game.isMarkSuspendedPlayersEnable());
             serializer.text(Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString());
             serializer.endTag("", GAME_SETTINGS_MARK_SUSPENDED_PLAYERS);
 
-            serializer.text("\n");
+            serializer.text("\n\t");
             serializer.endTag("", GAME_SETTINGS_TAG);
 
         } catch (Exception e) {
@@ -314,7 +314,7 @@ public class DokoXMLClass {
 
                 if(n.getNodeType() != Node.ELEMENT_NODE) continue;
 
-                if (mXMLVersion == null || !mXMLVersion.equalsIgnoreCase( GAME_XML_STRUCT_VERSION)) {
+                if (mXMLVersion == null || !mXMLVersion.equalsIgnoreCase(GAME_XML_STRUCT_VERSION)) {
                     // old version
                     DokoXMLClass.setGameSettingsFromNode(n, mGame);
                 }
