@@ -48,7 +48,8 @@
     <string name="str_error_player_name">Ungültiger, gleiche oder fehlender Spielername</string>
     <string name="str_image">Bild</string>
     <string name="anim_inout">300</string>
-    
+
+    <string name="str_game_load">Spiel wird geladen...</string>
     <string name="str_game">Aktuelles Spiel</string>
     <string name="str_game_cnt_variant">Zählvariante</string>
     <string name="str_game_cnt_variant_normal">Standard</string>
@@ -91,6 +92,7 @@
     <string name="str_accept">Ok</string>
     <string name="str_abort">Abbrechen</string>
     <string name="str_close">Schließen</string>
+    <string name="str_plz_wait">Bitte warten</string>
     
     
     <!-- INFO/HELP -->

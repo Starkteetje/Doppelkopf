@@ -48,7 +48,8 @@
     <string name="str_error_player_name">Invalid, duplication or missing player name</string>
     <string name="str_image">Image</string>
     <string name="anim_inout">300</string>
-    
+
+    <string name="str_game_load">Load game...</string>
     <string name="str_game">Current game</string>
     <string name="str_game_cnt_variant">Count variant</string>
     <string name="str_game_cnt_variant_normal">Standard</string>
@@ -91,6 +92,7 @@
     <string name="str_accept">OK</string>
     <string name="str_abort">Abort</string>
     <string name="str_close">Close</string>
+    <string name="str_plz_wait">Please wait</string>
     
     <!-- INFO/HELP -->
     <string name="str_info">Info</string>

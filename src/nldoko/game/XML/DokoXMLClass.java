@@ -47,10 +47,22 @@ public class DokoXMLClass {
     private static final String GAME_CREATE_DATE = "CreateDate";
     private static final String GAME = "Game";
 
+    private static final String GAME_ROUNDS = "Rounds";
+    private static final String GAME_ROUND = "Round";
+    private static final String GAME_ROUND_ID = "RoundID";
+    private static final String GAME_ROUND_POINTS = "RoundPoints";
+    private static final String GAME_ROUND_BOCK_CNT = "RoundBockCount";
+    private static final String GAME_ROUND_TYPE = "RoundType";
+
     private static final String GAME_PLAYERS = "Players";
     private static final String GAME_PLAYER = "Player";
+    private static final String GAME_PLAYER_ID = "PlayerID";
     private static final String GAME_PLAYER_NAME = "name";
     private static final String GAME_PLAYER_POINTS = "points";
+    private static final String GAME_PLAYER_POINT_HISTORY = "PointsHistory";
+    private static final String GAME_PLAYER_POINT_HISTORY_ROUND = "Round";
+    private static final String GAME_PLAYER_POINT_HISTORY_POINTS = "Points";
+    private static final String GAME_PLAYER_POINT_HISTORY_POINTS_PER_ROUND = "PointPerRound";
 
     private static final String GAME_PRE_ROUNDS = "PreRounds";
     private static final String GAME_PRE_ROUND = "PreRound";
@@ -139,24 +151,90 @@ public class DokoXMLClass {
                 // only @ version > 2.5
                 // add game settings
                 addGameSettingsToXML(serializer, game);
-    	        
-  
+
+                // add played rounds
+                serializer.text("\n\t");
+                serializer.startTag("", GAME_ROUNDS);
+                ArrayList<RoundClass> rounds = game.getRoundList();
+                for(int i=0; i < rounds.size(); i++){
+                    RoundClass r = rounds.get(i);
+
+                    serializer.text("\n\t\t");
+                    serializer.startTag("", GAME_ROUND);
+
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_ROUND_ID);
+                    serializer.text(Integer.toString(r.getID()));
+                    serializer.endTag("", GAME_ROUND_ID);
+
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_ROUND_TYPE);
+                    serializer.text(DokoData.GAME_RESULT_TYPE.stringValueOf(r.getRoundType()));
+                    serializer.endTag("", GAME_ROUND_TYPE);
+
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_ROUND_POINTS);
+                    serializer.text(Float.toString(r.getPoints()));
+                    serializer.endTag("", GAME_ROUND_POINTS);
+
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_ROUND_BOCK_CNT);
+                    serializer.text(Integer.toString(r.getBockCount()));
+                    serializer.endTag("", GAME_ROUND_BOCK_CNT);
+
+                    serializer.text("\n\t\t");
+                    serializer.endTag("", GAME_ROUND);
+                }
+                serializer.text("\n\t");
+                serializer.endTag("", GAME_ROUNDS);
+
+                // add player infos
     	        serializer.text("\n\t");
     	        serializer.startTag("", GAME_PLAYERS);
     	        for(int i=0;i<game.getMAXPlayerCount();i++){
-    	        	
+    	        	PlayerClass p = game.getPlayer(i);
+
         	        serializer.text("\n\t\t");
         	        serializer.startTag("", GAME_PLAYER);
 
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_PLAYER_ID);
+                    serializer.text(Integer.toString(p.getID()));
+                    serializer.endTag("", GAME_PLAYER_ID);
+
         	        serializer.text("\n\t\t\t");
     	            serializer.startTag("", GAME_PLAYER_NAME);
-    	            serializer.text(game.getPlayer(i).getName());
+    	            serializer.text(p.getName());
     	            serializer.endTag("", GAME_PLAYER_NAME);
     	            
     	            serializer.text("\n\t\t\t");
     	            serializer.startTag("", GAME_PLAYER_POINTS);
-    	            serializer.text(Float.toString(game.getPlayer(i).getPoints()));
+    	            serializer.text(Float.toString(p.getPoints()));
     	            serializer.endTag("", GAME_PLAYER_POINTS);
+
+                    // point history
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_PLAYER_POINT_HISTORY);
+
+                    for (int ph = 0; ph < p.getPointHistoryLength() && ph < p.getPointHistoryPerRoundLength(); ph++) {
+                        serializer.text("\n\t\t\t\t");
+                        serializer.startTag("", GAME_PLAYER_POINT_HISTORY_ROUND);
+
+                        serializer.text("\n\t\t\t\t\t");
+                        serializer.startTag("", GAME_PLAYER_POINT_HISTORY_POINTS);
+                        serializer.text(Float.toString(p.getPointHistory(ph)));
+                        serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS);
+
+                        serializer.text("\n\t\t\t\t\t");
+                        serializer.startTag("", GAME_PLAYER_POINT_HISTORY_POINTS_PER_ROUND);
+                        serializer.text(Float.toString(p.getPointHistoryPerRound(ph)));
+                        serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS_PER_ROUND);
+
+                        serializer.text("\n\t\t\t\t");
+                        serializer.endTag("", GAME_PLAYER_POINT_HISTORY_ROUND);
+                    }
+                    serializer.text("\n\t\t\t");
+                    serializer.endTag("", GAME_PLAYER_POINT_HISTORY);
     	            
     	            serializer.text("\n\t\t");
     	            serializer.endTag("", GAME_PLAYER);

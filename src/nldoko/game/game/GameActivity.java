@@ -23,12 +23,14 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment.SavedState;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -74,7 +76,7 @@ public class GameActivity extends FragmentActivity  {
 	private static TextView mBottomInfoBockRoundPreview;
 	
 	private static boolean mBockPreviewOnOff = true;
-	
+
 	private TextView mTvPlayerCnt;
 	private static TextView mTvAddRoundBockPoints;
     private static LinearLayout mTvRoundBockPointsContainer;
@@ -111,6 +113,8 @@ public class GameActivity extends FragmentActivity  {
     private static GameAddRoundPlayernameClickListener mAddRoundPlayernameClickListener;
     private static GameAddRoundPlayernameLongClickListener mAddRoundPlayernameLongClickListener;
     private static btnAddRoundClickListener mBtnAddRoundClickListener;
+
+    private ProgressDialog progressDialog;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +194,7 @@ public class GameActivity extends FragmentActivity  {
     }
     
     private GameClass getGame(Bundle savedInstanceState){
-    	GameClass mGame = null;
+    	GameClass mGame;
     	Intent intent = getIntent();
     	Bundle extras = intent.getExtras();
     	int mActivePlayers,mBockLimit,mPlayerCnt;
@@ -204,6 +208,13 @@ public class GameActivity extends FragmentActivity  {
         	mGame =  loadStateData(savedInstanceState);
         }
         else if(extras != null && extras.getBoolean("RestoreGameFromXML", false)){
+            progressDialog = new ProgressDialog(GameActivity.this);
+            progressDialog.setTitle(this.getResources().getString(R.string.str_plz_wait));
+            progressDialog.setMessage(this.getResources().getString(R.string.str_game_load));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
         	String file = extras.getString("filename");
         	Log.d(TAG,"Game from XML file:"+file);
         	mGame =  DokoXMLClass.restoreGameStateFromXML(this,file);
@@ -211,6 +222,17 @@ public class GameActivity extends FragmentActivity  {
         		// if success delete old file
                 DokoXMLClass.saveGameStateToXML(mContext, mGame);
         	}
+
+            new CountDownTimer(1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) { }
+
+                @Override
+                public void onFinish() {
+                    progressDialog.dismiss();
+                }
+            }.start();
+
         }
         else if(extras != null){
         	mPlayerCnt 		= extras.getInt(DokoData.PLAYER_CNT_KEY,0);

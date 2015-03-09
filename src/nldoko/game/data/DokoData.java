@@ -19,7 +19,50 @@ public class DokoData {
 		WIN_SOLO, 
 		LOSE_SOLO, 
 		FIVEPLAYER_3WIN, 
-		FIVEPLAYER_2WIN
+		FIVEPLAYER_2WIN,
+        RESTORE_ROUND;
+
+        public static GAME_RESULT_TYPE valueForString(String type) {
+            if (type == null ){
+                return RESTORE_ROUND;
+            }
+
+            if (type.equalsIgnoreCase("normal")){
+                return NORMAL;
+            }
+            else if (type.equalsIgnoreCase("win_solo")){
+                return WIN_SOLO;
+            }
+            else if (type.equalsIgnoreCase("lose_solo")){
+                return LOSE_SOLO;
+            }
+            else if (type.equalsIgnoreCase("5Player_3Win")){
+                return FIVEPLAYER_3WIN;
+            }
+            else if (type.equalsIgnoreCase("5Player_2Win")){
+                return FIVEPLAYER_2WIN;
+            }
+
+            return RESTORE_ROUND;
+        }
+
+        public static String stringValueOf(GAME_RESULT_TYPE type) {
+            if (type == null) {
+                return "restore";
+            }
+
+            switch (type) {
+                case NORMAL: return "normal";
+                case WIN_SOLO: return "win_solo";
+                case LOSE_SOLO: return "lose_solo";
+                case FIVEPLAYER_3WIN: return "5Player_3Win";
+                case FIVEPLAYER_2WIN: return "5Player_2Win";
+                case RESTORE_ROUND: return  "restore";
+                default:
+                    break;
+            }
+            return "restore";
+        }
 	}
 	
 	public static enum PLAYER_ROUND_RESULT_STATE {

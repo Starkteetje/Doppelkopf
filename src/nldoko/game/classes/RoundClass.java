@@ -67,7 +67,7 @@ public class RoundClass implements Serializable  {
 	public GAME_RESULT_TYPE getRoundType(){
 		return mRoundType;
 	}
-	
+
 	public void setRoundType(int winner_count, int active_player){
 		if(winner_count == 1){
 			//Win solo
