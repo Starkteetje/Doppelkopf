@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 apply plugin: 'android'
@@ -14,7 +14,7 @@ dependencies {
 
 android {
     compileSdkVersion 15
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "21.1.2"
 
     sourceSets {
         main {
@@ -44,14 +44,14 @@ android {
     buildTypes {
 
         debug {
-            runProguard true
+            minifyEnabled true
             proguardFile getDefaultProguardFile('proguard-android.txt')
             debuggable true
 
         }
 
         release {
-            runProguard false
+            minifyEnabled false
             proguardFile getDefaultProguardFile('proguard-android.txt')
             debuggable false
 

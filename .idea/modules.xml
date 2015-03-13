@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/doko_android_.iml" filepath="$PROJECT_DIR$/doko_android_.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DoppelkopfApp.iml" filepath="$PROJECT_DIR$/DoppelkopfApp.iml" />
     </modules>
   </component>
 </project>
