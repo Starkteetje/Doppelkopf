@@ -175,7 +175,11 @@ public class DokoXMLClass {
 
                     serializer.text("\n\t\t\t");
                     serializer.startTag("", GAME_ROUND_POINTS);
-                    serializer.text(Integer.toString(r.getPoints()));
+                    int mBockMulti = 1;
+                    if (r.getBockCount() > 0) {
+                        mBockMulti = r.getBockCount() * 2;
+                    }
+                    serializer.text(Integer.toString(r.getPoints() / mBockMulti));
                     serializer.endTag("", GAME_ROUND_POINTS);
 
                     serializer.text("\n\t\t\t");
