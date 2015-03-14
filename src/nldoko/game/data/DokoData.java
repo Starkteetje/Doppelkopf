@@ -14,7 +14,7 @@ public class DokoData {
 	public static final String PLAYER_NAMES_XML = "player_names.xml";
 
 	
-	public static enum GAME_RESULT_TYPE {
+	public static enum GAME_ROUND_RESULT_TYPE {
 		NORMAL, 
 		WIN_SOLO, 
 		LOSE_SOLO, 
@@ -22,7 +22,7 @@ public class DokoData {
 		FIVEPLAYER_2WIN,
         RESTORE_ROUND;
 
-        public static GAME_RESULT_TYPE valueForString(String type) {
+        public static GAME_ROUND_RESULT_TYPE valueForString(String type) {
             if (type == null ){
                 return RESTORE_ROUND;
             }
@@ -46,7 +46,7 @@ public class DokoData {
             return RESTORE_ROUND;
         }
 
-        public static String stringValueOf(GAME_RESULT_TYPE type) {
+        public static String stringValueOf(GAME_ROUND_RESULT_TYPE type) {
             if (type == null) {
                 return "restore";
             }

@@ -50,6 +50,7 @@
     <string name="anim_inout">300</string>
 
     <string name="str_game_load">Spiel wird geladen...</string>
+    <string name="str_saved_games_load">Gespeicherte Spiele werden geladen...</string>
     <string name="str_game">Aktuelles Spiel</string>
     <string name="str_game_cnt_variant">Zählvariante</string>
     <string name="str_game_cnt_variant_normal">Standard</string>

@@ -4,11 +4,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +44,9 @@ public class SavedGameListActivity extends Activity {
 
 	private static int SAVED_GAME_TAG  = 2611;
 	private static int SAVED_GAME_TAG_DELETE  = 4211;
-	
+
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +64,29 @@ public class SavedGameListActivity extends Activity {
     }
 
     private void reload() {
-    	fileList = getFileList();
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(SavedGameListActivity.this);
+            progressDialog.setTitle(this.getResources().getString(R.string.str_plz_wait));
+            progressDialog.setMessage(this.getResources().getString(R.string.str_saved_games_load));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCancelable(false);
+        }
+
+        progressDialog.show();
+
+        fileList = getFileList();
     	setUI();
+
+        new CountDownTimer(1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) { }
+
+            @Override
+            public void onFinish() {
+                progressDialog.dismiss();
+            }
+        }.start();
+
     }
 
     private String[] getFileList (){
@@ -143,7 +168,7 @@ public class SavedGameListActivity extends Activity {
                 mTv = (TextView)v.findViewById(R.id.saved_game_entry_path_filepath);
                 mTv.setText(savedGameFile);
     			
-            	GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,savedGameFile);
+            	GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,savedGameFile, false);
             	if (mGame != null) {
             		// if success delete old file
 

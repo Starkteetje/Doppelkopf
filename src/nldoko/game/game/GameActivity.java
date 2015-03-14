@@ -217,7 +217,7 @@ public class GameActivity extends FragmentActivity  {
 
         	String file = extras.getString("filename");
         	Log.d(TAG,"Game from XML file:"+file);
-        	mGame =  DokoXMLClass.restoreGameStateFromXML(this,file);
+        	mGame =  DokoXMLClass.restoreGameStateFromXML(this,file, true);
         	if (mGame != null) {
         		// if success delete old file
                 DokoXMLClass.saveGameStateToXML(mContext, mGame);

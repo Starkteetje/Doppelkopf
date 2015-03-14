@@ -73,6 +73,10 @@ public class GameClass  implements Serializable{
 	}
 
 
+    public void setRoundList(ArrayList<RoundClass> roundList){
+        this.mRoundList = roundList;
+    }
+
     public void setPreRoundList(ArrayList<RoundClass> preRoundList){
         this.mPreRoundList = preRoundList;
     }

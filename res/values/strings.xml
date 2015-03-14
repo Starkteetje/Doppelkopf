@@ -50,6 +50,7 @@
     <string name="anim_inout">300</string>
 
     <string name="str_game_load">Load game...</string>
+    <string name="str_saved_games_load">Load saved games...</string>
     <string name="str_game">Current game</string>
     <string name="str_game_cnt_variant">Count variant</string>
     <string name="str_game_cnt_variant_normal">Standard</string>

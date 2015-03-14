@@ -19,7 +19,7 @@ import nldoko.game.R;
 import nldoko.game.classes.GameClass;
 import nldoko.game.classes.RoundClass;
 import nldoko.game.data.DokoData;
-import nldoko.game.data.DokoData.GAME_RESULT_TYPE;
+import nldoko.game.data.DokoData.GAME_ROUND_RESULT_TYPE;
 import nldoko.game.data.DokoData.GAME_VIEW_TYPE;
 import nldoko.game.data.DokoData.PLAYER_ROUND_RESULT_STATE;
 
@@ -116,7 +116,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 		if(mRound.getPoints() == 0) mRoundPoints.setText("-");
 		else mRoundPoints.setText(String.valueOf(mRound.getPoints()));
 		
-		if(mRound.getRoundType() == GAME_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_RESULT_TYPE.WIN_SOLO){
+		if(mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.WIN_SOLO){
 			mRoundPointsSolo.setVisibility(View.VISIBLE);
 			mRoundPointsSolo.setText(String.valueOf(mRound.getPoints()*(mGame.getActivePlayerCount()-1)));
 		}
@@ -204,7 +204,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 			mRoundNumber.setText("#"+String.valueOf(mRound.getID()+1));
 		}
 		
-		if(mRound.getRoundType() == GAME_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_RESULT_TYPE.WIN_SOLO)
+		if(mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.WIN_SOLO)
 			mRoundPointsSolo.setText(String.valueOf((mRound.getPoints()*(mGame.getActivePlayerCount()-1))));
 		else mRoundPointsSolo.setText("");
 		
@@ -330,7 +330,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 				for(int k=0;k<mGame.getPlayerCount();k++){
 					mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.WIN_STATE;
 					i.putExtra(DokoData.PLAYERS_KEY[k], mGame.getPlayer(k).getName());
-					Log.d("roundnr edit yes","p:"+mGame.getPlayer(k).getPointHistoryPerRound(roundNumber - 1)+" lenght:"+mGame.getPlayer(k).getPointHistoryPerRoundLength());
+					Log.d("roundnr edit yes","p:"+mGame.getPlayer(k).getPointHistoryPerRound(roundNumber - 1)+" lenght:"+mGame.getPlayer(k).getPointHistoryAtRoundLength());
 					if(mGame.getPlayer(k).getPointHistoryPerRound(roundNumber - 1) < 0) {
 						mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.LOSE_STATE;
 						Log.d("roundnr edit yes","lose"+mGame.getPlayer(k).getPointHistoryPerRound(roundNumber - 1));

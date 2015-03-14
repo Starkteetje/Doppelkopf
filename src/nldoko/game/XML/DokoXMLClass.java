@@ -10,6 +10,7 @@ import nldoko.game.classes.PlayerClass;
 import nldoko.game.classes.RoundClass;
 import nldoko.game.data.DokoData;
 import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
+import nldoko.game.data.DokoData.GAME_ROUND_RESULT_TYPE;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -62,7 +63,7 @@ public class DokoXMLClass {
     private static final String GAME_PLAYER_POINT_HISTORY = "PointsHistory";
     private static final String GAME_PLAYER_POINT_HISTORY_ROUND = "Round";
     private static final String GAME_PLAYER_POINT_HISTORY_POINTS = "Points";
-    private static final String GAME_PLAYER_POINT_HISTORY_POINTS_PER_ROUND = "PointPerRound";
+    private static final String GAME_PLAYER_POINT_HISTORY_POINTS_AT_ROUND = "PointAtRound";
 
     private static final String GAME_PRE_ROUNDS = "PreRounds";
     private static final String GAME_PRE_ROUND = "PreRound";
@@ -169,12 +170,12 @@ public class DokoXMLClass {
 
                     serializer.text("\n\t\t\t");
                     serializer.startTag("", GAME_ROUND_TYPE);
-                    serializer.text(DokoData.GAME_RESULT_TYPE.stringValueOf(r.getRoundType()));
+                    serializer.text(GAME_ROUND_RESULT_TYPE.stringValueOf(r.getRoundType()));
                     serializer.endTag("", GAME_ROUND_TYPE);
 
                     serializer.text("\n\t\t\t");
                     serializer.startTag("", GAME_ROUND_POINTS);
-                    serializer.text(Float.toString(r.getPoints()));
+                    serializer.text(Integer.toString(r.getPoints()));
                     serializer.endTag("", GAME_ROUND_POINTS);
 
                     serializer.text("\n\t\t\t");
@@ -216,7 +217,7 @@ public class DokoXMLClass {
                     serializer.text("\n\t\t\t");
                     serializer.startTag("", GAME_PLAYER_POINT_HISTORY);
 
-                    for (int ph = 0; ph < p.getPointHistoryLength() && ph < p.getPointHistoryPerRoundLength(); ph++) {
+                    for (int ph = 0; ph < p.getPointHistoryLength() && ph < p.getPointHistoryAtRoundLength(); ph++) {
                         serializer.text("\n\t\t\t\t");
                         serializer.startTag("", GAME_PLAYER_POINT_HISTORY_ROUND);
 
@@ -226,9 +227,9 @@ public class DokoXMLClass {
                         serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS);
 
                         serializer.text("\n\t\t\t\t\t");
-                        serializer.startTag("", GAME_PLAYER_POINT_HISTORY_POINTS_PER_ROUND);
+                        serializer.startTag("", GAME_PLAYER_POINT_HISTORY_POINTS_AT_ROUND);
                         serializer.text(Float.toString(p.getPointHistoryPerRound(ph)));
-                        serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS_PER_ROUND);
+                        serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS_AT_ROUND);
 
                         serializer.text("\n\t\t\t\t");
                         serializer.endTag("", GAME_PLAYER_POINT_HISTORY_ROUND);
@@ -347,7 +348,7 @@ public class DokoXMLClass {
         }
     }
 	
-	public static GameClass restoreGameStateFromXML(Context c,String filePath) {
+	public static GameClass restoreGameStateFromXML(Context c,String filePath, boolean loadFull) {
 		GameClass mGame = new GameClass(filePath);
         if (mGame == null) {
             return null;
@@ -359,7 +360,7 @@ public class DokoXMLClass {
             //for debug
             FileInputStream in2 = new FileInputStream(filePath);
             String fileContent = convertStreamToString(in2);
-            Log.d(TAG,"File:"+filePath+" content:"+fileContent);
+            //Log.d(TAG,"File:"+filePath+" content:"+fileContent);
 
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -374,7 +375,7 @@ public class DokoXMLClass {
 				return null;
 			}
 
-            Log.v(TAG, nodeAsText(mNode));
+            //Log.v(TAG, nodeAsText(mNode));
 
             // check  xml struct version
             String mXMLVersion = null; // null means v1
@@ -386,28 +387,53 @@ public class DokoXMLClass {
                 }
             }
 
+            if (mXMLVersion == null || !mXMLVersion.equalsIgnoreCase(GAME_XML_STRUCT_VERSION)) {
+                // old version
+                DokoXMLClass.setGameSettingsFromNode(mNode, mGame);
+            }
+
+            ArrayList<RoundClass> mGameRoundsFromRestore = new ArrayList<RoundClass>();
+
             NodeList mMainNodes = mNode.getChildNodes();
 			for (int i = 0; i < mMainNodes.getLength(); i++) {
                 Node n =  mMainNodes.item(i);
 
                 if(n.getNodeType() != Node.ELEMENT_NODE) continue;
 
-                if (mXMLVersion == null || !mXMLVersion.equalsIgnoreCase(GAME_XML_STRUCT_VERSION)) {
-                    // old version
-                    DokoXMLClass.setGameSettingsFromNode(n, mGame);
-                }
-
                 if (n.getNodeName().equalsIgnoreCase(GAME_SETTINGS_TAG)) {
                     // new xml
                     DokoXMLClass.setGameSettingsFromNode(n, mGame);
                 }
                 else if(n.getNodeName().equalsIgnoreCase(GAME_PLAYERS)){
-					DokoXMLClass.setGamePlayersFromNode(n, mGame);
+					DokoXMLClass.setGamePlayersFromNode(n, mGame, loadFull);
 				}
-                else if(n.getNodeName().equalsIgnoreCase(GAME_PRE_ROUNDS)){
+                else if(n.getNodeName().equalsIgnoreCase(GAME_PRE_ROUNDS) && loadFull){
                     DokoXMLClass.setGamePreRoundsFromNode(n, mGame);
-				} 
-			}
+				}
+                else if(n.getNodeName().equalsIgnoreCase(GAME_ROUNDS) && loadFull){
+                    mGameRoundsFromRestore = DokoXMLClass.getGameRoundsFromNode(n);
+                }
+            }
+
+            int historyCnt = mGame.getPlayer(0).getPointHistoryLength();
+            if (historyCnt != mGameRoundsFromRestore.size()) {
+                // player history different from game
+                for (PlayerClass p : mGame.getPlayers()) {
+                    p.resetPointHistory();
+                }
+
+                ArrayList<RoundClass> rounds = new ArrayList<RoundClass>();
+                RoundClass r = new RoundClass(0, GAME_ROUND_RESULT_TYPE.RESTORE_ROUND, 0 , 0);
+                rounds.add(r);
+                mGame.setRoundList(rounds);
+            }
+            else {
+                if (mGameRoundsFromRestore.size() == historyCnt) {
+                    mGame.setRoundList(mGameRoundsFromRestore);
+                }
+            }
+
+
 		}
 		catch(Exception e){
 			Log.d(TAG,e.toString());
@@ -419,7 +445,6 @@ public class DokoXMLClass {
             return null;
         }
 
-		mGame.getRoundList().add(new RoundClass(0,0,0));
 		return mGame;
 	}
 
@@ -483,7 +508,7 @@ public class DokoXMLClass {
 
     }
 
-    private static void setGamePlayersFromNode(Node n, GameClass mGame) {
+    private static void setGamePlayersFromNode(Node n, GameClass mGame, boolean loadPointHistory) {
         if (n == null || mGame == null ) {
             return;
         }
@@ -494,6 +519,11 @@ public class DokoXMLClass {
         ArrayList<PlayerClass> mPlayers = new ArrayList<PlayerClass>();
         NodeList mPlayerNodes = n.getChildNodes();
 
+        ArrayList<Float> mPlayerPointsHistoryPoints;
+        ArrayList<Float> mPlayerPointsHistoryPointsATRound;
+
+        ArrayList<Float> mBackupPlayerPoints = new ArrayList<Float>();
+
         for(int t=0; t<mPlayerNodes.getLength();t++) {
             Node mPlayer = mPlayerNodes.item(t);
             if(mPlayer.getNodeType() != Node.ELEMENT_NODE) continue;
@@ -503,6 +533,8 @@ public class DokoXMLClass {
 
                 mName = "";
                 mPoints = 0.0f;
+                mPlayerPointsHistoryPoints = new ArrayList<Float>();
+                mPlayerPointsHistoryPointsATRound = new ArrayList<Float>();
 
                 for(int k=0;k<mPlayerValues.getLength();k++){
 
@@ -513,24 +545,118 @@ public class DokoXMLClass {
                     }
                     else if(mPlayerValue.getNodeName().equalsIgnoreCase(GAME_PLAYER_POINTS)) {
                         mPoints = Float.valueOf(mPlayerValue.getTextContent());
+                        mBackupPlayerPoints.add(mPoints);
                     }
+                    else if(mPlayerValue.getNodeName().equalsIgnoreCase(GAME_PLAYER_POINT_HISTORY)) {
+                        if (!loadPointHistory) {
+                            continue;
+                        }
+
+                        NodeList mPlayerValuePoints =  mPlayerValue.getChildNodes();
+                        for(int v=0; v<mPlayerValuePoints.getLength();v++) {
+                            Node mPlayerPointsHistory = mPlayerValuePoints.item(v);
+                            if (mPlayerPointsHistory.getNodeType() != Node.ELEMENT_NODE) continue;
+
+                            NodeList mPlayerValuePointsRound =  mPlayerPointsHistory.getChildNodes();
+
+                            float mPointsCurrent = 0.0f;
+                            float mPointsAtRound = 0.0f;
+                            int valueCnt = 0;
+
+                            for(int z=0; z<mPlayerValuePointsRound.getLength();z++) {
+                                Node mPlayerPointsHistoryRound = mPlayerValuePointsRound.item(z);
+                                String nodestring = mPlayerPointsHistoryRound.getTextContent()+" "+ mPlayerPointsHistoryRound.getNodeName();
+                                if (mPlayerPointsHistoryRound.getNodeType() != Node.ELEMENT_NODE) continue;
+
+                                if(mPlayerPointsHistoryRound.getNodeName().equalsIgnoreCase(GAME_PLAYER_POINT_HISTORY_POINTS)) {
+                                    mPointsCurrent = Float.valueOf(mPlayerPointsHistoryRound.getTextContent());
+                                    valueCnt++;
+                                }
+                                else if(mPlayerPointsHistoryRound.getNodeName().equalsIgnoreCase(GAME_PLAYER_POINT_HISTORY_POINTS_AT_ROUND)) {
+                                    mPointsAtRound = Float.valueOf(mPlayerPointsHistoryRound.getTextContent());
+                                    valueCnt++;
+                                }
+
+                            }
+
+                            if (valueCnt == 2) {
+                                mPlayerPointsHistoryPoints.add(mPointsCurrent);
+                                mPlayerPointsHistoryPointsATRound.add(mPointsAtRound);
+                            }
+                        }
+                    }
+
 
                 }
 
                 if(mName.length() > 0){
                     //player found
-                    mPlayers.add(new PlayerClass(mPID++,mName,mPoints));
+
+                    // add round history
+                    PlayerClass player;
+                    if (mPlayerPointsHistoryPoints.size() > 0 && mPlayerPointsHistoryPointsATRound.size() > 0) {
+                        player = new PlayerClass(mPID++,mName,mPlayerPointsHistoryPoints.get(mPlayerPointsHistoryPoints.size() - 1));
+                        player.setPointHistoy(mPlayerPointsHistoryPoints, mPlayerPointsHistoryPointsATRound);
+                    }
+                    else {
+                        player = new PlayerClass(mPID++,mName,mPoints);
+                        player.updatePoints(0,(float)0);
+                    }
+
+                    if (player != null) {
+                        mPlayers.add(player);
+                    }
+
                 }
             }
         }
 
-        //fill inactive players
-        for(int i=mPlayers.size();i<DokoData.MAX_PLAYER;i++) {
-            mPlayers.add(new PlayerClass(i,"",0));
+
+        // check if all palyers have same history length otherwise kill
+        boolean mCheckHistory = true;
+        if (mPlayers != null && mPlayers.size() > 0) {
+            int mPointsHistoryPointLength = mPlayers.get(0).getPointHistoryLength();
+            int mPointsHistoryPointsATRoundLength = mPlayers.get(0).getPointHistoryAtRoundLength();
+
+            for (PlayerClass p : mPlayers) {
+                if (p.getPointHistoryLength() != mPointsHistoryPointLength
+                    || p.getPointHistoryAtRoundLength() != mPointsHistoryPointsATRoundLength) {
+
+                    mCheckHistory = false;
+                    break;
+                }
+            }
         }
 
-        for(PlayerClass player : mPlayers){
-            player.updatePoints(0,(float)0);
+        if (!mCheckHistory) {
+            for (int i = 0; i < mPlayers.size(); i++) {
+                PlayerClass p = mPlayers.get(i);
+                float startPoints = mBackupPlayerPoints.get(i).floatValue();
+                p.resetPointHistoryAndForceStartAndCurrentPointsTo(startPoints);
+            }
+        }
+
+
+        //fill inactive players
+        int mHistoryCnt = 0;
+        if(mPlayers.size() > 0) {
+            mHistoryCnt = mPlayers.get(0).getPointHistoryLength();
+        }
+
+        for(int i=mPlayers.size();i<DokoData.MAX_PLAYER;i++) {
+            PlayerClass pInactive = new PlayerClass(i, "", 0);
+            if (mHistoryCnt > 0) {
+                // fill points history only 0.0f
+                mPlayerPointsHistoryPoints = new ArrayList<Float>();
+                mPlayerPointsHistoryPointsATRound = new ArrayList<Float>();
+                for (int a = 0; a < mHistoryCnt; a++) {
+                    mPlayerPointsHistoryPoints.add(0.0f);
+                    mPlayerPointsHistoryPointsATRound.add(0.0f);
+                }
+
+                pInactive.setPointHistoy(mPlayerPointsHistoryPoints, mPlayerPointsHistoryPointsATRound);
+            }
+            mPlayers.add(pInactive);
         }
 
         // set players in game
@@ -572,6 +698,74 @@ public class DokoXMLClass {
 
         // set pre rounds for game
         mGame.setPreRoundList(mPreRounds);
+    }
+
+    private static ArrayList<RoundClass> getGameRoundsFromNode(Node n) {
+        if (n == null) {
+            return null;
+        }
+
+        int mRoundID = 0, mRoundBockCount = 0;
+        int mRoundPoints = 0;
+        GAME_ROUND_RESULT_TYPE mRoundType;
+
+        int valueCnt = 0;
+
+        ArrayList<RoundClass> mRounds = new ArrayList<RoundClass>();
+        NodeList mRoundList = n.getChildNodes();
+
+        for(int t=0; t<mRoundList.getLength();t++) {
+            Node mRound = mRoundList.item(t);
+            if(mRound.getNodeType() != Node.ELEMENT_NODE) continue;
+
+            if(mRound.getNodeName().equalsIgnoreCase(GAME_ROUND)){
+                NodeList mRoundValues =  mRound.getChildNodes();
+                // reset values
+                valueCnt = 0;
+                mRoundID = 0;
+                mRoundBockCount = 0;
+                mRoundPoints = 0;
+                mRoundType = GAME_ROUND_RESULT_TYPE.RESTORE_ROUND;
+
+                for(int k=0;k<mRoundValues.getLength();k++){
+                    Node mRoundValue = mRoundValues.item(k);
+                    if(mRoundValue.getNodeType() != Node.ELEMENT_NODE) continue;
+
+
+                    if(mRoundValue.getNodeName().equalsIgnoreCase(GAME_ROUND_ID)) {
+                        mRoundID = Integer.valueOf(mRoundValue.getTextContent());
+                        valueCnt++;
+                    }
+
+
+                    if(mRoundValue.getNodeName().equalsIgnoreCase(GAME_ROUND_TYPE)) {
+                        mRoundType = GAME_ROUND_RESULT_TYPE.valueForString(mRoundValue.getTextContent());
+                        valueCnt++;
+                    }
+
+
+                    if(mRoundValue.getNodeName().equalsIgnoreCase(GAME_ROUND_POINTS)) {
+                        mRoundPoints = Integer.valueOf(mRoundValue.getTextContent());
+                        valueCnt++;
+                    }
+
+
+                    if(mRoundValue.getNodeName().equalsIgnoreCase(GAME_ROUND_BOCK_CNT)) {
+                        mRoundBockCount = Integer.valueOf(mRoundValue.getTextContent());
+                        valueCnt++;
+                    }
+                }
+
+                if (valueCnt == 4) {
+                    // valid round
+                    RoundClass round  = new RoundClass(mRoundID, mRoundType, mRoundPoints, mRoundBockCount);
+                    mRounds.add(round);
+                }
+
+            }
+        }
+
+       return mRounds;
     }
 
     private static String nodeAsText(Node n) {

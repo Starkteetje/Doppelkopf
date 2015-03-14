@@ -12,7 +12,7 @@ public class PlayerClass implements Serializable  {
 	private float mStartPoints;
 	private boolean mIsActive = false;
 	private ArrayList<Float> mPointHistroy = new ArrayList<Float>();
-	private ArrayList<Float> mPointHistroyPerRound = new ArrayList<Float>();
+	private ArrayList<Float> mPointHistroyATRound = new ArrayList<Float>();
 	
 	
 	public PlayerClass(){
@@ -64,14 +64,14 @@ public class PlayerClass implements Serializable  {
 	}
 	
 	public void updatePoints(int pos, Float p){
-		if (pos < getPointHistoryPerRoundLength()) {
+		if (pos < getPointHistoryAtRoundLength()) {
 			// update existing round
 			changePointsForRound(pos, p);
 		} else {
 			// points for a new round
 			Float i = mCurrentPoints + p;
 			this.mPointHistroy.add(i);
-			this.mPointHistroyPerRound.add(p);
+			this.mPointHistroyATRound.add(p);
 			this.calculateCurrentPoints();
 		}
 	}
@@ -87,17 +87,18 @@ public class PlayerClass implements Serializable  {
 	public int getPointHistoryLength(){
 		return this.mPointHistroy.size();
 	}
-	
+
+
 	public float getPointHistoryPerRound(int pos){
-		return this.mPointHistroyPerRound.get(pos);
+		return this.mPointHistroyATRound.get(pos);
 	}
 	
-	public int getPointHistoryPerRoundLength(){
-		return this.mPointHistroyPerRound.size();
+	public int getPointHistoryAtRoundLength(){
+		return this.mPointHistroyATRound.size();
 	}
 	
 	public void changePointsForRound(int pos, float newPoints) {
-		mPointHistroyPerRound.set(pos, newPoints);
+		mPointHistroyATRound.set(pos, newPoints);
 		if (pos == 0){
 			mPointHistroy.set(pos,newPoints);
 		} else {
@@ -108,11 +109,34 @@ public class PlayerClass implements Serializable  {
 	
 	private void calculateCurrentPoints() {
 		float sum = 0;
-		for (float points : mPointHistroyPerRound) {
+		for (float points : mPointHistroyATRound) {
 			sum += points;
 		}
 		sum += mStartPoints;
 		mCurrentPoints = sum;
 	}
+
+    public void resetPointHistory() {
+        mPointHistroy = new ArrayList<Float>();
+        mPointHistroyATRound = new ArrayList<Float>();
+        updatePoints(0,(float)0);
+    }
+
+    public void resetPointHistoryAndForceStartAndCurrentPointsTo(float p) {
+        mStartPoints = p;
+        mCurrentPoints = p;
+        mPointHistroy = new ArrayList<Float>();
+        mPointHistroyATRound = new ArrayList<Float>();
+        updatePoints(0,(float)0);
+    }
+
+    public void setPointHistoy(ArrayList<Float> points, ArrayList<Float> pointsAtRounds) {
+        mPointHistroy = points;
+        mPointHistroyATRound = pointsAtRounds;
+
+        if (mPointHistroy != null && mPointHistroy.size() > 0) {
+            mCurrentPoints = mPointHistroy.get(mPointHistroy.size() -1);
+        }
+    }
 	
 }
