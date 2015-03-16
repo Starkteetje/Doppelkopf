@@ -97,8 +97,8 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
     	
 		if(v ==  null || DokoData.mTvTablePlayerName.length < mGame.getPlayerCount()) return v;
 		
-		if(mRound.getID() % 2 == 1) v.setBackgroundColor(v.getResources().getColor(R.color.gray));
-		else v.setBackgroundColor(v.getResources().getColor(R.color.white));
+		if(mRound.getID() % 2 == 1) v.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_bg_2));
+		else v.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_bg_1));
 	
 		mRoundNumber = (TextView)v.findViewById(R.id.fragment_game_round_view_table_round_nr);
 		mRoundPoints = (TextView)v.findViewById(R.id.fragment_game_round_view_table_round_points);
@@ -107,11 +107,11 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 		
 		mRoundNumber.setText(String.valueOf(mRound.getID()+1));
 		if(mGame.getRoundList().size() == mRound.getID()+1)
-			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.orange_dark));
+			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_nr_active_background));
 		else if(mRound.getID() % 2 == 1)
-			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.gray));
+			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_bg_2));
 		else 
-			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.white));
+			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_bg_1));
 		
 		if(mRound.getPoints() == 0) mRoundPoints.setText("-");
 		else mRoundPoints.setText(String.valueOf(mRound.getPoints()));
@@ -135,14 +135,14 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 			mPlayerPoints = (TextView)v.findViewById(DokoData.mTvTablePlayerName[i]);
     		
     		mPlayerPoints.setText(Functions.getFloatAsString(mPoints));
-    		if(mPoints < 0) mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.red));
-    		else mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.green_dark));
+    		if(mPoints < 0) mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_negative));
+    		else mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_positive));
 			
 			// if points don't change player was suspended
 			if (mGame.isMarkSuspendedPlayersEnable() &&
 				mRound.getID() > 0 && 
 				mPoints  == mGame.getPlayer(i).getPointHistory(mRound.getID() - 1)) {
-				mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.blue_dark));
+				mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_suspended));
 			}
 
     		

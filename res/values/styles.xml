@@ -19,10 +19,41 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="light_gray">#E2E2E2</color>
     <color name="gray">#D8D8D8</color>
     <color name="gray_dark">#777777</color>
-    
+
     <color name="alpha">#00000000</color>
+
+    <!-- table colors -->
+    <color name="table_header_background">#669900</color>
+    <color name="table_header_vl">#777777</color>
+    <color name="table_header_hl">#777777</color>
+    <color name="table_header_text">#000000</color>
+
+    <color name="table_entry_round_bg_1">#FFFFFF</color>
+    <color name="table_entry_round_bg_2">#D8D8D8</color>
+
+    <color name="table_entry_round_nr_inactive_text">#000000</color>
+    <color name="table_entry_round_nr_inactive_background">#FFFFFF</color>
+    <color name="table_entry_round_nr_active_text">#FFFFFF</color>
+    <color name="table_entry_round_nr_active_background">#FF8800</color>
+
+    <color name="table_entry_vl">#777777</color>
+    <color name="table_entry_hl">#777777</color>
+
+    <color name="table_entry_points_positive">#669900</color>
+    <color name="table_entry_points_negative">#CC0000</color>
+    <color name="table_entry_points_suspended">#0099CC</color>
+
+    <color name="table_entry_round_points">#000000</color>
+    <color name="table_entry_round_bock_total">#777777</color>
+    <color name="table_entry_round_bock_count">#FF8800</color>
+
+    <color name="table_footer_background">#777777</color>
+    <color name="table_footer_bock_count_label">#000000</color>
+    <color name="table_footer_bock_count_number">#000000</color>
+    <color name="table_footer_bock_counts">#000000</color>
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
