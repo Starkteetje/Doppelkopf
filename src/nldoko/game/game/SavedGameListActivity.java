@@ -195,11 +195,19 @@ public class SavedGameListActivity extends Activity {
                     mTv = (TextView)v.findViewById(R.id.saved_game_entry_text);
         			mTv.setText(gameStats);
             	}
-            	
-            	mIv = (ImageView)v.findViewById(R.id.saved_game_entry_delete);
-            	mIv.setTag(SAVED_GAME_TAG_DELETE + tagCnt);
-            	mIv.setOnClickListener(mFileDeleteClickListerner);
-                mIv.setColorFilter(mContext.getResources().getColor(R.color.red_dark), PorterDuff.Mode.SRC_ATOP);
+
+                l = (LinearLayout)v.findViewById(R.id.saved_game_entry_icons);
+                if (l != null) {
+                    mIv = (ImageView)l.findViewById(R.id.saved_game_entry_icon_delete);
+                    mIv.setTag(SAVED_GAME_TAG_DELETE + tagCnt);
+                    mIv.setOnClickListener(mFileDeleteClickListerner);
+                    mIv.setColorFilter(mContext.getResources().getColor(R.color.red_dark), PorterDuff.Mode.SRC_ATOP);
+
+                    mIv = (ImageView)l.findViewById(R.id.saved_game_entry_icon_mail);
+                    mIv.setOnClickListener(new FileMailClickListener(mGame));
+                    mIv.setColorFilter(mContext.getResources().getColor(R.color.blue_dark), PorterDuff.Mode.SRC_ATOP);
+                }
+
             	
             	Log.d(TAG,"set tagcnt:"+tagCnt);
     			mEntriesLayout.addView(v);  
@@ -236,6 +244,18 @@ public class SavedGameListActivity extends Activity {
 			}		
 		}
     }
+
+    private class FileMailClickListener implements OnClickListener {
+        GameClass mGame;
+        public FileMailClickListener(GameClass game) {
+            this.mGame = game;
+        }
+
+        @Override
+        public void onClick(View v) {
+            DokoXMLClass.setGameViaMail(v.getContext(), mGame);
+        }
+    };
     
 	private void showDeleteAllSavedGamesDialog(){
 		Builder back = new AlertDialog.Builder(this);

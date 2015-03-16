@@ -8,10 +8,14 @@
     <string name="start_action_load_save_game">Vorheriges Spiel starten</string>
     <string name="str_saved_game">Gespeicherte Spiele</string>
     <string name="str_saved_game_delete_all">Spiele löschen</string>
-     <string name="str_saved_game_delete">Spiel löschen</string>
+    <string name="str_saved_game_delete">Spiel löschen</string>
     <string name="str_saved_game_delete_all_q">Sind Sie sicher das sie ALLE gespeicherten Spiele löschen möchten?</string>
-    <string name="str_saved_game_delete_q">Sind Sie sicher das sie das gespeicherte Spiel löschen möchten?</string>  
-    <string name="action_about">Über diese App</string>  
+    <string name="str_saved_game_delete_q">Sind Sie sicher das sie das gespeicherte Spiel löschen möchten?</string>
+    <string name="str_saved_game_via_mail">Spiel per E-Mail verschicken</string>
+    <string name="str_saved_game_via_mail_description">Um das Spiel per E-Mail zu verschicken müssen sie ein "long press" auf das entsprechende Spiel ausführen</string>
+    <string name="str_saved_game_via_mail_text_1">Doppelkopf Spiel vom:</string>
+    <string name="str_saved_game_via_mail_text_excel">*Die Daten können in Excel importiert werden. Dazu die Daten als Textdatei abspeichern und in Excel importieren. Komma als Trennzeichen auswählen.</string>
+    <string name="action_about">Über diese App</string>
     <string name="str_new_game">Neues Spiel erstellen</string>
     <string name="str_start_fun">Doppelkopf</string>
     <string name="str_player">Spieler</string>

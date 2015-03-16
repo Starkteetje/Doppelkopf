@@ -10,7 +10,11 @@
     <string name="str_saved_game_delete_all">Delete all saved game</string>
      <string name="str_saved_game_delete">Delete saved game</string>
     <string name="str_saved_game_delete_all_q">Are you sure you want to delete ALL saved games?</string>
-    <string name="str_saved_game_delete_q">Are you sure you want to delete the saved game?</string>  
+    <string name="str_saved_game_delete_q">Are you sure you want to delete the saved game?</string>
+    <string name="str_saved_game_via_mail">Send game via Mail</string>
+    <string name="str_saved_game_via_mail_description">Do a "long press" on a game to send it via mail</string>
+    <string name="str_saved_game_via_mail_text_1">Doppelkopf game from:</string>
+    <string name="str_saved_game_via_mail_text_excel">*You can import this data into excel. Save data as text file and import into excel by using comma as separator</string>
     <string name="action_about">About this App</string>  
     <string name="str_new_game">Create new game</string>
     <string name="str_start_fun">Doppelkopf</string>

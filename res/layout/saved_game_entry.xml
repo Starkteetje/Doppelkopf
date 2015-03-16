@@ -19,7 +19,7 @@
         
        <LinearLayout
         android:id="@+id/saved_game_entry_layout_start_game"
-        android:layout_width="match_parent"
+        android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_weight="0.9"
@@ -114,13 +114,28 @@
 	        </LinearLayout>
 	    </LinearLayout>
 
-        <ImageView
-            android:id="@+id/saved_game_entry_delete"
-            android:layout_weight="0.1"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/saved_game_entry_icons"
+            android:orientation="vertical"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_remove"/>
+            android:layout_weight="0.1"
+            android:weightSum="1">
+            <ImageView
+                android:id="@+id/saved_game_entry_icon_delete"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_remove"/>
+            <ImageView
+                android:id="@+id/saved_game_entry_icon_mail"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_content_email"/>
+        </LinearLayout>
         
     </LinearLayout>
     

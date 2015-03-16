@@ -1,9 +1,12 @@
 package nldoko.game.XML;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
 import android.util.Xml;
+
+import nldoko.android.Functions;
 import nldoko.game.R;
 import nldoko.game.classes.GameClass;
 import nldoko.game.classes.PlayerClass;
@@ -1012,5 +1015,64 @@ public class DokoXMLClass {
         }
         reader.close();
         return sb.toString();
+    }
+
+    public static void setGameViaMail(Context context, GameClass mGame) {
+        /* Create the Intent */
+        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+        String text =  context.getResources().getString(R.string.str_saved_game_via_mail_text_1) + " "
+                +  mGame.getCreateDate("dd.MM.yyyy - HH:mm")+ "\n\n";
+
+        String csv = "";
+        if (mGame != null && mGame.getPlayers().size() > 0 && mGame.getRoundList().size() > 0) {
+            // header
+            csv += "Nr.,";
+            for (int u = 0; u < mGame.getPlayerCount(); u++) {
+                PlayerClass p = mGame.getPlayer(u);
+                csv += p.getName()+",";
+            }
+            csv += context.getResources().getString(R.string.str_game_points)+",";
+            csv += context.getResources().getString(R.string.str_game_points)+" solo ,";
+            csv += context.getResources().getString(R.string.str_bock)+",";
+            csv += "\n";
+
+
+            // rounds
+            RoundClass mRound;
+            for (int i = 0; i < mGame.getRoundList().size(); i++) {
+                mRound = mGame.getRoundList().get(i);
+
+                csv += Integer.toString(mRound.getID())+",";
+
+                for(int u=0; u < mGame.getPlayerCount(); u++) {
+                    float mPoints = mGame.getPlayer(u).getPointHistory(mRound.getID());
+                    csv += mPoints + ",";
+                }
+
+                csv += String.valueOf(mRound.getPoints())+",";
+                if (mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.WIN_SOLO) {
+                    csv += String.valueOf(mRound.getPoints()*(mGame.getActivePlayerCount()-1));
+                } else {
+                    csv += " ,";
+                }
+
+                csv += Functions.getBockCountAsRom(mRound.getBockCount())+",";
+                csv += "\n";
+            }
+
+            csv += "\n\n\n";
+            csv += context.getResources().getString(R.string.str_saved_game_via_mail_text_excel);
+        }
+
+        text += csv;
+
+        /* Fill it with Data */
+        emailIntent.setType("plain/text");
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, context.getResources().getString(R.string.app_name) + " - " + "App" );
+        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,text);
+
+        /* Send it off to the Activity-Chooser */
+        context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
     }
 }
