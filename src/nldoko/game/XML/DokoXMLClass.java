@@ -1073,6 +1073,6 @@ public class DokoXMLClass {
         emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,text);
 
         /* Send it off to the Activity-Chooser */
-        context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        context.startActivity(Intent.createChooser(emailIntent, context.getResources().getString(R.string.str_saved_game_via_mail_intent)));
     }
 }
