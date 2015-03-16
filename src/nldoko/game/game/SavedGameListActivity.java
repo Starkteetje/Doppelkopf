@@ -253,7 +253,7 @@ public class SavedGameListActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-            DokoXMLClass.setGameViaMail(v.getContext(), mGame);
+            DokoXMLClass.sendGameViaMail(v.getContext(), mGame);
         }
     };
     

@@ -1017,7 +1017,7 @@ public class DokoXMLClass {
         return sb.toString();
     }
 
-    public static void setGameViaMail(Context context, GameClass mGame) {
+    public static void sendGameViaMail(Context context, GameClass mGame) {
         /* Create the Intent */
         final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 
