@@ -90,6 +90,7 @@
             android:layout_width="0dp"
             android:gravity="right|center_vertical"
             android:text="@string/str_saved_game"
+            android:textColor="@color/red_dark"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
@@ -98,6 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/str_saved_game"
+            android:tint="@color/black"
             android:src="@drawable/ic_action_save" />
     </LinearLayout>
 

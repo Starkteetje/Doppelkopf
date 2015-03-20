@@ -16,6 +16,7 @@
             android:layout_height="fill_parent"
             android:scaleType="center"
             android:contentDescription="@string/str_image"
+            android:tint="@color/red_dark"
             android:src="@drawable/content_select_all" />
 
     </LinearLayout>

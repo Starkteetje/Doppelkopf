@@ -16,6 +16,7 @@
             android:layout_height="fill_parent"
             android:contentDescription="@string/str_image"
             android:scaleType="center"
+            android:tint="@color/orange_dark"
             android:src="@drawable/ic_action_brightness_auto" />
 
     </LinearLayout>
