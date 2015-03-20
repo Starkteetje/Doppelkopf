@@ -126,9 +126,13 @@ public class DokoData {
 	
 	public static final String[] PLAYERS_KEY  = {"PLAYER_1","PLAYER_2","PLAYER_3","PLAYER_4",
 												 "PLAYER_5","PLAYER_6","PLAYER_7","PLAYER_8"};
+
+    public static final String[] PLAYERS_POINTS_KEY = {"PLAYER_1_POINTS","PLAYER_2_POINTS","PLAYER_3_POINTS","PLAYER_4_POINTS",
+            "PLAYER_5_POINTS","PLAYER_6_POINTS","PLAYER_7_POINTS","PLAYER_8_POINTS"};
 	
 	public static final int CHANGE_GAME_SETTINGS_ACTIVITY_CODE = 1122;
 	public static final int EDIT_ROUND_ACTIVITY_CODE = 1133;
+    public static final int GAME_RESULT_ACTIVITY = 1144;
 	
 
 

@@ -16,6 +16,7 @@
             android:layout_height="fill_parent"
             android:contentDescription="@string/str_image"
             android:scaleType="center"
+            android:tint="@color/green_dark"
             android:src="@drawable/device_access_network_cell" />
 
     </LinearLayout>

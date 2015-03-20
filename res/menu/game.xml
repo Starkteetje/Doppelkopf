@@ -36,7 +36,14 @@
         android:orderInCategory="1"
         android:showAsAction="never"
         android:title="@string/str_edit_round"/>
-        
+
+
+    <item
+        android:id="@+id/menu_game_result"
+        android:icon="@drawable/content_paste"
+        android:orderInCategory="1"
+        android:showAsAction="never"
+        android:title="@string/str_game_result_calc"/>
 
      <item
         android:id="@+id/menu_exit_game"

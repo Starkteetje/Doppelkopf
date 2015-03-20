@@ -21,6 +21,7 @@
     <string name="str_start_fun">Doppelkopf</string>
     <string name="str_player">Player</string>
     <string name="str_player_create">Create player</string>
+    <string name="str_player_name">Playername</string>
     <string name="str_player_add">Add player</string>
     <string name="str_number_short">Nr.</string>
     
@@ -54,6 +55,9 @@
     <string name="str_image">Image</string>
     <string name="anim_inout">300</string>
 
+    <string name="str_game_result_calc">Finish / Payoff</string>
+    <string name="str_game_result_calc_btn">Caculate</string>
+    <string name="str_game_result_calc_factor">Factor e.g. 0,10 (only 0-9 , . valid chars)</string>
     <string name="str_game_load">Load game...</string>
     <string name="str_saved_games_load">Load saved games...</string>
     <string name="str_game">Current game</string>

@@ -20,6 +20,7 @@
     <string name="str_new_game">Neues Spiel erstellen</string>
     <string name="str_start_fun">Doppelkopf</string>
     <string name="str_player">Spieler</string>
+    <string name="str_player_name">Spielername</string>
     <string name="str_player_create">Spieler anlegen</string>
     <string name="str_player_add">Spieler hinzufügen</string>
     <string name="str_number_short">Nr.</string>
@@ -54,6 +55,9 @@
     <string name="str_image">Bild</string>
     <string name="anim_inout">300</string>
 
+    <string name="str_game_result_calc">Ende / Abrechnung</string>
+    <string name="str_game_result_calc_btn">Brechnen</string>
+    <string name="str_game_result_calc_factor">Faktor z.B. 0,10 (nur 0-9 , . gülitge Zeichen)</string>
     <string name="str_game_load">Spiel wird geladen...</string>
     <string name="str_saved_games_load">Gespeicherte Spiele werden geladen...</string>
     <string name="str_game">Aktuelles Spiel</string>

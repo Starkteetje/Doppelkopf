@@ -13,22 +13,18 @@ import nldoko.android.Functions;
 import nldoko.game.R;
 import nldoko.game.XML.DokoXMLClass;
 import nldoko.game.classes.GameClass;
-import nldoko.game.classes.RoundClass;
 import nldoko.game.data.DokoData;
 import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
 import nldoko.game.data.DokoData.GAME_VIEW_TYPE;
 import nldoko.game.data.DokoData.PLAYER_ROUND_RESULT_STATE;
-import nldoko.game.information.AboutActivity;
+
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.Fragment.SavedState;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -841,6 +837,7 @@ public class GameActivity extends FragmentActivity  {
     
     @Override
   	public boolean onOptionsItemSelected(MenuItem item){
+        Intent i;
     	switch(item.getItemId()) {
     		case R.id.menu_switch_game_list_view:
     			GAME_VIEW_TYPE mRoundListViewMode = mLvRoundAdapter.getRoundListViewMode();
@@ -861,7 +858,7 @@ public class GameActivity extends FragmentActivity  {
     		break;
     		
     		case R.id.menu_change_game_settings:
-    			Intent i = new Intent(this, ChangeGameSettingActivity.class);
+    			i = new Intent(this, ChangeGameSettingActivity.class);
     			for(int k=0;k<mGame.getPlayerCount();k++){
     				i.putExtra(DokoData.PLAYERS_KEY[k], mGame.getPlayer(k).getName());
     			}
@@ -891,6 +888,17 @@ public class GameActivity extends FragmentActivity  {
     		case R.id.menu_edit_round:
     			Toast.makeText(mContext, getResources().getString(R.string.str_edit_round_info), Toast.LENGTH_LONG).show();
     		break;
+
+            case R.id.menu_game_result:
+                i = new Intent(this, GameResultActivity.class);
+                for(int k=0;k<mGame.getPlayerCount();k++){
+                    i.putExtra(DokoData.PLAYERS_KEY[k], mGame.getPlayer(k).getName());
+                    i.putExtra(DokoData.PLAYERS_POINTS_KEY[k], mGame.getPlayer(k).getPoints());
+                }
+                i.putExtra(DokoData.PLAYER_CNT_KEY, mGame.getPlayerCount());
+
+                startActivityForResult(i,DokoData.GAME_RESULT_ACTIVITY);
+                break;
     		
     		case R.id.menu_exit_game:
     			showExitDialog();
@@ -911,8 +919,12 @@ public class GameActivity extends FragmentActivity  {
 
 			case DokoData.EDIT_ROUND_ACTIVITY_CODE:
 				handleEditRoundFinish(requestCode, resultCode, data);
-			default:
+
+            case DokoData.GAME_RESULT_ACTIVITY:
 				break;
+
+            default:
+                break;
 		}
     }
     
