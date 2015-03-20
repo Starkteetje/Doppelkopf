@@ -119,6 +119,11 @@ public class GameResultActivity extends Activity {
 
                 mTv = (TextView)playerEntry.findViewById(R.id.player_entry_game_result_name_points);
                 mTv.setText(Float.toString(points));
+                if (points < 0) {
+                    mTv.setTextColor(this.getResources().getColor(R.color.red_dark));
+                } else {
+                    mTv.setTextColor(this.getResources().getColor(R.color.green_dark));
+                }
 
                 mTv = (TextView)playerEntry.findViewById(R.id.player_entry_game_result_factor);
                 mTv.setText(Float.toString(factor));
@@ -127,9 +132,9 @@ public class GameResultActivity extends Activity {
                 mTv.setText(String.format("%.2f",factor * points));
 
                 if (points < 0) {
-                    mTv.setTextColor(this.getResources().getColor(R.color.red));
+                    mTv.setTextColor(this.getResources().getColor(R.color.red_dark));
                 } else {
-                    mTv.setTextColor(this.getResources().getColor(R.color.green));
+                    mTv.setTextColor(this.getResources().getColor(R.color.green_dark));
                 }
 
                 playerEntry.setPadding(0,0,0,40);
