@@ -204,7 +204,7 @@ public class SavedGameListActivity extends Activity {
                     mIv.setColorFilter(mContext.getResources().getColor(R.color.red_dark), PorterDuff.Mode.SRC_ATOP);
 
                     mIv = (ImageView)l.findViewById(R.id.saved_game_entry_icon_mail);
-                    mIv.setOnClickListener(new FileMailClickListener(mGame));
+                    mIv.setOnClickListener(new FileMailClickListener(savedGameFile));
                     mIv.setColorFilter(mContext.getResources().getColor(R.color.blue_dark), PorterDuff.Mode.SRC_ATOP);
                 }
 
@@ -246,13 +246,14 @@ public class SavedGameListActivity extends Activity {
     }
 
     private class FileMailClickListener implements OnClickListener {
-        GameClass mGame;
-        public FileMailClickListener(GameClass game) {
-            this.mGame = game;
+        String savedGameFile;
+        public FileMailClickListener(String file) {
+            this.savedGameFile = file;
         }
 
         @Override
         public void onClick(View v) {
+            GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(v.getContext(), this.savedGameFile, true);
             DokoXMLClass.sendGameViaMail(v.getContext(), mGame);
         }
     };

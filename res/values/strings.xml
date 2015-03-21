@@ -14,7 +14,9 @@
     <string name="str_saved_game_via_mail">Send game via Mail</string>
     <string name="str_saved_game_via_mail_description">Do a "long press" on a game to send it via mail</string>
     <string name="str_saved_game_via_mail_text_1">Doppelkopf game from:</string>
-    <string name="str_saved_game_via_mail_text_excel">*You can import this data into excel. Save data as text file and import into excel by using comma as separator</string>
+    <string name="str_saved_game_via_mail_text_excel">*You can import this data into excel.
+        Save data as text file and import into excel by using semicolon as separator.</string>
+        Important set \".\" (dot) as decimal seperator.
     <string name="str_saved_game_via_mail_intent">Send via mail...</string>
     <string name="action_about">About this App</string>
     <string name="str_new_game">Create new game</string>

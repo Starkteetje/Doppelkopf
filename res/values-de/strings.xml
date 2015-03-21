@@ -14,7 +14,9 @@
     <string name="str_saved_game_via_mail">Spiel per E-Mail verschicken</string>
     <string name="str_saved_game_via_mail_description">Um das Spiel per E-Mail zu verschicken müssen sie ein "long press" auf das entsprechende Spiel ausführen</string>
     <string name="str_saved_game_via_mail_text_1">Doppelkopf Spiel vom:</string>
-    <string name="str_saved_game_via_mail_text_excel">*Die Daten können in Excel importiert werden. Dazu die Daten als Textdatei abspeichern und in Excel importieren. Komma als Trennzeichen auswählen.</string>
+    <string name="str_saved_game_via_mail_text_excel">*Die Daten können in Excel importiert werden.
+        Dazu die Daten als Textdatei abspeichern und in Excel importieren um z.B. eine Auswertung anzufertigen.
+        Semikolon als Trennzeichen auswählen. WICHTIG: Dezimaltrennzeichen auf \".\" (Punkt) einstellen</string>
     <string name="str_saved_game_via_mail_intent">Als E-Mail verschicken...</string>
     <string name="action_about">Über diese App</string>
     <string name="str_new_game">Neues Spiel erstellen</string>

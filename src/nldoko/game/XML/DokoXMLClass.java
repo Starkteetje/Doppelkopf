@@ -1021,20 +1021,32 @@ public class DokoXMLClass {
         /* Create the Intent */
         final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 
+        String mSeperator = ";";
         String text =  context.getResources().getString(R.string.str_saved_game_via_mail_text_1) + " "
                 +  mGame.getCreateDate("dd.MM.yyyy - HH:mm")+ "\n\n";
+
+
+        if (mGame.currentFilename() != null && mGame.currentFilename().length() > 0) {
+            String basename = mGame.currentFilename().substring( mGame.currentFilename().lastIndexOf('/')+1, mGame.currentFilename().length() );
+            String[] arr = basename.split("_");
+            if (arr.length > 5) {
+                String lastDate = arr[0] + "." + arr[1] + "." + arr[2] + " - " + arr[3] + ":" + arr[4] + ":" + arr[5];
+                text = context.getResources().getString(R.string.str_saved_game_via_mail_text_1) + " "
+                        +  lastDate+ "\n\n";
+            }
+        }
 
         String csv = "";
         if (mGame != null && mGame.getPlayers().size() > 0 && mGame.getRoundList().size() > 0) {
             // header
-            csv += "Nr.,";
+            csv += "Nr."+mSeperator;
             for (int u = 0; u < mGame.getPlayerCount(); u++) {
                 PlayerClass p = mGame.getPlayer(u);
-                csv += p.getName()+",";
+                csv += p.getName()+mSeperator;
             }
-            csv += context.getResources().getString(R.string.str_game_points)+",";
-            csv += context.getResources().getString(R.string.str_game_points)+" solo ,";
-            csv += context.getResources().getString(R.string.str_bock)+",";
+            csv += context.getResources().getString(R.string.str_game_points)+mSeperator;
+            csv += context.getResources().getString(R.string.str_game_points)+" solo"+mSeperator;
+            csv += context.getResources().getString(R.string.str_bock);
             csv += "\n";
 
 
@@ -1043,21 +1055,22 @@ public class DokoXMLClass {
             for (int i = 0; i < mGame.getRoundList().size(); i++) {
                 mRound = mGame.getRoundList().get(i);
 
-                csv += Integer.toString(mRound.getID())+",";
+                csv += Integer.toString(mRound.getID())+mSeperator;
 
                 for(int u=0; u < mGame.getPlayerCount(); u++) {
                     float mPoints = mGame.getPlayer(u).getPointHistory(mRound.getID());
-                    csv += mPoints + ",";
+                    csv += mPoints + mSeperator;
                 }
 
                 csv += String.valueOf(mRound.getPoints())+",";
                 if (mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.WIN_SOLO) {
                     csv += String.valueOf(mRound.getPoints()*(mGame.getActivePlayerCount()-1));
+                    csv += mSeperator;
                 } else {
-                    csv += " ,";
+                    csv += "-"+mSeperator;
                 }
 
-                csv += Functions.getBockCountAsRom(mRound.getBockCount())+",";
+                csv += Functions.getBockCountAsRom(mRound.getBockCount());
                 csv += "\n";
             }
 
