@@ -151,6 +151,17 @@ public class GameResultActivity extends Activity {
         public void onClick(View v) {
             String newFactor = mFactorField.getText().toString();
             newFactor = newFactor.replace(",", ".");
+            int counter = 0;
+            for( int i=0; i<newFactor.length(); i++ ) {
+                if( newFactor.charAt(i) == '.' ) {
+                    counter++;
+                }
+            }
+
+            if (counter > 1) {
+                Toast.makeText(mContext, getResources().getString(R.string.str_game_result_calc_factor_error), Toast.LENGTH_LONG).show();
+                return;
+            }
             setUI(Float.valueOf(newFactor));
         }
     }

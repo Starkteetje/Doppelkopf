@@ -55,9 +55,10 @@
     <string name="str_image">Bild</string>
     <string name="anim_inout">300</string>
 
-    <string name="str_game_result_calc">Ende / Abrechnung</string>
+    <string name="str_game_result_calc">Abrechnung</string>
     <string name="str_game_result_calc_btn">Brechnen</string>
     <string name="str_game_result_calc_factor">Faktor z.B. 0,10 (nur 0-9 , . gülitge Zeichen)</string>
+    <string name="str_game_result_calc_factor_error">Fehler: Bitte geben die einen gültigen Faktor ein (z.B. 0,05 - 0,10 - 1 - 1,5 - 2 - 10)</string>
     <string name="str_game_load">Spiel wird geladen...</string>
     <string name="str_saved_games_load">Gespeicherte Spiele werden geladen...</string>
     <string name="str_game">Aktuelles Spiel</string>

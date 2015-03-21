@@ -55,9 +55,10 @@
     <string name="str_image">Image</string>
     <string name="anim_inout">300</string>
 
-    <string name="str_game_result_calc">Finish / Payoff</string>
-    <string name="str_game_result_calc_btn">Caculate</string>
+    <string name="str_game_result_calc">Payoff</string>
+    <string name="str_game_result_calc_btn">Calculation</string>
     <string name="str_game_result_calc_factor">Factor e.g. 0,10 (only 0-9 , . valid chars)</string>
+    <string name="str_game_result_calc_factor_error">Error: Enter a valid factor (e.g. 0,05 - 0,10 - 1 - 1,5 - 2 - 10)</string>
     <string name="str_game_load">Load game...</string>
     <string name="str_saved_games_load">Load saved games...</string>
     <string name="str_game">Current game</string>
