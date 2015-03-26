@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "nldoko.gamee"
+        applicationId "nldoko.game"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 10
