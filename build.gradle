@@ -9,11 +9,12 @@ buildscript {
 apply plugin: 'android'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile fileTree(include: '*.jar', dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.0.0'
 }
 
 android {
-    compileSdkVersion 15
+    compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
     sourceSets {
@@ -39,6 +40,14 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
 
+    }
+
+    defaultConfig {
+        applicationId "nldoko.gamee"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 10
+        versionName "3.0"
     }
 
     buildTypes {
