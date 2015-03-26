@@ -54,6 +54,7 @@ android {
             minifyEnabled false
             proguardFile getDefaultProguardFile('proguard-android.txt')
             debuggable false
+            zipAlignEnabled true
 
         }
     }
