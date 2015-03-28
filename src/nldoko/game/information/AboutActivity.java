@@ -1,24 +1,26 @@
 package nldoko.game.information;
 
 import nldoko.game.R;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class AboutActivity extends Activity {
-	ActionBar actionBar;
+public class AboutActivity extends ActionBarActivity {
+    private static Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        
-        actionBar = getActionBar();
-        actionBar.show();
-        actionBar.setTitle(getResources().getString(R.string.action_about));
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        
+
+
+        mToolbar = (Toolbar)findViewById(R.id.toolbar_id);
+        setSupportActionBar(mToolbar);
+        mToolbar.bringToFront();
+        mToolbar.setTitle(getResources().getString(R.string.action_about));
+
     	overridePendingTransition(R.anim.right_out, R.anim.left_in);
     }
 

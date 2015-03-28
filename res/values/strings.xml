@@ -4,6 +4,8 @@
 	
     <string name="app_name">Doppelkopf</string>
     <string name="app_version">v3.0</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
     <string name="start_action_about">About this App</string>
     <string name="start_action_load_save_game">Start last game</string>
     <string name="str_saved_game">Saved games</string>
@@ -75,8 +77,8 @@
     <string name="str_game_current_round">Current Round</string>
     <string name="str_game_prev_round">Previous round</string>
     <string name="str_game_points">Points</string>
-    <string name="str_game_points_choose_winner">Choose: winner (click)</string>
-    <string name="str_game_points_choose_winner_and_suspend">Winner (click) + suspended player(s) (long press)</string>
+    <string name="str_game_points_choose_winner">Choose: winner (tap)</string>
+    <string name="str_game_points_choose_winner_and_suspend">Winner (tap) + suspended player(s) (long press)</string>
     <string name="str_game_points_choose_bock">New bock rounds</string>
     <string name="str_game_switch_list_view">Change view</string>
     <string name="str_error_game_new_round_data">Invalid values. Please check points and count of winner/loser/(suspended player)</string>

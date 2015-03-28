@@ -4,6 +4,8 @@
 
     <string name="app_name">Doppelkopf</string>
     <string name="app_version">v3.0</string>
+    <string name="drawer_open">öffnen</string>
+    <string name="drawer_close">schließen</string>
     <string name="start_action_about">Über diese App</string>
     <string name="start_action_load_save_game">Vorheriges Spiel starten</string>
     <string name="str_saved_game">Gespeicherte Spiele</string>
@@ -75,8 +77,8 @@
     <string name="str_game_current_round">Aktuelle Runde</string>
     <string name="str_game_prev_round">Vorherige Runde</string>
     <string name="str_game_points">Punkte</string>
-    <string name="str_game_points_choose_winner">Wähle: Gewinner(click)</string>
-    <string name="str_game_points_choose_winner_and_suspend">Gewinner (click) + Ausgesetzte/r (long click)</string>
+    <string name="str_game_points_choose_winner">Wähle: Gewinner (tap)</string>
+    <string name="str_game_points_choose_winner_and_suspend">Gewinner (tap) + Ausgesetzte/r (long press)</string>
     <string name="str_game_points_choose_bock">Neue Bockrunden</string>
     <string name="str_game_switch_list_view">Wechsle Ansicht</string>
     <string name="str_error_game_new_round_data">Ungültige Werte. Bitte Punkte, Anzahl Gewinner/(Ausgesetzt) prüfen</string>

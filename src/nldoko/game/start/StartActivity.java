@@ -1,31 +1,25 @@
 package nldoko.game.start;
 
 import nldoko.game.R;
+import nldoko.game.base.BaseActivity;
 import nldoko.game.game.NewGameActivity;
 import nldoko.game.game.SavedGameListActivity;
-import nldoko.game.information.AboutActivity;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class StartActivity extends Activity {
-	
-	private static String TAG = "StartActivity";
-	private ActionBar mActionBar;
+
+public class StartActivity extends BaseActivity {
 	private Button mBtnNewGame;
 	private LinearLayout mSavedGameBtn;
-	private Button mBtnGame;
-	
+
+
 	private Handler mHandler;
 	
 	private long mDelayChar;
@@ -37,11 +31,9 @@ public class StartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
-        
-        mActionBar = getActionBar();
-        mActionBar.show();
-        
+        super.setContentView(R.layout.activity_start);
+
+
         mHandler = new Handler();
         mDelayChar = 50; // ms
         mSavedGameTextCharSequence =  this.getResources().getString(R.string.str_saved_game);
@@ -82,34 +74,8 @@ public class StartActivity extends Activity {
     	}
     };
 
-    public void animateText() {
-    	mIndex = 0;
-       	mSavedGameText.setText("");
-    	mHandler.removeCallbacks(characterAdder);
-    	mHandler.postDelayed(characterAdder, mDelayChar);
+    protected void drawerItemPressed(int pos) {
+        int i = 0;
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.start, menu);
-        return true;
-    }
-    
-    
-    @Override
-  	public boolean onOptionsItemSelected(MenuItem item){
-    	// same as using a normal menu
-    	Intent i;
-    	switch(item.getItemId()) {
-	    	case R.id.action_about:
-	    		i = new Intent(this, AboutActivity.class);
-	    		startActivity(i);
-	    		break;
-
-    	}
-    	return true;
-    }
-    
 }
