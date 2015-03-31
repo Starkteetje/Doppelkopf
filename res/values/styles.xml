@@ -25,8 +25,8 @@
 
     <color name="alpha">#00000000</color>
 
-    <color name="primary">#33B5E5</color>
-    <color name="primary_dark">#1170FF</color>
+    <color name="primary">#03A9F4 </color>
+    <color name="primary_dark">#0288D1</color>
     <color name="color_accent">#000000</color>
 
     <!-- table colors -->

@@ -6,9 +6,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView;
@@ -21,13 +23,17 @@ public class BaseActivity extends ActionBarActivity {
 
     public Context mContext;
 	public static String TAG = "BaseActivity";
+
     public static Toolbar mToolbar;
     public ActionBarDrawerToggle mDrawToggle;
+
     public ListView mLeftDrawerList;
     public DrawerLayout mDrawerLayout;
     public ArrayAdapter<String> navigationDrawerAdapter;
     public String[] leftSliderData = {"Home", "Android", "Sitemap", "About", "Contact Me"};
     LinearLayout mBaseLayout;
+
+    public LayoutInflater mInflater;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,8 @@ public class BaseActivity extends ActionBarActivity {
         initToolbarDrawer();
         mContext = this;
         mBaseLayout = (LinearLayout)this.findViewById(R.id.base_layout_content);
+
+        mInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     private void initToolbarDrawer() {

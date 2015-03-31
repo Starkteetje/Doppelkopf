@@ -1,7 +1,6 @@
 package nldoko.game.game;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 import nldoko.game.R;
 import nldoko.game.XML.DokoXMLClass;
+import nldoko.game.base.BaseActivity;
 import nldoko.game.data.DokoData;
 import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
 import nldoko.game.information.AboutActivity;
@@ -20,19 +20,15 @@ import nldoko.game.information.InfoSettingsDialog;
 
 import java.util.ArrayList;
 
-public class NewGameActivity extends Activity {
-	private Context mContext;
-	
-	private String TAG = "NewGame";
-	
-	private ActionBar mActionBar;
+public class NewGameActivity extends BaseActivity {
+
+
 	private LinearLayout mLayout;
 	private LinearLayout mMarkSuspendedLayout;
 	private Boolean isMarkSuspendedPlayerSelected = false;
 	private ImageView mIv;
 	private TextView mTv;
 	private TextView mTvPlayerCnt;
-	private LayoutInflater inflater;
 	private int mPlayerCnt = DokoData.MIN_PLAYER;
 	private AutoCompleteTextView myAutoComplete;
 	private Spinner mSpActivePlayer;
@@ -52,16 +48,8 @@ public class NewGameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_newgame);
-        mContext = this;
-        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        
-        mActionBar = getActionBar();
-        mActionBar.show();
-        mActionBar.setTitle(getResources().getString(R.string.str_new_game));
-        
-        
-        
+        super.setContentView(R.layout.activity_newgame);
+        getSupportActionBar().setTitle(R.string.str_new_game);
         setUI();
         
         overridePendingTransition(R.anim.right_out, R.anim.left_in);
@@ -290,7 +278,7 @@ public class NewGameActivity extends Activity {
 		public void onClick(View v) {
 			if(mPlayerCnt == DokoData.MAX_PLAYER) return;
 			mLayout = (LinearLayout)findViewById(R.id.player_view_holder);
-			v = inflater.inflate(R.layout.player_entry, null);
+			v = mInflater.inflate(R.layout.player_entry, null);
 			
 			mIv = (ImageView)v.findViewById(R.id.player_entry_remove);
 			mIv.setOnClickListener(new removePlayerClickListener());
