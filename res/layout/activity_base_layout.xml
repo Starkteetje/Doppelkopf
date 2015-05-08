@@ -10,8 +10,7 @@
     <RelativeLayout
         android:id="@+id/base_layout_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
         <include layout="@layout/toolbar_layout"/>
 
@@ -23,8 +22,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:background="@color/gray"
                 android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_padding_lr"
+                android:paddingRight="@dimen/activity_padding_lr"
                 android:id="@+id/base_layout_content"/>
 
             <ImageView
@@ -47,8 +47,7 @@
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="@color/primary"/>
+        android:dividerHeight="0dp"/>
 
 
 </android.support.v4.widget.DrawerLayout>

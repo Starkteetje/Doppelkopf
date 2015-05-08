@@ -1,48 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="48dp"
-    android:orientation="horizontal" 
-    android:paddingBottom="5dp"
+    android:layout_height="55dp"
+    android:orientation="horizontal"
     android:clickable="true"
-    android:background="@drawable/selector_orange"
-    android:id="@+id/player_entry_add_btn">
+    android:id="@+id/player_entry_add_btn"
+    android:weightSum="1.0">
 
-    <LinearLayout
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:orientation="vertical"
-        android:background="@color/alpha" >
+    <TextView
+        android:id="@+id/fragment_game_round_number"
+        android:layout_width="0dip"
+        android:layout_weight="0.9"
+        android:layout_height="fill_parent"
+        android:paddingLeft="@dimen/item_space"
+        android:gravity="center|left"
+        android:text="@string/str_player_add"
+        android:textColor="@color/text_as_button"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-
-
-    </LinearLayout>
-    
-    <View 
-		android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/alpha"   />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/str_image"
-            android:scaleType="center"
-            android:src="@drawable/social_add_person" />
-
-        <TextView
-            android:id="@+id/fragment_game_round_number"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|left"
-            android:text="@string/str_player_add"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/player_add_player_cnt"
+        android:layout_width="0dip"
+        android:layout_weight="0.1"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:textColor="@color/gray_dark"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

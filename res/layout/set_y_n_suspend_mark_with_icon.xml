@@ -50,7 +50,7 @@
            <CheckBox
                android:id="@+id/cb_suspend"
             	android:layout_width="0dp"
-            	android:layout_height="wrap_content"
+            	android:layout_height="fill_parent"
             	android:layout_weight="0.15"
                 android:text="" />
 

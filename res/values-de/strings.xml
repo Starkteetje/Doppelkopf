@@ -27,6 +27,7 @@
     <string name="str_player_name">Spielername</string>
     <string name="str_player_create">Spieler anlegen</string>
     <string name="str_player_add">Spieler hinzufügen</string>
+    <string name="str_player_required">Bitte mindestens vier Spieler anlegen</string>
     <string name="str_number_short">Nr.</string>
     
     <string name="str_game_settings">Spieleinstellungen</string>

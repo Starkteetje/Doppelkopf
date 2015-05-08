@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import nldoko.android.Functions;
 import nldoko.game.R;
 import nldoko.game.XML.DokoXMLClass;
+import nldoko.game.base.BaseActivity;
 import nldoko.game.classes.GameClass;
 import nldoko.game.data.DokoData;
 import nldoko.game.data.DokoData.GAME_CNT_VARIANT;
@@ -56,8 +57,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameActivity extends FragmentActivity  {
-	private Context mContext;
+public class GameActivity extends BaseActivity {
+	private GameActivity mContext;
 	
 	private String TAG = "Game";
 		
@@ -115,38 +116,40 @@ public class GameActivity extends FragmentActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        super.setContentView(R.layout.activity_game);
+        getSupportActionBar().setTitle(R.string.str_game);
+
         mContext = this;
         mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        
-        mActionBar = getActionBar();
-        mActionBar.show();
-        mActionBar.setTitle(getResources().getString(R.string.str_game));
 
         mGame = getGame(savedInstanceState);
-        
+
         if(mGame == null){
         	Toast.makeText(this, getResources().getString(R.string.str_error_game_start), Toast.LENGTH_LONG).show();
         	finish();
         }
-            
+
         mPlayerCnt = mGame.getPlayerCount();
-       
+
         loadSwipeViews();
- 
+
         mAddRoundPlayernameClickListener = new GameAddRoundPlayernameClickListener();
         mAddRoundPlayernameLongClickListener = new GameAddRoundPlayernameLongClickListener();
         mBtnAddRoundClickListener = new btnAddRoundClickListener();
-        
+
         findViewById(R.id.game_main_layout).requestFocus();
         overridePendingTransition(R.anim.right_out, R.anim.left_in);
     }
-    
+
     private void loadSwipeViews(){
     	  mDemoCollectionPagerAdapter =  new SwipePagerAdapter(getSupportFragmentManager());
           mViewPager = (ViewPager) findViewById(R.id.game_pager);
           mViewPager.setAdapter(mDemoCollectionPagerAdapter);
           mViewPager.setOnPageChangeListener(new GamePageChangeListener());
+    }
+
+    private void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
     
     private void reloadSwipeViews(){
@@ -161,9 +164,9 @@ public class GameActivity extends FragmentActivity  {
             String mStr = "";
             switch (mFocusedPage) {
 			case mIndexGameMain:
-				mActionBar.setTitle(getResources().getString(R.string.str_game)); return;
+				mContext.setActionBarTitle(getResources().getString(R.string.str_game)); return;
 			case mIndexGameNewRound:
-	  			mActionBar.setTitle(getResources().getString(R.string.str_game_new_round)); 
+                mContext.setActionBarTitle(getResources().getString(R.string.str_game_new_round));
 	  			if(mGame != null && mGame.getPreRoundList().size() > 0 && mGame.getPreRoundList().get(0).getBockCount() > 0){
 	  				mStr = getResources().getString(R.string.str_bockround)+" ";
 	  				mStr += Functions.getBockCountAsRom(mGame.getPreRoundList().get(0).getBockCount()); 
@@ -383,15 +386,14 @@ public class GameActivity extends FragmentActivity  {
 
 
 	private static void setUINewRound(View rootView) {
-		GridView mGv;
 		ImageView mIv;
 		TextView mTv;
 
+        mEtNewRoundPoints = (EditText)rootView.findViewById(R.id.game_add_round_points_entry);
+        mEtNewRoundPoints.clearFocus();
+
 		loadUINewRoundPlayerSection(rootView);
-	
-		mEtNewRoundPoints = (EditText)rootView.findViewById(R.id.game_add_round_points_entry);
-		mEtNewRoundPoints.clearFocus();
-		
+
 		mBtnAddRound = (Button)rootView.findViewById(R.id.btn_game_add_new_round);
 		mBtnAddRound.setOnClickListener(mBtnAddRoundClickListener);
 		
@@ -407,9 +409,7 @@ public class GameActivity extends FragmentActivity  {
 		mRNewRoundBockYes = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_yes);
 		mRNewRoundBockNo = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_no);
 		
-		mGv = (GridView)rootView.findViewById(R.id.game_add_round_point_grid);
-		mGv.setAdapter(new GameAddNewRoundPointGridAdapter(rootView.getContext(),mEtNewRoundPoints));
-		
+
 		mIv = (ImageView)rootView.findViewById(R.id.icon);
 		mIv.setImageDrawable(rootView.getResources().getDrawable(R.drawable.social_cc_bcc));
 		
@@ -437,6 +437,10 @@ public class GameActivity extends FragmentActivity  {
     	mGameAddRoundPlayer.clear();
     	
 		mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_playersection);
+
+        LinearLayout mPointGrid = (LinearLayout)rootView.findViewById(R.id.point_grid);
+        setupGridPointButtonsToEditValues(mPointGrid, mEtNewRoundPoints);
+
 		
 		mTmp = (int) ((double)mGame.getPlayerCount()/2 + 0.5d);
 		for(int i=0;i<(DokoData.MAX_PLAYER/2) && i<mTmp ;i++){
@@ -464,7 +468,55 @@ public class GameActivity extends FragmentActivity  {
 			}
 		}
 	}
-    
+
+
+    public static void setupGridPointButtonsToEditValues(LinearLayout grid, final EditText valueField) {
+        OnClickListener clickPoints = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView)v;
+                valueField.setText(valueField.getText() + tv.getText().toString());
+            }
+        };
+
+        TextView v = (TextView)grid.findViewById(R.id.point_grid_top_left);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_top_center);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_top_right);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_center_left);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_center_center);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_center_right);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_bottom_left);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_bottom_left);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_bottom_right);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_footer_center);
+        v.setOnClickListener(clickPoints);
+
+        v = (TextView)grid.findViewById(R.id.point_grid_footer_right);
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                valueField.setText("");
+            }
+        });
+    }
 
     
     private void setSpinnerValues(){

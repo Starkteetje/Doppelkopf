@@ -1,30 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:descendantFocusability="beforeDescendants"
-	android:focusableInTouchMode="true"
-	android:id="@+id/new_game_main_layout"
-    tools:context=".NewGameActivity" >
-
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
     <ScrollView
-        android:id="@+id/scrollView1"
-        android:background="@color/white"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
         <LinearLayout
+            android:id="@+id/new_gamge_layout_content"
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:weightSum="1"
+            android:animateLayoutChanges="true"
             android:orientation="vertical" >
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/categorie_header_with_icon" 
-                android:id="@+id/categorie_player_header"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,84 +20,119 @@
                 <include
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
                     layout="@layout/player_entry" /> 
 
                 <include
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
                     layout="@layout/player_entry" />
 
                 <include
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
                     layout="@layout/player_entry" />
-
 
                 <include
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
                     layout="@layout/player_entry" />
 
-
-                
             </LinearLayout>
 
             <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="@dimen/item_space"
+                android:layout_height="70dp"
                 layout="@layout/player_entry_add" />
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+
             <include
-                 android:id="@+id/categorie_settings_header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/categorie_header_with_icon_and_icon_back" />
+                android:layout_height="70dp"
+                android:layout_marginLeft="@dimen/item_space"
+                layout="@layout/new_game_settings_entry" />
 
-            <include
+            <LinearLayout
+                android:id="@+id/new_game_settings_entry_list"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/set_active_player_with_icon" />
+                android:layout_marginLeft="@dimen/item_space"
+                android:layout_marginRight="@dimen/item_space"
+                android:orientation="vertical">
 
-            <include
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/set_bock_cnt_with_icon" />
-
-            <include
+                <include
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    layout="@layout/set_active_player_with_icon" />
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    layout="@layout/set_bock_cnt_with_icon" />
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
                     layout="@layout/set_game_cnt_variant_icon" />
 
 
-            <include
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 layout="@layout/set_auto_bock_calc_with_icon" />
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    layout="@layout/set_auto_bock_calc_with_icon" />
 
 
-            <include
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 layout="@layout/set_y_n_suspend_mark_with_icon" />
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    layout="@layout/set_y_n_suspend_mark_with_icon" />
 
 
-            <include
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                layout="@layout/spacer_gray" />
+
+
+            </LinearLayout>
+
+        <TextView
+            android:id="@+id/player_add_player_cnt"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="@dimen/item_space"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/gray_dark"
+            android:text="@string/str_player_required"
+            android:textStyle="italic"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
         
         <Button
-                android:id="@+id/btn_change_game_settings"
-                 android:padding="15dp"
-		        android:textSize="22sp"
-		        android:textStyle="bold"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/str_start_game" />
+            android:layout_marginTop="@dimen/item_space"
+            android:layout_marginBottom="@dimen/item_space"
+            android:id="@+id/btn_start_new_game"
+            android:padding="15dp"
+            android:textSize="22sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_start_game"
+            android:background="@drawable/bnt_style_1"
+            android:elevation="4dp"/>
+            <!-- android:background="@drawable/bnt_style_1" />-->
 
         </LinearLayout>
 
 
     </ScrollView>
 
-</LinearLayout>
+</merge>

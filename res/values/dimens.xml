@@ -3,6 +3,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">12dp</dimen>
     <dimen name="activity_vertical_margin">12dp</dimen>
+    <dimen name="activity_padding_lr">5dp</dimen>
+    <dimen name="item_space">5dp</dimen>
 
-
+    <dimen name="player_color_dim">5dp</dimen>
+    <dimen name="saved_game_entry_padding_lr">12dp</dimen>
+    <dimen name="saved_game_entry_padding_tb">20dp</dimen>
 </resources>

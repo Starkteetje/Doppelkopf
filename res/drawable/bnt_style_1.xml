@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Layer 0-->
+    <!--Layer 1-->
+    <!--Layer 2-->
+    <!--Layer 3-->
+    <!--Layer 4 (content background)-->
+
+    <item>
+        <layer-list>
+            <!--<item>-->
+            <!--<shape>-->
+            <!--<corners android:radius="3dp" />-->
+            <!--<solid android:color="#20CCCCCC" />-->
+            <!--</shape>-->
+            <!--</item>-->
+            <!--<item android:bottom="1dp" android:right="1dp" android:left="1dp" android:top="1dp">-->
+            <!--<shape>-->
+            <!--<corners android:radius="3dp" />-->
+            <!--<solid android:color="#40CCCCCC" />-->
+            <!--</shape>-->
+            <!--</item>-->
+            <!--<item android:bottom="2dp" android:right="2dp" android:left="2dp" android:top="2dp">-->
+            <!--<shape>-->
+            <!--<corners android:radius="3dp" />-->
+            <!--<solid android:color="#50CCCCCC" />-->
+            <!--</shape>-->
+            <!--</item>-->
+            <!--<item android:bottom="3dp" android:right="3dp" android:left="3dp" android:top="3dp">-->
+            <!--<shape>-->
+            <!--<corners android:radius="3dp" />-->
+            <!--<solid android:color="#60CCCCCC" />-->
+            <!--</shape>-->
+            <!--</item>-->
+
+            <!--<item android:bottom="4dp" android:right="4dp" android:left="4dp" android:top="4dp">-->
+            <!--<shape>-->
+            <!--<solid android:color="@color/btn_style_1" />-->
+            <!--<corners android:radius="3dp" />-->
+
+            <!--</shape>-->
+            <!--</item>-->
+            <item>
+                <shape>
+                    <solid android:color="@color/btn_style_1" />
+                    <corners android:radius="3dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

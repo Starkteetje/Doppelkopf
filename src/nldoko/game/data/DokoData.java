@@ -129,7 +129,10 @@ public class DokoData {
 
     public static final String[] PLAYERS_POINTS_KEY = {"PLAYER_1_POINTS","PLAYER_2_POINTS","PLAYER_3_POINTS","PLAYER_4_POINTS",
             "PLAYER_5_POINTS","PLAYER_6_POINTS","PLAYER_7_POINTS","PLAYER_8_POINTS"};
-	
+
+    public static final Integer[] PLAYERS_COLORS_KEY = {R.color.player_1_color, R.color.player_2_color, R.color.player_3_color, R.color.player_4_color,
+            R.color.player_5_color,R.color.player_6_color, R.color.player_7_color, R.color.player_8_color};
+
 	public static final int CHANGE_GAME_SETTINGS_ACTIVITY_CODE = 1122;
 	public static final int EDIT_ROUND_ACTIVITY_CODE = 1133;
     public static final int GAME_RESULT_ACTIVITY = 1144;

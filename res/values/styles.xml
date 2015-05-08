@@ -27,7 +27,9 @@
 
     <color name="primary">#03A9F4 </color>
     <color name="primary_dark">#0288D1</color>
-    <color name="color_accent">#000000</color>
+    <color name="primary_background">#F1F1F1</color>
+    <color name="color_accent">@color/primary_dark</color>
+    <color name="text_field_color">#000000</color>
 
     <!-- table colors -->
     <color name="table_header_background">#669900</color>
@@ -60,6 +62,19 @@
     <color name="table_footer_bock_counts">#000000</color>
 
 
+    <color name="player_1_color">#F57C00</color>
+    <color name="player_2_color">#7CB342</color>
+    <color name="player_3_color">#D32F2F</color>
+    <color name="player_4_color">#0097A7</color>
+    <color name="player_5_color">#774B3E</color>
+    <color name="player_6_color">#FF1E96</color>
+    <color name="player_7_color">#0D397A</color>
+    <color name="player_8_color">#1CFFBA</color>
+
+    <color name="activity_background_color">#F1F1F1</color>
+    <color name="text_as_button">#0288D1</color>
+    <color name="btn_style_1">#009688</color>
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppThemeBase">
     </style>
@@ -73,11 +88,37 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="colorControlNormal">@color/light_gray</item>
+        <item name="colorControlActivated">@color/color_accent</item>
+        <item name="colorControlHighlight">@color/color_accent</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompTextViewStyle</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:dropDownItemStyle">@style/DropDownItem</item>
+        <item name="android:dropDownSpinnerStyle">@android:style/Widget.Holo.Light.Spinner</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>
     </style>
+
+    <style name="DropDownListViewStyle" parent="android:Widget.ListView.DropDown">
+        <item name="android:divider">@color/light_gray</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/text_field_color</item>
+    </style>
+
+    <style name="AutoCompTextViewStyle" parent="android:Widget.AutoCompleteTextView">
+        <item name="android:textColor">@color/text_field_color</item>
+    </style>
+
+    <style name="DropDownItem" parent="android:Widget.DropDownItem">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 
 </resources>

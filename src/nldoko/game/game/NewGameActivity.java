@@ -1,8 +1,7 @@
 package nldoko.game.game;
 
-import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.*;
 import android.view.View.OnClickListener;
@@ -20,6 +19,7 @@ import nldoko.game.information.InfoSettingsDialog;
 
 import java.util.ArrayList;
 
+
 public class NewGameActivity extends BaseActivity {
 
 
@@ -36,6 +36,8 @@ public class NewGameActivity extends BaseActivity {
 	private Spinner mSpGameCntVariant;
 	private CheckBox mCbSuspendMark;
     private CheckBox mCbAutoBockCalc;
+    private LinearLayout mGameSettingsEntry;
+    private LinearLayout mGameSettingsList;
 	
 	private Button mBtnStart;
 	
@@ -57,22 +59,9 @@ public class NewGameActivity extends BaseActivity {
 
 
     private void setUI() {
-    	mLayout = (LinearLayout)findViewById(R.id.new_game_main_layout);
+    	mLayout = (LinearLayout)findViewById(R.id.new_gamge_layout_content);
     	mLayout.requestFocus();
-    	
-    	mLayout = (LinearLayout)findViewById(R.id.categorie_player_header);
-    	
-    	mIv = (ImageView)mLayout.findViewById(R.id.icon);
-    	mIv.setImageDrawable(getResources().getDrawable(R.drawable.social_group));
-    	
-    	mTv = (TextView)mLayout.findViewById(R.id.fragment_game_round_str_prim);
-    	mTv.setText(getResources().getString(R.string.str_player_create));
-    	   	
-    	
-    	
-    	mTvPlayerCnt = (TextView)mLayout.findViewById(R.id.fragment_game_round_str_extra);
-    	mTvPlayerCnt.setText(String.valueOf(mPlayerCnt));
-    	
+
     	mLayout = (LinearLayout)findViewById(R.id.player_entry_add_btn); 
     	if(mLayout != null)mLayout.setOnClickListener(new addPlayerClickListener());
     	
@@ -82,18 +71,15 @@ public class NewGameActivity extends BaseActivity {
     	mCbSuspendMark		= (CheckBox)findViewById(R.id.cb_suspend);
         mCbAutoBockCalc     = (CheckBox)findViewById(R.id.cb_bock_auto_calc);
         mCbSuspendMark     = (CheckBox)findViewById(R.id.cb_suspend);
+
+        mGameSettingsEntry = (LinearLayout)findViewById(R.id.new_game_settings_entry);
+        mGameSettingsEntry.setOnClickListener(new showGameSettingsClickListener());
+
+        mGameSettingsList = (LinearLayout)findViewById(R.id.new_game_settings_entry_list);
+        mGameSettingsList.setVisibility(View.GONE);
     	
-    	mLayout = (LinearLayout)findViewById(R.id.categorie_settings_header);
-    	mTv = (TextView)mLayout.findViewById(R.id.fragment_game_round_str_prim);
-    	mTv.setText(getResources().getString(R.string.str_game_settings));
-    	mIv = (ImageView)mLayout.findViewById(R.id.icon);
-    	mIv.setImageDrawable(getResources().getDrawable(R.drawable.action_settings));
-    	mIv = (ImageView)mLayout.findViewById(R.id.icon_back);
-    	mIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_about));
-    	
-        Animation inOutInfinit = AnimationUtils.loadAnimation(this, R.anim.about_icon_infinit_fade_in_out);
-        mIv.startAnimation(inOutInfinit);
-        if(mIv != null)mIv.setOnClickListener(new settingInfoClickListener());
+    	mTvPlayerCnt = (TextView)findViewById(R.id.player_add_player_cnt);
+
         
         mMarkSuspendedLayout = (LinearLayout)findViewById(R.id.fragment_game_set_mark_suspend_entry);
         if (mCbSuspendMark != null) {
@@ -104,11 +90,14 @@ public class NewGameActivity extends BaseActivity {
             mCbAutoBockCalc.setChecked(true); // default on
         }
 
-    	mBtnStart = (Button)findViewById(R.id.btn_change_game_settings);
+    	mBtnStart = (Button)findViewById(R.id.btn_start_new_game);
     	mBtnStart.setOnClickListener(new startBtnClickListener());
     	
     	setSpinnerValues();
     	setAutoCompleteNames();
+
+        setPlayerColors();
+        updatePlayerCnt();
 	}
     
     private void setSpinnerValues(){
@@ -117,7 +106,7 @@ public class NewGameActivity extends BaseActivity {
     	mSelction = mSpActivePlayer.getSelectedItemPosition();
     	mActivePlayerArrayList.clear();
     	for(int k=DokoData.MIN_PLAYER; k <= mPlayerCnt && k <= DokoData.MAX_ACTIVE_PLAYER;k++) mActivePlayerArrayList.add(k);
-    	mSPActivePlayerArrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item,mActivePlayerArrayList);
+    	mSPActivePlayerArrayAdapter = new ArrayAdapter<Integer>(getApplicationContext(), R.layout.spinner_item_text,mActivePlayerArrayList);
    	    mSpActivePlayer.setAdapter(mSPActivePlayerArrayAdapter);
    	    mSpActivePlayer.setOnItemSelectedListener(new OnItemSelectedListener(){
 			@Override
@@ -140,13 +129,13 @@ public class NewGameActivity extends BaseActivity {
    			i++;
    		}
 
-   		mSPGameCntVaraintArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,mGameCntVariantArr);
+   		mSPGameCntVaraintArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item_text,mGameCntVariantArr);
    	    mSpGameCntVariant.setAdapter(mSPGameCntVaraintArrayAdapter);
    	    
    	 	mSelction = mSpBockLimit.getSelectedItemPosition();
     	mBockLimitArrayList.clear();
     	for(int k=0;k<=mPlayerCnt;k++) mBockLimitArrayList.add(k);
-    	mSPBockLimitArrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item,mBockLimitArrayList);
+    	mSPBockLimitArrayAdapter = new ArrayAdapter<Integer>(getApplicationContext(), R.layout.spinner_item_text,mBockLimitArrayList);
    	    mSpBockLimit.setAdapter(mSPBockLimitArrayAdapter);
    	    
    	    if(mSpBockLimit.getAdapter().getCount() > mSelction) mSpBockLimit.setSelection(mSelction);
@@ -160,7 +149,7 @@ public class NewGameActivity extends BaseActivity {
     	    v = mLayout.getChildAt(i);
     	    if (v.getId() == R.id.player_entry){
     	    	v = (AutoCompleteTextView)v.findViewById(R.id.player_entry_auto_complete);
-    	    	   ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,DokoData.PLAYER_NAMES);
+    	    	   ArrayAdapter<String> adapter =  new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item_text,DokoData.PLAYER_NAMES);
     	    	((AutoCompleteTextView) v).setAdapter(adapter);
     	    	((AutoCompleteTextView) v).setOnTouchListener(new View.OnTouchListener(){
     	    		   @Override
@@ -180,6 +169,22 @@ public class NewGameActivity extends BaseActivity {
 		
 	}
 
+    private void setPlayerColors() {
+        LinearLayout mLayout = (LinearLayout)findViewById(R.id.player_view_holder);
+
+        int pCount = 0;
+        for (int i = 0; i < mLayout.getChildCount(); ++i) {
+            View v = mLayout.getChildAt(i);
+            if (v.getId() == R.id.player_entry) {
+                View mPlayercolorView = v.findViewById(R.id.player_color);
+                if (mPlayercolorView != null) {
+                    mPlayercolorView.setBackgroundColor(this.getResources().getColor(DokoData.PLAYERS_COLORS_KEY[pCount]));
+                    pCount++;
+                }
+
+            }
+        }
+    }
 
 	private void updatePlayerCnt(){
     	View v;
@@ -189,7 +194,8 @@ public class NewGameActivity extends BaseActivity {
     	    v = mLayout.getChildAt(i);
     	    if (v.getId() == R.id.player_entry) mPlayerCnt++;
     	}
-    	mTvPlayerCnt.setText(String.valueOf(mPlayerCnt));
+
+        mTvPlayerCnt.setText(String.valueOf(mPlayerCnt));
 
     	updateMarkPlayerOption();
     	setSpinnerValues();
@@ -276,29 +282,52 @@ public class NewGameActivity extends BaseActivity {
     private class addPlayerClickListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
-			if(mPlayerCnt == DokoData.MAX_PLAYER) return;
+			if(mPlayerCnt == DokoData.MAX_PLAYER) {
+
+                return;
+            }
 			mLayout = (LinearLayout)findViewById(R.id.player_view_holder);
-			v = mInflater.inflate(R.layout.player_entry, null);
+			LinearLayout mNewPlayerView = (LinearLayout)mInflater.inflate(R.layout.player_entry, null);
 			
-			mIv = (ImageView)v.findViewById(R.id.player_entry_remove);
+			mIv = (ImageView)mNewPlayerView.findViewById(R.id.player_entry_remove);
 			mIv.setOnClickListener(new removePlayerClickListener());
 			mIv.setVisibility(View.VISIBLE);
 			mIv.setId(mPlayerCnt+1);
-			mLayout.addView(v);
+			mLayout.addView(mNewPlayerView);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mNewPlayerView.getLayoutParams();
+
+            float marginTop = v.getResources().getDimension(R.dimen.item_space);
+            layoutParams.setMargins(0, Math.round(marginTop),0,0);
+            mNewPlayerView.setLayoutParams(layoutParams);
 			
 			updatePlayerCnt();
-	        
+
 			setAutoCompleteNames();
+            setPlayerColors();
 		}
     	
+    }
+
+    private class showGameSettingsClickListener implements OnClickListener{
+        @Override
+        public void onClick(View v) {
+            if (mGameSettingsList.getVisibility() == View.VISIBLE) {
+                mGameSettingsList.setVisibility(View.GONE);
+            } else {
+                mGameSettingsList.setVisibility(View.VISIBLE);
+            }
+
+        }
+
     }
     
     private class removePlayerClickListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
 			mLayout = (LinearLayout)findViewById(R.id.player_view_holder);	
-			mLayout.removeView((View) v.getParent().getParent().getParent());
-			updatePlayerCnt();	        
+			mLayout.removeView((View) v.getParent());
+			updatePlayerCnt();
+            setPlayerColors();
 		}
     	
     }

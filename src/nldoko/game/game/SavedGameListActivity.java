@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import nldoko.game.R;
 import nldoko.game.XML.DokoXMLClass;
+import nldoko.game.base.BaseActivity;
 import nldoko.game.classes.GameClass;
 import nldoko.game.classes.PlayerClass;
 
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class SavedGameListActivity extends Activity {
+public class SavedGameListActivity extends BaseActivity {
 	private Context mContext;
 	
 	private String TAG = "SavedGameList";
@@ -50,14 +51,12 @@ public class SavedGameListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saved_games);
+        super.setContentView(R.layout.activity_saved_games);
+        getSupportActionBar().setTitle(R.string.str_saved_game);
+
         mContext = this;
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        
-        mActionBar = getActionBar();
-        mActionBar.show();
-        mActionBar.setTitle(getResources().getString(R.string.str_saved_game));
-        mActionBar.setDisplayHomeAsUpEnabled(true);       
+
         reload();
         
         overridePendingTransition(R.anim.right_out, R.anim.left_in);

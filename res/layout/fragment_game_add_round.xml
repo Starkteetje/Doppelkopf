@@ -2,17 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
     android:orientation="horizontal"
     android:descendantFocusability="beforeDescendants"
 	android:focusableInTouchMode="true"
 	android:id="@+id/game_add_round_main_layout"
     tools:context=".GameActivity" >
-    
-    <View 
-		android:layout_width="1dp"
-        android:layout_height="fill_parent"
-        android:background="@color/gray"    />
+
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -29,17 +24,36 @@
 	        android:paddingTop="@dimen/activity_vertical_margin" >
 
 
-            <EditText
-                android:id="@+id/game_add_round_points_entry"
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/str_game_points"
-                android:inputType="number" >
+                android:layout_height="wrap_content">
 
-                <requestFocus />
-            </EditText>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:text="@string/str_game_points"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/black"/>
+
+                <View android:layout_width="10dp"
+                    android:layout_height="fill_parent" />
+
+                <EditText
+                    android:id="@+id/game_add_round_points_entry"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/str_game_points"
+                    android:textColor="@color/black"
+                    android:inputType="number" >
+
+                    <requestFocus />
+                </EditText>
+
+            </LinearLayout>
+
 
             <LinearLayout
                     android:id="@+id/game_add_round_bock_info_container"
@@ -79,16 +93,7 @@
 
             </LinearLayout>
 	
-	        <GridView
-	            android:id="@+id/game_add_round_point_grid"
-	            android:layout_width="fill_parent"
-	            android:layout_height="100dp"
-	            android:layout_marginTop="10dp"
-	            android:descendantFocusability="beforeDescendants"
-	            android:focusableInTouchMode="true"
-	            android:gravity="center_horizontal|center_vertical"
-	            android:numColumns="8" >
-	        </GridView>
+	        <include layout="@layout/fragment_game_new_round_grid_point"/>
 	
 	        <LinearLayout
 	            android:id="@+id/game_add_round_playersection"

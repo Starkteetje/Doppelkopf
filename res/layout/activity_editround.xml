@@ -35,6 +35,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/str_game_points"
+                android:textColor="@color/black"
                 android:inputType="number" >
 
                 <requestFocus />
@@ -80,16 +81,7 @@
 
             </LinearLayout>
 
-            <GridView
-	            android:id="@+id/game_add_round_point_grid"
-	            android:layout_width="fill_parent"
-	            android:layout_height="100dp"
-	            android:layout_marginTop="10dp"
-	            android:descendantFocusability="beforeDescendants"
-	            android:focusableInTouchMode="true"
-	            android:gravity="center_horizontal|center_vertical"
-	            android:numColumns="8" >
-	        </GridView>
+            <include layout="@layout/fragment_game_new_round_grid_point"/>
 	
 	        <LinearLayout
 	            android:id="@+id/game_add_round_playersection"

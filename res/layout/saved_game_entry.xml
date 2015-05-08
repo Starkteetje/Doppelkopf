@@ -2,19 +2,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingTop="5dp"
-    android:paddingBottom="15dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:background="@color/white"
     android:id="@+id/saved_game_entry" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/saved_game_entry_padding_lr"
+        android:paddingRight="@dimen/saved_game_entry_padding_lr"
+        android:paddingTop="@dimen/saved_game_entry_padding_tb"
+        android:paddingBottom="@dimen/saved_game_entry_padding_tb"
         android:weightSum="1" >
         
        <LinearLayout
@@ -24,13 +25,7 @@
         android:orientation="horizontal"
         android:layout_weight="0.9"
         android:weightSum="1">
-        
-	        <ImageView
-	            android:id="@+id/saved_game_entry_icon"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:src="@drawable/ic_action_save" />
-	            
+
 	        <LinearLayout
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
@@ -41,16 +36,16 @@
 	                android:layout_width="fill_parent"
 	                android:gravity="center_vertical"
 	                android:layout_height="match_parent"
-	                android:textAppearance="?android:attr/textAppearanceMedium"
-	                android:textStyle="bold" />
+                    android:textColor="@color/primary"
+	                android:textAppearance="?android:attr/textAppearanceLarge"
+	                android:textStyle="normal" />
 
 
                 <LinearLayout
                         android:id="@+id/saved_game_entry_create_date_layout"
                         android:orientation="horizontal"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginBottom="8dp">
+                        android:layout_height="fill_parent">
                     <TextView
                             android:id="@+id/saved_game_entry_create_date"
                             android:layout_width="wrap_content"
@@ -75,12 +70,18 @@
                             android:textAppearance="?android:attr/textAppearanceSmall" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/saved_game_entry_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_marginBottom="8dp"/>
+
                 <LinearLayout
                     android:id="@+id/saved_game_entry_path_layout"
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="8dp">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/saved_game_entry_path"
                         android:layout_width="wrap_content"
@@ -104,12 +105,6 @@
                         android:textColor="@color/gray_dark"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
                 </LinearLayout>
-
-                <TextView
-	                android:id="@+id/saved_game_entry_text"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:textAppearance="?android:attr/textAppearanceSmall" />
 	
 	        </LinearLayout>
 	    </LinearLayout>
@@ -138,11 +133,5 @@
         </LinearLayout>
         
     </LinearLayout>
-    
-   <View
-      	android:layout_marginTop="5dp"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray" />
-    
+
 </LinearLayout>

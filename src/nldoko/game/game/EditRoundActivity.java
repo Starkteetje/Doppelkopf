@@ -123,17 +123,16 @@ public class EditRoundActivity extends Activity {
 
 
 	private static void setUIEditNewRound(View rootView) {
-		GridView mGv;
 		ImageView mIv;
 		TextView mTv;
 		String mStr;
 
+        mEtNewRoundPoints = (EditText)rootView.findViewById(R.id.game_add_round_points_entry);
+        mEtNewRoundPoints.setText(""+mRoundPoints);
+        mEtNewRoundPoints.clearFocus();
+
 		loadUINewRoundPlayerSection(rootView);
-	
-		mEtNewRoundPoints = (EditText)rootView.findViewById(R.id.game_add_round_points_entry);
-		mEtNewRoundPoints.setText(""+mRoundPoints);
-		mEtNewRoundPoints.clearFocus();
-		
+
 		mBtnEditRound = (Button)rootView.findViewById(R.id.btn_game_edit_round);
 		mBtnEditRound.setOnClickListener(mBtnEditRoundClickListener);
 		
@@ -168,9 +167,7 @@ public class EditRoundActivity extends Activity {
 		mNewRoundBockRadioGroup.setEnabled(false);
 		mRNewRoundBockYes.setEnabled(false);
 		mRNewRoundBockNo.setEnabled(false);*/
-		
-		mGv = (GridView)rootView.findViewById(R.id.game_add_round_point_grid);
-		mGv.setAdapter(new GameAddNewRoundPointGridAdapter(rootView.getContext(),mEtNewRoundPoints));
+
 		
 		mIv = (ImageView)rootView.findViewById(R.id.icon);
 		mIv.setImageDrawable(rootView.getResources().getDrawable(R.drawable.social_cc_bcc));
@@ -200,6 +197,9 @@ public class EditRoundActivity extends Activity {
     	mRoundPlayer.clear();
     	
 		mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_playersection);
+
+        LinearLayout mPointGrid = (LinearLayout)rootView.findViewById(R.id.point_grid);
+        GameActivity.setupGridPointButtonsToEditValues(mPointGrid, mEtNewRoundPoints);
 		
 		mTmp = (int) ((double)mPlayerCnt/2 + 0.5d);
 		for(int i=0;i<(DokoData.MAX_PLAYER/2) && i<mTmp ;i++){
