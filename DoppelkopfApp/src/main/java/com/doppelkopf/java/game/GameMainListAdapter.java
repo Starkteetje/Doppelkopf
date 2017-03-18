@@ -133,7 +133,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 		
 		if(mRound.getBockCount() > 0){
 			mBockCountInfo.setVisibility(View.VISIBLE);
-			mBockCountInfo.setText(mContext.getString(R.string.str_bock)+": "+Functions.getBockCountAsString(mRound.getBockCount()));
+			mBockCountInfo.setText(mContext.getString(R.string.str_bock)+" "+Functions.getBockCountAsString(mRound.getBockCount()));
 		}
 		else {
             mBockCountInfo.setVisibility(View.GONE);
