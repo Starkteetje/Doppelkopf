@@ -2,160 +2,135 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_game_round_view_table_7_player"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp">
+    android:layout_height="52dp"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1.0"
-        android:minHeight="32dp" >
+        android:layout_height="match_parent"
+        android:weightSum="1.0" >
 
         <TextView
             android:id="@+id/fragment_game_round_view_table_round_nr"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="12sp"
             android:textColor="@color/table_entry_round_nr_inactive_text"
-            android:text="@string/str_number_short"
-            android:layout_weight="0.05"
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/table_entry_vl" />
-                 
-         <TextView
+            android:layout_weight="0.12"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:background="@color/activity_background_color"
+            android:lines="1" />
+
+
+        <TextView
             android:id="@+id/fragment_game_round_view_table_player_1"
             android:layout_width="0dp"
-            android:layout_weight="0.12"
+            android:layout_weight="0.107"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
+            android:lines="1" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/table_entry_vl" />
-        
+
         <TextView
             android:id="@+id/fragment_game_round_view_table_player_2"
             android:layout_width="0dp"
-            android:layout_weight="0.12"
+            android:layout_weight="0.107"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
+            android:lines="1" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/table_entry_vl" />
-        
+
         <TextView
             android:id="@+id/fragment_game_round_view_table_player_3"
             android:layout_width="0dp"
-            android:layout_weight="0.12"
+            android:layout_weight="0.107"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
+            android:lines="1" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/table_entry_vl" />
-        
-         <TextView
+
+        <TextView
             android:id="@+id/fragment_game_round_view_table_player_4"
             android:layout_width="0dp"
-            android:layout_weight="0.12"
+            android:layout_weight="0.107"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
+            android:lines="1" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/table_entry_vl" />
-         
+
         <TextView
             android:id="@+id/fragment_game_round_view_table_player_5"
             android:layout_width="0dp"
-            android:layout_weight="0.12"
+            android:layout_weight="0.107"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
+            android:lines="1" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/table_entry_vl" />
-         
-       <TextView
+
+        <TextView
             android:id="@+id/fragment_game_round_view_table_player_6"
             android:layout_width="0dp"
-            android:layout_weight="0.12"
+            android:layout_weight="0.107"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
+            android:lines="1" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/table_entry_vl" />
-         
-         
-         <TextView
+
+
+        <TextView
             android:id="@+id/fragment_game_round_view_table_player_7"
             android:layout_width="0dp"
-            android:layout_weight="0.12"
+            android:layout_weight="0.107"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
+            android:lines="1" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
@@ -167,14 +142,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_weight="0.10"
+            android:layout_weight="0.13"
             layout="@layout/fargment_game_round_view_table_result" />
 
     </LinearLayout>
-    
-   <View
-       android:layout_width="fill_parent"
-       android:layout_height="0dp"
-       android:background="@color/table_entry_hl" />
 
 </LinearLayout>

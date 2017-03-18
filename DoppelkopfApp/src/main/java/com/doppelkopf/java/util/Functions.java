@@ -6,13 +6,17 @@ import java.math.BigDecimal;
 public class Functions {
 	
 	public static String getFloatAsString(float points){
-		if(points == 0) return "0";
+		if(points == 0) {
+			return "0";
+		}
 		return new BigDecimal(Float.toString(points)).stripTrailingZeros().toPlainString();
 	}
 	
-	public static String getBockCountAsRom(int bockcount){
+	public static String getBockCountAsString(int bockcount){
 		String mStr = "";
-		for(int i=0;i<bockcount;i++) mStr += "I";
+        mStr += bockcount;
+        mStr += "×";
+
 		return mStr;
 	}
 

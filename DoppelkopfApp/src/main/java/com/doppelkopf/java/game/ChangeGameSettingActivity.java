@@ -169,6 +169,7 @@ public class ChangeGameSettingActivity extends DokoActivity {
     	mBtnChangeGameSettings.setOnClickListener(new changeGameSettingsBtnClickListener());
 
         mTvPlayerCnt = (TextView)findViewById(R.id.player_add_player_cnt);
+		mTvPlayerCnt.setText(Integer.toString(mGameHolder.getPlayerCount()));
 
     	setSpinnerValues();
     	setAutoCompleteNames();

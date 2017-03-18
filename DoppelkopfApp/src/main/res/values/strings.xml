@@ -16,7 +16,8 @@
     <string name="str_new_game">New game</string>
     <string name="str_player_name">Playername</string>
     <string name="str_player_add">Add player</string>
-    <string name="str_number_short">Nr.</string>
+    <string name="str_round_number_short">Nr.</string>
+    <string name="str_round_number">Game</string>
     <string name="str_player_required">Please setup minimum four players</string>
 
     <string name="str_game_settings">Game settings</string>
@@ -88,6 +89,7 @@
     <string name="str_help">Help</string>
     <string name="str_apply">Apply</string>
     <string name="str_hint">Info</string>
+    <string name="str_no_bock">none</string>
 
     <string name="str_external_storage">To save games on external storage and send games as CSV-File via Mail access to external storage is needed.</string>
 

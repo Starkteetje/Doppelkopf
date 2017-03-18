@@ -166,7 +166,7 @@ public class GameActivity extends DokoActivity {
                 getSupportActionBar().setTitle(getResources().getString(R.string.str_game_new_round));
 	  			if(mGame != null && mGame.getPreRoundList().size() > 0 && mGame.getPreRoundList().get(0).getBockCount() > 0){
 	  				mStr = getResources().getString(R.string.str_bockround)+" ";
-	  				mStr += Functions.getBockCountAsRom(mGame.getPreRoundList().get(0).getBockCount()); 
+	  				mStr += Functions.getBockCountAsString(mGame.getPreRoundList().get(0).getBockCount());
 	  				mTvAddRoundBockPoints.setText(mStr);
 
                     mTvRoundBockPointsContainer.setVisibility(View.VISIBLE);
@@ -319,7 +319,7 @@ public class GameActivity extends DokoActivity {
 		  switch(args.getInt(mPageIndex)){
 		  	case mIndexGameMain:
 		  		rootView  = inflater.inflate(R.layout.fragment_game_main, container, false);
-		  		setUIMain(rootView, inflater);
+		  		setUIMain(rootView, inflater, this.getContext());
 		  		break;
 		  	case mIndexGameNewRound:
 		  		rootView  = inflater.inflate(R.layout.fragment_game_add_round, container, false);
@@ -332,13 +332,10 @@ public class GameActivity extends DokoActivity {
 	  }
 	}
 	
-	private static void setUIMain(View rootView, LayoutInflater inflater) {
+	private static void setUIMain(View rootView, LayoutInflater inflater, Context context) {
 		mLvRounds = (ListView)rootView.findViewById(R.id.fragment_game_round_list);
-		
-		mLvRounds.setDivider(rootView.getResources().getDrawable(R.color.gray_dark));
-		mLvRounds.setDividerHeight(1);
-		
-		mLvRoundAdapter = new GameMainListAdapter(rootView.getContext(), mGame.getRoundList(),mGame);
+
+		mLvRoundAdapter = new GameMainListAdapter(context, mGame.getRoundList(),mGame);
 		mLvRounds.setAdapter(mLvRoundAdapter);
 		mLvRoundAdapter.changeRoundListViewMode(GAME_VIEW_TYPE.ROUND_VIEW_TABLE);
 		mGameRoundsInfoSwipe = (LinearLayout)rootView.findViewById(R.id.fragment_game_rounds_infos);
@@ -347,7 +344,7 @@ public class GameActivity extends DokoActivity {
 		
 		if(mGame != null && mGame.getRoundCount() > 0 && mLvRoundAdapter.getRoundListViewMode() == GAME_VIEW_TYPE.ROUND_VIEW_TABLE){
 			mGameRoundsInfoSwipe.removeAllViews();
-			createTableHeader(inflater);
+			createTableHeader(inflater, context);
 		}
 		
 		mBottomInfos = (LinearLayout)rootView.findViewById(R.id.fragment_game_bottom_infos);
@@ -357,13 +354,15 @@ public class GameActivity extends DokoActivity {
 		if(mGame != null){
 			if(mGame.getBockRoundLimit() == 0 )
 				mBottomInfos.setVisibility(View.GONE);
-			else setBottomInfo();
+			else {
+                setBottomInfo(context);
+            }
 		}
 		
 	}
 
 	
-	private static void setBottomInfo() {
+	private static void setBottomInfo(Context context) {
 		int mBockRoundCnt = 0, mTmp = 0;
 		String mBockPreviewStr = "";
 		if(mGame != null && mGame.getBockRoundLimit() > 0){
@@ -371,13 +370,21 @@ public class GameActivity extends DokoActivity {
 				mTmp = mGame.getPreRoundList().get(i).getBockCount();
 				if(mTmp > 0){
 					mBockRoundCnt++;
-					mBockPreviewStr += Functions.getBockCountAsRom(mTmp)+", ";
+					mBockPreviewStr += Functions.getBockCountAsString(mTmp)+"  ";
 				}
 			}
 		}
-		if(mBockPreviewStr.length() > 0)
-			mBockPreviewStr.substring(0, mBockPreviewStr.length()-1);
-		mBottomInfoBockRoundCount.setText(String.valueOf(mBockRoundCnt));
+		if(mBockPreviewStr.length() > 0) {
+            mBockPreviewStr.substring(0, mBockPreviewStr.length()-1);
+        }
+
+        if (mBockRoundCnt == 0) {
+            mBottomInfoBockRoundCount.setText(context.getResources().getString(R.string.str_no_bock));
+
+        } else {
+            mBottomInfoBockRoundCount.setText(String.valueOf(mBockRoundCnt));
+        }
+
 		mBottomInfoBockRoundPreview.setText(mBockPreviewStr);
 	}
 
@@ -612,7 +619,7 @@ public class GameActivity extends DokoActivity {
 			if(mGame.getRoundCount() == 0){
 				if(mLvRoundAdapter.getRoundListViewMode() == GAME_VIEW_TYPE.ROUND_VIEW_TABLE){
 					mGameRoundsInfoSwipe.removeAllViews();
-					createTableHeader(mInflater);
+					createTableHeader(mInflater, mContext);
 				}
 				else if(mLvRoundAdapter.getRoundListViewMode() == GAME_VIEW_TYPE.ROUND_VIEW_DETAIL){ 
 					mGameRoundsInfoSwipe.removeAllViews();
@@ -645,7 +652,7 @@ public class GameActivity extends DokoActivity {
 			
 			DokoXMLClass.saveGameStateToXML(mContext, mGame);
 			
-			setBottomInfo();
+			setBottomInfo(mContext);
 		}
 	}
 	
@@ -654,7 +661,7 @@ public class GameActivity extends DokoActivity {
 	}
 	
 	
-	private static void createTableHeader(LayoutInflater inflater) {
+	private static void createTableHeader(LayoutInflater inflater, Context context) {
 		LinearLayout mLl = null;
 		TextView mTv = null;
 		switch(mGame.getPlayerCount()){
@@ -664,11 +671,16 @@ public class GameActivity extends DokoActivity {
 			case 7: mLl = (LinearLayout) inflater.inflate(R.layout.fragment_game_round_view_table_7_player_header, null); break;
 			case 8: mLl = (LinearLayout) inflater.inflate(R.layout.fragment_game_round_view_table_8_player_header, null); break;
 		}
-		if(mLl ==  null || DokoData.mTvTablePlayerName.length < mGame.getPlayerCount()) return;
+		if(mLl ==  null || DokoData.mTvTablePlayerName.length < mGame.getPlayerCount()) {
+            return;
+        }
 		
 		for(int i=0;i<mGame.getPlayerCount();i++){
 			mTv = (TextView)mLl.findViewById(DokoData.mTvTablePlayerName[i]);
 			mTv.setText(mGame.getPlayer(i).getName());
+
+            View color = mLl.findViewById(DokoData.mTvTablePlayerNameColor[i]);
+            color.setBackgroundColor(color.getResources().getColor(DokoData.PLAYERS_COLORS_KEY[i]));
 		}
 		mGameRoundsInfoSwipe.removeAllViews();
 		mGameRoundsInfoSwipe.addView(mLl);
@@ -948,7 +960,7 @@ public class GameActivity extends DokoActivity {
 //    		case R.id.menu_switch_game_list_view:
 //    			GAME_VIEW_TYPE mRoundListViewMode = mLvRoundAdapter.getRoundListViewMode();
 //	    		if(mRoundListViewMode == GAME_VIEW_TYPE.ROUND_VIEW_DETAIL){
-//	    			createTableHeader(mInflater);
+//	    			createTableHeader(mInflater, mContext);
 //	    			mLvRoundAdapter.changeRoundListViewMode(GAME_VIEW_TYPE.ROUND_VIEW_TABLE);
 //	    		}
 //	    		else{

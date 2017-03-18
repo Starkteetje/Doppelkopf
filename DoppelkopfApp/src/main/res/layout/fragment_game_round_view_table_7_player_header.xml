@@ -10,181 +10,220 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:weightSum="1.0"
         android:background="@color/table_header_background" >
 
-        <TextView
-            android:id="@+id/fragment_game_round_view_table_round_nr"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/table_header_text"
-            android:text="@string/str_number_short"
-            android:layout_weight="0.05"
-            android:singleLine="true" 
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="bold" />
-        
-         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/gray_dark" />
-                 
-         <TextView
-            android:id="@+id/fragment_game_round_view_table_player_1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/table_header_text"
-            android:singleLine="true" 
-			android:ellipsize="marquee"   
-			android:lines="1"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_weight="0.12"
-            android:textStyle="normal" />
-        
-         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/table_header_vl" />
-        
-        <TextView
-            android:id="@+id/fragment_game_round_view_table_player_2"
-            android:layout_width="0dp"
-            android:layout_weight="0.12"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/table_header_text"
-            android:singleLine="true" 
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="normal" />
-        
-         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/table_header_vl" />
-        
-        <TextView
-            android:id="@+id/fragment_game_round_view_table_player_3"
-            android:layout_width="0dp"
-            android:layout_weight="0.12"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:singleLine="true" 
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="normal" />
-        
-         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/table_header_vl" />
-        
-         <TextView
-            android:id="@+id/fragment_game_round_view_table_player_4"
-            android:layout_width="0dp"
-            android:layout_weight="0.12"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/table_header_text"
-            android:singleLine="true" 
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="normal" />
-        
-         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/table_header_vl" />
-         
-        <TextView
-            android:id="@+id/fragment_game_round_view_table_player_5"
-            android:layout_width="0dp"
-            android:layout_weight="0.12"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/table_header_text"
-            android:singleLine="true" 
-			android:ellipsize="marquee"   
-			android:lines="1"
-            android:textStyle="normal" />
-        
-         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/table_header_vl" />
-         
-       <TextView
-            android:id="@+id/fragment_game_round_view_table_player_6"
-            android:layout_width="0dp"
-            android:layout_weight="0.12"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/table_header_text"
-           	android:singleLine="true" 
-			android:ellipsize="end"   
-			android:lines="1"
-            android:textStyle="normal" />
-       
-                <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/table_header_vl" />
-         
-       <TextView
-            android:id="@+id/fragment_game_round_view_table_player_7"
-            android:layout_width="0dp"
-            android:layout_weight="0.12"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/table_header_text"
-           	android:singleLine="true" 
-			android:ellipsize="end"   
-			android:lines="1"
-            android:textStyle="normal" />
-        
-         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:background="@color/table_header_vl" />
-         
-       <TextView
-            android:id="@+id/fragment_game_round_view_table_round_points"
-            android:layout_width="0dp"
-            android:layout_weight="0.11"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/table_header_text"
-            android:text="@string/str_game_points"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
 
-        
-        
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_round_nr"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:text="@string/str_round_number"
+                android:ellipsize="marquee"
+                android:lines="1" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.107"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_player_1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:lines="1" />
+
+            <View
+                android:id="@+id/fragment_game_round_view_table_player_1_color"
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.107"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_player_2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:lines="1" />
+
+            <View
+                android:id="@+id/fragment_game_round_view_table_player_2_color"
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.107"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_player_3"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:lines="1" />
+
+            <View
+                android:id="@+id/fragment_game_round_view_table_player_3_color"
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.107"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_player_4"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:lines="1" />
+
+            <View
+                android:id="@+id/fragment_game_round_view_table_player_4_color"
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.107"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_player_5"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:lines="1" />
+
+            <View
+                android:id="@+id/fragment_game_round_view_table_player_5_color"
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.107"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_player_6"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:lines="1" />
+
+            <View
+                android:id="@+id/fragment_game_round_view_table_player_6_color"
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.107"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_player_7"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:lines="1" />
+
+            <View
+                android:id="@+id/fragment_game_round_view_table_player_7_color"
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.13"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+
+            <TextView
+                android:id="@+id/fragment_game_round_view_table_round_points"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/table_header_text"
+                android:text="@string/str_game_points"
+                android:lines="1" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:background="@color/table_header_hl" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
-    
-   <View
-       android:layout_width="fill_parent"
-       android:layout_height="2dp"
-       android:background="@color/table_header_hl" />
 
 </LinearLayout>

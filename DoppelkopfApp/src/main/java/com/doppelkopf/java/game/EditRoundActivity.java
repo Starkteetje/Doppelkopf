@@ -123,7 +123,7 @@ public class EditRoundActivity extends DokoActivity {
 		mTvAddRoundBockPoints = (TextView)rootView.findViewById(R.id.game_add_round_bock_points);
 		if(mBockRound > 0){
 			mStr = rootView.getResources().getString(R.string.str_bockround)+" ";
-			mStr += Functions.getBockCountAsRom(mBockRound); 
+			mStr += Functions.getBockCountAsString(mBockRound);
 			mTvAddRoundBockPoints.setText(mStr);
 			mTvAddRoundBockPoints.setVisibility(View.VISIBLE);
 		}

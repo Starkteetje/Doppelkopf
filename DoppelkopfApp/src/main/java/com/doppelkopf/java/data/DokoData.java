@@ -102,8 +102,20 @@ public class DokoData {
 			R.id.fragment_game_round_view_table_player_6,
 			R.id.fragment_game_round_view_table_player_7,
 			R.id.fragment_game_round_view_table_player_8,
-	};	
-	
+	};
+
+	public static final Integer[] mTvTablePlayerNameColor = {
+			R.id.fragment_game_round_view_table_player_1_color,
+			R.id.fragment_game_round_view_table_player_2_color,
+			R.id.fragment_game_round_view_table_player_3_color,
+			R.id.fragment_game_round_view_table_player_4_color,
+			R.id.fragment_game_round_view_table_player_5_color,
+			R.id.fragment_game_round_view_table_player_6_color,
+			R.id.fragment_game_round_view_table_player_7_color,
+			R.id.fragment_game_round_view_table_player_8_color,
+	};
+
+
 	// name - description
 	public static final Integer[][] GAME_CNT_VARAINT_ARRAY  = {
 		{R.string.str_info_cnt_cnt_variant_std_name, R.string.str_info_cnt_cnt_variant_standard},

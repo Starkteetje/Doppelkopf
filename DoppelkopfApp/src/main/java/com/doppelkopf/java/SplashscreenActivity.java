@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v7.appcompat.BuildConfig;
 
 import com.doppelkopf.java.game.NewGameActivity;
+import com.doppelkopf.java.game.SavedGameListActivity;
 
 
 public class SplashscreenActivity extends Activity {
@@ -31,7 +32,7 @@ public class SplashscreenActivity extends Activity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SplashscreenActivity.this,NewGameActivity.class);
+                Intent mainIntent = new Intent(SplashscreenActivity.this,SavedGameListActivity.class);
                 SplashscreenActivity.this.startActivity(mainIntent);
                 SplashscreenActivity.this.finish();
             }

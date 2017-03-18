@@ -16,7 +16,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="light_gray">#E2E2E2</color>
+    <color name="light_gray">@color/activity_background_color</color>
     <color name="gray">#D8D8D8</color>
     <color name="gray_dark">#777777</color>
 
@@ -24,19 +24,17 @@
     <color name="primary_dark">#0288D1</color>
 
     <!-- table colors -->
-    <color name="table_header_background">#669900</color>
+    <color name="table_header_background">#FFFFFF</color>
     <color name="table_header_vl">#777777</color>
-    <color name="table_header_hl">#777777</color>
+    <color name="table_header_hl">@color/activity_background_color</color>
     <color name="table_header_text">#000000</color>
 
-    <color name="table_entry_round_bg_1">#FFFFFF</color>
-    <color name="table_entry_round_bg_2">#D8D8D8</color>
+    <color name="table_entry_round_nr_inactive_text">#777777</color>
+    <color name="table_entry_round_nr_active_text">#FF1E96</color>
 
-    <color name="table_entry_round_nr_inactive_text">#000000</color>
-    <color name="table_entry_round_nr_active_background">#FF8800</color>
 
-    <color name="table_entry_vl">#777777</color>
-    <color name="table_entry_hl">#777777</color>
+    <color name="table_entry_vl">@color/activity_background_color</color>
+    <color name="table_entry_hl">@color/activity_background_color</color>
 
     <color name="table_entry_points_positive">#669900</color>
     <color name="table_entry_points_negative">#CC0000</color>
@@ -45,16 +43,16 @@
     <color name="add_round_player_lose">#A8CC0000</color>
     <color name="add_round_player_win">#A8669900</color>
     <color name="add_round_player_suspended">#A80099CC</color>
-    <color name="add_round_player_background">#F1F1F1</color>
+    <color name="add_round_player_background">#F8F9F9F9</color>
 
     <color name="table_entry_round_points">#000000</color>
     <color name="table_entry_round_bock_total">#777777</color>
     <color name="table_entry_round_bock_count">#FF8800</color>
 
-    <color name="table_footer_background">#777777</color>
-    <color name="table_footer_bock_count_label">#000000</color>
-    <color name="table_footer_bock_count_number">#000000</color>
-    <color name="table_footer_bock_counts">#000000</color>
+    <color name="table_footer_background">#B8000000</color>
+    <color name="table_footer_bock_count_label">#FFFFFF</color>
+    <color name="table_footer_bock_count_number">#FFFFFF</color>
+    <color name="table_footer_bock_counts">#FFFFFF</color>
 
 
     <color name="player_1_color">#F57C00</color>

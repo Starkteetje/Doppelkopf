@@ -1155,7 +1155,7 @@ public class DokoXMLClass {
                     csv += "-"+mSeperator;
                 }
 
-                csv += Functions.getBockCountAsRom(mRound.getBockCount());
+                csv += Functions.getBockCountAsString(mRound.getBockCount());
                 csv += "\n";
             }
 

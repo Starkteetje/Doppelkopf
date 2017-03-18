@@ -65,56 +65,63 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
     
     private View getRoundViewTable(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-        LinearLayout mPlayerRow = null;
-        TextView mRoundNumber,mRoundPoints,mRoundPointsSolo,mPlayerPoints,mBockCountInfo;
-        String mStr = "";
-        
-        int mPlayerPerRow = 2, mRoundType, mTmp;
-        float mPoints,mPointsDiff;
-        
-        final RoundClass mRound = mRounds.get(position);
+		LinearLayout mPlayerRow = null;
+		TextView mRoundNumber, mRoundPoints, mRoundPointsSolo, mPlayerPoints, mBockCountInfo;
+		String mStr = "";
 
-        if(mRound == null) return v;
-    	if(v == null){
-    		if(mGame.getPlayerCount() == 4) v = mInflater.inflate(R.layout.fragment_game_round_view_table_4_player, parent,false);
-    		else if(mGame.getPlayerCount() == 5) v = mInflater.inflate(R.layout.fragment_game_round_view_table_5_player, parent,false);
-    		else if(mGame.getPlayerCount() == 6) v = mInflater.inflate(R.layout.fragment_game_round_view_table_6_player, parent,false);
-    		else if(mGame.getPlayerCount() == 7) v = mInflater.inflate(R.layout.fragment_game_round_view_table_7_player, parent,false);
-    		else if(mGame.getPlayerCount() == 8) v = mInflater.inflate(R.layout.fragment_game_round_view_table_8_player, parent,false);
-    	}
-    	else{
-    		if(mGame.getPlayerCount() == 4 && v.getId() != R.id.fragment_game_round_view_table_4_player)
-    			v = mInflater.inflate(R.layout.fragment_game_round_view_table_4_player, parent,false);
-    		else if(mGame.getPlayerCount() == 5 && v.getId() != R.id.fragment_game_round_view_table_5_player)
-    			v = mInflater.inflate(R.layout.fragment_game_round_view_table_5_player, parent,false);
-    		else if(mGame.getPlayerCount() == 6 && v.getId() != R.id.fragment_game_round_view_table_6_player)
-    			v = mInflater.inflate(R.layout.fragment_game_round_view_table_6_player, parent,false);
-    		else if(mGame.getPlayerCount() == 7 && v.getId() != R.id.fragment_game_round_view_table_7_player)
-    			v = mInflater.inflate(R.layout.fragment_game_round_view_table_7_player, parent,false);
-    		else if(mGame.getPlayerCount() == 8 && v.getId() != R.id.fragment_game_round_view_table_8_player)
-    			v = mInflater.inflate(R.layout.fragment_game_round_view_table_8_player, parent,false);
-    	}
-    	
-		if(v ==  null || DokoData.mTvTablePlayerName.length < mGame.getPlayerCount()) return v;
+		int mPlayerPerRow = 2, mRoundType, mTmp;
+		float mPoints, mPointsDiff;
+
+		final RoundClass mRound = mRounds.get(position);
+
+		if (mRound == null) return v;
+		if (v == null) {
+			if (mGame.getPlayerCount() == 4)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_4_player, parent, false);
+			else if (mGame.getPlayerCount() == 5)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_5_player, parent, false);
+			else if (mGame.getPlayerCount() == 6)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_6_player, parent, false);
+			else if (mGame.getPlayerCount() == 7)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_7_player, parent, false);
+			else if (mGame.getPlayerCount() == 8)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_8_player, parent, false);
+		} else {
+			if (mGame.getPlayerCount() == 4 && v.getId() != R.id.fragment_game_round_view_table_4_player)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_4_player, parent, false);
+			else if (mGame.getPlayerCount() == 5 && v.getId() != R.id.fragment_game_round_view_table_5_player)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_5_player, parent, false);
+			else if (mGame.getPlayerCount() == 6 && v.getId() != R.id.fragment_game_round_view_table_6_player)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_6_player, parent, false);
+			else if (mGame.getPlayerCount() == 7 && v.getId() != R.id.fragment_game_round_view_table_7_player)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_7_player, parent, false);
+			else if (mGame.getPlayerCount() == 8 && v.getId() != R.id.fragment_game_round_view_table_8_player)
+				v = mInflater.inflate(R.layout.fragment_game_round_view_table_8_player, parent, false);
+		}
+
+		if (v == null || DokoData.mTvTablePlayerName.length < mGame.getPlayerCount()) {
+            return v;
+        }
+
+		mRoundNumber = (TextView) v.findViewById(R.id.fragment_game_round_view_table_round_nr);
+		mRoundPoints = (TextView) v.findViewById(R.id.fragment_game_round_view_table_round_points);
+		mRoundPointsSolo = (TextView) v.findViewById(R.id.fragment_game_round_view_table_round_points_solo);
+		mBockCountInfo = (TextView) v.findViewById(R.id.fragment_game_round_view_table_round_bock_info);
+
+		mRoundNumber.setText(String.valueOf(mRound.getID() + 1));
+		if (mGame.getRoundList().size() == mRound.getID() + 1) {
+			mRoundNumber.setTextColor(v.getResources().getColor(R.color.table_entry_round_nr_active_text));
+		} else {
+			mRoundNumber.setTextColor(v.getResources().getColor(R.color.table_entry_round_nr_inactive_text));
+		}
+
 		
-		if(mRound.getID() % 2 == 1) v.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_bg_2));
-		else v.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_bg_1));
-	
-		mRoundNumber = (TextView)v.findViewById(R.id.fragment_game_round_view_table_round_nr);
-		mRoundPoints = (TextView)v.findViewById(R.id.fragment_game_round_view_table_round_points);
-		mRoundPointsSolo = (TextView)v.findViewById(R.id.fragment_game_round_view_table_round_points_solo);
-		mBockCountInfo = (TextView)v.findViewById(R.id.fragment_game_round_view_table_round_bock_info);
-		
-		mRoundNumber.setText(String.valueOf(mRound.getID()+1));
-		if(mGame.getRoundList().size() == mRound.getID()+1)
-			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_nr_active_background));
-		else if(mRound.getID() % 2 == 1)
-			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_bg_2));
-		else 
-			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.table_entry_round_bg_1));
-		
-		if(mRound.getPoints() == 0) mRoundPoints.setText("-");
-		else mRoundPoints.setText(String.valueOf(mRound.getPoints()));
+		if(mRound.getPoints() == 0) {
+            mRoundPoints.setText("−");
+        }
+		else {
+            mRoundPoints.setText(String.valueOf(mRound.getPoints()));
+        }
 		
 		if(mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.WIN_SOLO){
 			mRoundPointsSolo.setVisibility(View.VISIBLE);
@@ -126,9 +133,11 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 		
 		if(mRound.getBockCount() > 0){
 			mBockCountInfo.setVisibility(View.VISIBLE);
-			mBockCountInfo.setText("B: "+Functions.getBockCountAsRom(mRound.getBockCount()));
+			mBockCountInfo.setText(mContext.getString(R.string.str_bock)+": "+Functions.getBockCountAsString(mRound.getBockCount()));
 		}
-		else mBockCountInfo.setVisibility(View.GONE);
+		else {
+            mBockCountInfo.setVisibility(View.GONE);
+        }
 		
 		for(int i=0;i<mGame.getPlayerCount();i++){
 			mPoints = mGame.getPlayer(i).getPointHistory(mRound.getID());
@@ -196,12 +205,12 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 			mRoundNumber.setBackgroundColor(v.getResources().getColor(R.color.gray));
 		
 		if(mRound.getPoints() == 0){
-			mRoundPoints.setText("-");
-			mRoundNumber.setText("#"+String.valueOf(mRound.getID()+1));
+			mRoundPoints.setText("−");
+			mRoundNumber.setText(String.valueOf(mRound.getID()+1));
 		}
 		else{
 			mRoundPoints.setText(String.valueOf(mRound.getPoints()));
-			mRoundNumber.setText("#"+String.valueOf(mRound.getID()+1));
+			mRoundNumber.setText(String.valueOf(mRound.getID()+1));
 		}
 		
 		if(mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.WIN_SOLO)
@@ -210,7 +219,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 		
 		if(mRound.getBockCount()>0){
 			mStr = parent.getResources().getString(R.string.str_bock)+" ";
-			mStr += Functions.getBockCountAsRom(mRound.getBockCount());
+			mStr += Functions.getBockCountAsString(mRound.getBockCount());
 			mBockCnt.setText(mStr);
 		}
 		else mBockCnt.setText(null);

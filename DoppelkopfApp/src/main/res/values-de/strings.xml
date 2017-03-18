@@ -18,7 +18,8 @@
     <string name="str_player_name">Spielername</string>
     <string name="str_player_add">Spieler hinzufügen</string>
     <string name="str_player_required">Bitte mindestens vier Spieler anlegen</string>
-    <string name="str_number_short">Nr.</string>
+    <string name="str_roubd_number_short">Nr.</string>
+    <string name="str_round_number">Spiel</string>
     
     <string name="str_game_settings">Einstellungen</string>
     <string name="str_change_game_settings_save">Einstellungen speichern</string>
@@ -92,6 +93,7 @@
     <string name="str_help">Hilfe</string>
     <string name="str_apply">Übernehmen</string>
     <string name="str_hint">Hinweis</string>
+    <string name="str_no_bock">keine</string>
 
     <!-- Storage Permisson -->
     <string name="str_external_storage">Um die Spielstände innerhalb des

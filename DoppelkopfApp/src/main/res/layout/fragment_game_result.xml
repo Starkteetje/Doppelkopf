@@ -4,8 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:descendantFocusability="beforeDescendants"
-	android:focusableInTouchMode="true"
-    tools:context=".game.GameResultActivity" >
+	android:focusableInTouchMode="true">
 
     <include layout="@layout/my_toolbar"/>
 

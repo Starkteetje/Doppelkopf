@@ -1,11 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:layout_marginRight="1dp"
-    tools:context=".GameActivity" >
+    android:background="@color/activity_background_color"
+    android:layout_marginRight="1dp" >
 
     <LinearLayout
         android:id="@+id/fragment_game_rounds_infos"
@@ -19,7 +17,6 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="match_parent"
 		        android:text="@string/str_game_add_round_here"
-		        android:textStyle="bold"
 		        android:gravity="center"
 		        android:textColor="@color/gray_dark"
 		        android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -34,60 +31,60 @@
 
      <ListView
          android:id="@+id/fragment_game_round_list"
-         android:layout_width="match_parent"
          android:layout_height="fill_parent"
+         android:layout_width="match_parent"
          android:smoothScrollbar="true"
 		 android:fastScrollEnabled="true"
 		 android:keepScreenOn="true"
-		 android:cacheColorHint="#191919"
-		 android:layout_above="@+id/fragment_game_bottom_infos"
-		android:layout_below="@id/fragment_game_rounds_infos" />
+         android:dividerHeight="@dimen/item_space"
+         android:divider="@color/activity_background_color"
+         android:layout_below="@+id/fragment_game_rounds_infos"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentStart="true"
+         android:layout_above="@+id/fragment_game_bottom_infos" />
 
     <LinearLayout
-        android:id="@id/fragment_game_bottom_infos"
+        android:id="@+id/fragment_game_bottom_infos"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical" >
-		    <View
-		        android:background="@drawable/drop_shadow"
-		        android:layout_width="match_parent"
-		        android:layout_height="1dp"
-		        android:orientation="horizontal" />
-		            
-		    
+
 		    <LinearLayout
-		        android:background="@color/gray"
+		        android:background="@color/table_footer_background"
                 android:layout_width="match_parent"
 		        android:layout_height="fill_parent"
-                android:textColor="@color/table_footer_background"
-		        android:orientation="horizontal" >
+		        android:orientation="horizontal">
 
 		        <TextView
                     android:layout_width="wrap_content"
 		            android:layout_height="match_parent"
 		            android:gravity="center"
+					android:paddingLeft="10dp"
                     android:textColor="@color/table_footer_bock_count_label"
 		            android:text="@string/str_bockrounds"
 		            android:textAppearance="?android:attr/textAppearanceSmall" />
-		        
-		        <TextView
-		            android:id="@+id/fragment_game_bottom_infos_content_bock_count"
-		            android:layout_width="wrap_content"
-		            android:layout_height="match_parent"
-		            android:layout_marginLeft="4dp"
-                    android:textColor="@color/table_footer_bock_count_number"
-		            android:gravity="center"
-		            android:textStyle="bold"
-		            android:textAppearance="?android:attr/textAppearanceMedium" />
-		        
-		        <TextView
+
+                <TextView
+                    android:id="@+id/fragment_game_bottom_infos_content_bock_count"
                     android:layout_width="wrap_content"
-		            android:layout_height="match_parent"
-		            android:gravity="center"
-                    android:textColor="@color/table_footer_bock_counts"
-		            android:text="@string/str_dp_seperator"
-		            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="4dp"
+                    android:textColor="@color/table_footer_bock_count_number"
+                    android:gravity="center"
+                    android:textStyle="normal"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:gravity="center"
+					android:paddingLeft="2dp"
+					android:textColor="@color/table_footer_bock_counts"
+					android:text="@string/str_dp_seperator"
+					android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
 		        
 		       <TextView
 		            android:id="@+id/fragment_game_bottom_infos_content_bock_count_preview"
@@ -96,9 +93,10 @@
 		            android:layout_marginLeft="8dp"
 		            android:gravity="center"
 		            android:lines="1"
-		            android:ellipsize="marquee"  
-		            android:textStyle="bold"
-		            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@color/white"
+		            android:textAppearance="?android:attr/textAppearanceSmall"
+
+                   android:layout_marginRight="10dp"/>
 		            
 		    </LinearLayout>
             
