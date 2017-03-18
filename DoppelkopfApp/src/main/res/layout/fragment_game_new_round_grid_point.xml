@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/point_grid">
 
@@ -19,9 +18,8 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="1" />
         <View
@@ -35,9 +33,8 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="2" />
 
@@ -53,10 +50,9 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:text="3" />
 
     </LinearLayout>
@@ -78,10 +74,9 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:text="4" />
         <View
             android:layout_width="0dip"
@@ -91,11 +86,10 @@
             android:id="@+id/point_grid_center_center"
             android:layout_height="fill_parent"
             android:layout_width="0dip"
-            app:backgroundTint="@color/gray"
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
             android:text="5" />
@@ -113,9 +107,8 @@
             android:gravity="center_horizontal|center_vertical"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:text="6" />
 
     </LinearLayout>
@@ -137,10 +130,9 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:text="7" />
         <View
             android:layout_width="0dip"
@@ -153,10 +145,9 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:text="8" />
 
         <View
@@ -171,10 +162,9 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:text="9" />
 
     </LinearLayout>
@@ -209,10 +199,9 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:text="0" />
 
         <View
@@ -227,10 +216,9 @@
             android:layout_weight="0.32"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="@color/primary"
-            android:background="@drawable/border_std"
+            android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
-            app:backgroundTint="@color/gray"
             android:text="×" />
 
     </LinearLayout>

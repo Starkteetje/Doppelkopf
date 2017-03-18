@@ -42,6 +42,11 @@
     <color name="table_entry_points_negative">#CC0000</color>
     <color name="table_entry_points_suspended">#0099CC</color>
 
+    <color name="add_round_player_lose">#A8CC0000</color>
+    <color name="add_round_player_win">#A8669900</color>
+    <color name="add_round_player_suspended">#A80099CC</color>
+    <color name="add_round_player_background">#F1F1F1</color>
+
     <color name="table_entry_round_points">#000000</color>
     <color name="table_entry_round_bock_total">#777777</color>
     <color name="table_entry_round_bock_count">#FF8800</color>

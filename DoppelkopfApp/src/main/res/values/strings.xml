@@ -59,7 +59,7 @@
     <string name="str_game_points">Points</string>
     <string name="str_game_points_winner_select_text">win</string>
     <string name="str_game_points_lose_select_text">lose</string>
-    <string name="str_game_points_suspend_select_text">SUSPENDED</string>
+    <string name="str_game_points_suspend_select_text">suspended</string>
     <string name="str_game_points_choose_winner">Choose: winner (tap)</string>
     <string name="str_game_points_choose_winner_and_suspend">Winner (tap) + suspended player(s) (long press)</string>
     <string name="str_game_points_choose_bock">New bock rounds</string>

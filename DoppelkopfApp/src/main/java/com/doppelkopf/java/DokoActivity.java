@@ -3,6 +3,7 @@ package com.doppelkopf.java;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -55,7 +56,7 @@ public class DokoActivity extends AppCompatActivity {
                 public void uncaughtException(Thread paramThread, Throwable paramThrowable) {
                     Log.e("EX", paramThrowable.getStackTrace().toString());
                     paramThrowable.printStackTrace();
-                    android.os.Process.killProcess(android.os.Process.myPid());
+                    handleUncaughtException (paramThread, paramThrowable);
                 }
             });
         }
@@ -64,12 +65,21 @@ public class DokoActivity extends AppCompatActivity {
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public Boolean isDebug() {
-        if (BuildConfig.DEBUG) {
-            return YES;
-        }
 
-        return NO;
+    public void handleUncaughtException (Thread thread, Throwable e)
+    {
+        e.printStackTrace(); // not all Android versions will print the stack trace automatically
+
+        Intent intent = new Intent ();
+        intent.setAction ("com.doppelkopf.java.SEND_LOG"); // see step 5.
+        intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK); // required when starting from Application
+        startActivity (intent);
+
+        System.exit(1); // kill off the crashed app
+    }
+
+    public boolean isDebug() {
+        return ( 0 != ( getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) );
     }
 
     public void setupDrawerAndToolbar(String toolbarTitle) {

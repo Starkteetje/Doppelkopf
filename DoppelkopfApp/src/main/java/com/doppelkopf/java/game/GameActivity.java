@@ -4,8 +4,12 @@ package com.doppelkopf.java.game;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -85,7 +89,7 @@ public class GameActivity extends DokoActivity {
 	private ArrayAdapter<Integer> mSPActivePlayerArrayAdapter;
 	private ArrayAdapter<Integer> mSPBockLimitArrayAdapter;
 	
-	private static ArrayList<TextView> mGameAddRoundPlayer = new ArrayList<TextView>();
+	private static ArrayList<TextView> mGameAddRoundPlayerState = new ArrayList<TextView>();
 	
 	private SwipePagerAdapter mDemoCollectionPagerAdapter;
     private ViewPager mViewPager;
@@ -105,13 +109,11 @@ public class GameActivity extends DokoActivity {
 
     private ProgressDialog progressDialog;
 
-	private static TextDrawable winnerTextDraw;
-	private static TextDrawable loserTextDraw;
-	private static TextDrawable suspendTextDraw;
+	private static Drawable winnerDraw;
+	private static Drawable loserDraw;
+	private static Drawable suspendDraw;
 
 
-	private static ArrayList<TextView> allPlayersNewRoundTextViews;
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,9 +148,6 @@ public class GameActivity extends DokoActivity {
           mViewPager.setOnPageChangeListener(new GamePageChangeListener());
     }
 
-    private void setActionBarTitle(String title) {
-        getSupportActionBar().setTitle(title);
-    }
     
     private void reloadSwipeViews(){
     	loadSwipeViews();
@@ -324,7 +323,7 @@ public class GameActivity extends DokoActivity {
 		  		break;
 		  	case mIndexGameNewRound:
 		  		rootView  = inflater.inflate(R.layout.fragment_game_add_round, container, false);
-		  		setUINewRound(rootView, inflater);
+		  		setUINewRound(rootView, inflater, this.getContext());
 		  		break;
 		  	default:
 		  		rootView  = inflater.inflate(R.layout.spacer_gray, container, false);
@@ -383,10 +382,10 @@ public class GameActivity extends DokoActivity {
 	}
 
 
-    private static void setUINewRound(View rootView, LayoutInflater inflater) {
-		winnerTextDraw = new TextDrawable(rootView.getResources().getString(R.string.str_game_points_winner_select_text), rootView.getResources().getColor(R.color.green_dark));
-		loserTextDraw = new TextDrawable(rootView.getResources().getString(R.string.str_game_points_lose_select_text), rootView.getResources().getColor(R.color.red_dark));
-		suspendTextDraw = new TextDrawable(rootView.getResources().getString(R.string.str_game_points_suspend_select_text),rootView.getResources().getColor(R.color.suspended));
+    private static void setUINewRound(View rootView, LayoutInflater inflater, Context context) {
+		winnerDraw = rootView.getResources().getDrawable(R.drawable.layer_game_add_player_win);
+		loserDraw = rootView.getResources().getDrawable(R.drawable.layer_game_add_player_lose);
+		suspendDraw = rootView.getResources().getDrawable(R.drawable.layer_game_add_player_suspended);
 
 
 		mEtNewRoundPoints = (TextView)rootView.findViewById(R.id.game_add_round_points_entry);
@@ -415,7 +414,7 @@ public class GameActivity extends DokoActivity {
             mLayout.setVisibility(View.VISIBLE);
         }
 
-		resetNewRoundFields();
+		resetNewRoundFields(context);
 		
 		rootView.findViewById(R.id.game_add_round_main_layout).requestFocus();
 	}
@@ -425,8 +424,8 @@ public class GameActivity extends DokoActivity {
     	LinearLayout mLl;
     	TextView mTv;
     	int mTmp;
-    	
-    	mGameAddRoundPlayer.clear();
+
+        mGameAddRoundPlayerState.clear();
     	
 		mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_playersection);
 
@@ -434,39 +433,52 @@ public class GameActivity extends DokoActivity {
         setupGridPointButtonsToEditValues(mPointGrid, mEtNewRoundPoints);
 
 
-		allPlayersNewRoundTextViews = new ArrayList<TextView>();
-
 		mTmp = (int) ((double)mGame.getPlayerCount()/2 + 0.5d);
 		for(int i=0;i<(DokoData.MAX_PLAYER/2) && i<mTmp ;i++){
 			mLl = (LinearLayout)inflater.inflate(R.layout.fragment_game_add_round_2_player_row, null);
 			mLayout.addView(mLl);
 
+            // left
+            LinearLayout mLeftLayout = (LinearLayout)mLl.findViewById(R.id.game_add_round_player_left);
+
             View mPlayerColor = mLl.findViewById(R.id.game_add_round_playercolor_left);
             mPlayerColor.setBackgroundColor(rootView.getContext().getResources().getColor(DokoData.PLAYERS_COLORS_KEY[i * 2]));
 
 			mTv = (TextView)mLl.findViewById(R.id.game_add_round_playername_left);
-			allPlayersNewRoundTextViews.add(mTv);
 
 			mTv.setText(mGame.getPlayer(i*2).getName());
-			mTv.setOnClickListener(mAddRoundPlayernameClickListener);
-			if(mGame.getPlayerCount()-mGame.getActivePlayerCount() > 0) mTv.setOnLongClickListener(mAddRoundPlayernameLongClickListener);
-			mGameAddRoundPlayer.add(mTv);
+
+
+            mLeftLayout.setOnClickListener(mAddRoundPlayernameClickListener);
+			if(mGame.getPlayerCount()-mGame.getActivePlayerCount() > 0) {
+                mLeftLayout.setOnLongClickListener(mAddRoundPlayernameLongClickListener);
+			}
+
+			TextView mLeftStateView = (TextView)mLeftLayout.findViewById(R.id.game_add_round_player_left_state);
+            mGameAddRoundPlayerState.add(mLeftStateView);
+
+            // right
+            LinearLayout mRightLayout = (LinearLayout)mLl.findViewById(R.id.game_add_round_player_right);
 
             mPlayerColor = mLl.findViewById(R.id.game_add_round_playercolor_right);
             mPlayerColor.setBackgroundColor(rootView.getContext().getResources().getColor(DokoData.PLAYERS_COLORS_KEY[i * 2+ 1]));
 
 			mTv = (TextView)mLl.findViewById(R.id.game_add_round_playername_right);
-			allPlayersNewRoundTextViews.add(mTv);
 			
 			if(mGame.getPlayerCount() == 5 && i == 2){
-				mLl.removeView(mTv);
+                mRightLayout.setVisibility(View.GONE);
 			} else if(mGame.getPlayerCount() == 7 && i == 3){
-					mLl.removeView(mTv);
+                mRightLayout.setVisibility(View.GONE);
 			} else{
 				mTv.setText(mGame.getPlayer(i*2+1).getName());
-				mTv.setOnClickListener(mAddRoundPlayernameClickListener);
-				mGameAddRoundPlayer.add(mTv);
-				if(mGame.getPlayerCount()-mGame.getActivePlayerCount() > 0) mTv.setOnLongClickListener(mAddRoundPlayernameLongClickListener);
+
+                mRightLayout.setOnClickListener(mAddRoundPlayernameClickListener);
+                if(mGame.getPlayerCount()-mGame.getActivePlayerCount() > 0) {
+                    mRightLayout.setOnLongClickListener(mAddRoundPlayernameLongClickListener);
+                }
+                TextView mRightStateView = (TextView)mRightLayout.findViewById(R.id.game_add_round_player_right_state);
+                mGameAddRoundPlayerState.add(mRightStateView);
+
 			}
 		}
 	}
@@ -629,7 +641,7 @@ public class GameActivity extends DokoActivity {
 			if(mLvRounds.getCount() >= 1)
 				mLvRounds.setSelection(mLvRounds.getCount()-1);
 			
-			resetNewRoundFields();
+			resetNewRoundFields(mContext);
 			
 			DokoXMLClass.saveGameStateToXML(mContext, mGame);
 			
@@ -667,18 +679,26 @@ public class GameActivity extends DokoActivity {
 		@SuppressWarnings("deprecation")
 		@Override
 		public void onClick(View v) {
-			if(mGameAddRoundPlayer.size() > mSuspendList.length)
-				Log.e(TAG,"error Array"+mGameAddRoundPlayer.size()+"#"+mSuspendList.length);
-			for(int i=0;i<mGameAddRoundPlayer.size();i++){
-				if(v == mGameAddRoundPlayer.get(i) && mSuspendList[i]==0){
+			if(mGameAddRoundPlayerState.size() > mSuspendList.length) {
+                Log.e(TAG, "error Array" + mGameAddRoundPlayerState.size() + "#" + mSuspendList.length);
+            }
+			for(int i=0;i<mGameAddRoundPlayerState.size();i++){
+                TextView mTvState = mGameAddRoundPlayerState.get(i);
+                // maybe right or left
+                TextView mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_left_state);
+                if (mTvStateOfView == null) {
+                    mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_right_state);
+                }
+
+				if(mTvState != null && mTvStateOfView == mTvState && mSuspendList[i]==0){
 					if(mWinnerList[i] == 0 && getWinnerCnt() < mGame.getActivePlayerCount()-1){
 
-                        v.setBackgroundDrawable(winnerTextDraw);
+                        changePlayerViewState(mTvState, winnerDraw, R.string.str_game_points_winner_select_text, YES);
 						mWinnerList[i] = 1;
 					}
 					else{
 						mWinnerList[i] = 0;
-						v.setBackgroundDrawable(loserTextDraw);
+                        changePlayerViewState(mTvState, loserDraw, R.string.str_game_points_lose_select_text, YES);
 					}
 				}
 			}
@@ -689,20 +709,52 @@ public class GameActivity extends DokoActivity {
 		@SuppressWarnings("deprecation")
 		@Override
 		public boolean onLongClick(View v) {
-			for(int i=0;i<mGameAddRoundPlayer.size();i++){
-				if(v == mGameAddRoundPlayer.get(i) && mWinnerList[i]==0){
+			for(int i=0;i<mGameAddRoundPlayerState.size();i++){
+                TextView mTvState = mGameAddRoundPlayerState.get(i);
+
+                // maybe right or left
+                TextView mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_left_state);
+                if (mTvStateOfView == null) {
+                    mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_right_state);
+                }
+
+                if(mTvState != null && mTvStateOfView == mTvState && mWinnerList[i]==0){
 					if(mSuspendList[i] == 0 && getSuspendCnt() < mGame.getPlayerCount()-mGame.getActivePlayerCount()){
-						v.setBackgroundDrawable(suspendTextDraw);
+                        changePlayerViewState(mTvState, suspendDraw, R.string.str_game_points_suspend_select_text, YES);
 						mSuspendList[i] = 1;
 					}
 					else{
 						mSuspendList[i] = 0;
-						v.setBackgroundDrawable(loserTextDraw);
+                        changePlayerViewState(mTvState, loserDraw, R.string.str_game_points_lose_select_text, YES);
 					}
 				}
 			}
 			return true;	
 		}
+    }
+
+    private void changePlayerViewState(TextView mTvStateView, Drawable newDrawable, int stringID, boolean animate) {
+        changePlayerViewState(mTvStateView, newDrawable, stringID, animate, mContext);
+    }
+
+    private static void changePlayerViewState(TextView mTvStateView, Drawable newDrawable, int stringID, boolean animate, Context context) {
+        if (animate) {
+            Drawable backgrounds[] = new Drawable[2];
+            Resources res = context.getResources();
+            backgrounds[0] = mTvStateView.getBackground();
+            backgrounds[1] = newDrawable;
+
+            TransitionDrawable crossfader = new TransitionDrawable(backgrounds);
+            crossfader.setCrossFadeEnabled(true);
+
+            mTvStateView.setBackgroundDrawable(crossfader);
+
+            crossfader.startTransition(600);
+        } else {
+            mTvStateView.setBackgroundDrawable(newDrawable);
+        }
+
+        mTvStateView.setText(context.getResources().getString(stringID));
     }
 	
 	private boolean isNewRoundDataOK() {
@@ -711,7 +763,7 @@ public class GameActivity extends DokoActivity {
 		return true;
 	}
 	
-	private static void resetNewRoundFields() {
+	private static  void resetNewRoundFields(Context context) {
 		TextView mTv = null;
 		mEtNewRoundPoints.setText("");
 		for(int i=0;i<mGame.getMAXPlayerCount();i++){
@@ -719,9 +771,9 @@ public class GameActivity extends DokoActivity {
 			mWinnerList[i] = 0;
 		}
 		
-		for(int i=0;i<mGameAddRoundPlayer.size();i++){
-			mTv = mGameAddRoundPlayer.get(i);
-			mTv.setBackgroundDrawable(mTv.getResources().getDrawable(R.color.white));
+		for(int i=0;i<mGameAddRoundPlayerState.size();i++){
+			mTv = mGameAddRoundPlayerState.get(i);
+            changePlayerViewState(mTv, loserDraw, R.string.str_game_points_lose_select_text, NO, context);
 		}
 
         mCBNewBockRound.setChecked(false);
@@ -729,10 +781,6 @@ public class GameActivity extends DokoActivity {
 		if (mBtnAddRound != null && mBtnAddRound.getParent() != null && mBtnAddRound.getParent().getParent() != null && (mBtnAddRound.getParent().getParent() instanceof ScrollView)) {
 			ScrollView sv = (ScrollView)mBtnAddRound.getParent().getParent();
 			sv.fullScroll(ScrollView.FOCUS_UP);
-		}
-
-		for(TextView t:  allPlayersNewRoundTextViews) {
-			t.setBackgroundDrawable(loserTextDraw);
 		}
 	}
 

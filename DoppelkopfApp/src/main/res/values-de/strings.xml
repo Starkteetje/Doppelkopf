@@ -63,7 +63,7 @@
     <string name="str_game_points">Punkte</string>
     <string name="str_game_points_winner_select_text">gewonnen</string>
     <string name="str_game_points_lose_select_text">verloren</string>
-    <string name="str_game_points_suspend_select_text">AUSGESETZT</string>
+    <string name="str_game_points_suspend_select_text">ausgesetzt</string>
     <string name="str_game_points_choose_winner">Wähle: Gewinner (tap)</string>
     <string name="str_game_points_choose_winner_and_suspend">Gewinner (tap) + Ausgesetzte/r (long press)</string>
     <string name="str_game_points_choose_bock">Neue Bockrunden</string>
