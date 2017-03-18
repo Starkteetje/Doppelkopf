@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="90dp"
+    android:orientation="vertical"
+    android:paddingBottom="1dp"
+
+    android:background="@color/white"
+    android:layout_marginTop="10dp"
+    android:weightSum="1.0">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:paddingRight="5dp"
+        android:orientation="horizontal"
+        android:id="@+id/player_entry"
+        android:weightSum="1.0">
+
+        <View
+            android:id="@+id/player_color"
+            android:layout_height="fill_parent"
+            android:layout_width="@dimen/player_color_dim" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <AutoCompleteTextView
+                android:padding="10dp"
+
+                android:layout_marginLeft="@dimen/item_space"
+                android:layout_marginRight="@dimen/item_space"
+                android:id="@+id/player_entry_game_result_name"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:gravity="center_vertical|left"
+                android:hint="@string/str_player_name"
+                android:textColorHint="@color/light_gray"
+                android:textColor="@color/black"
+                android:popupBackground="@color/activity_background_color"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:clickable="false"
+                android:enabled="false"
+                android:maxLines="1">
+            </AutoCompleteTextView>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/player_entry_game_result_name_points"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/light_gray"
+            android:lines="1"
+            android:text=""
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:paddingRight="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="15dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.05"
+            android:gravity="right|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/light_gray"
+            android:lines="1"
+            android:layout_marginRight="4dp"
+            android:text="×"
+            android:layout_alignParentRight="true"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/player_entry_game_result_factor"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical|right"
+            android:lines="1"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/black"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="93dp"
+        android:layout_height="1dip"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="2dp"
+        android:layout_gravity="right"
+        android:layout_alignParentRight="true"
+        android:background="@color/light_gray" />
+
+    <LinearLayout
+        android:paddingRight="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:id="@+id/player_entry_game_result_final_result"
+            android:background="@color/white"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:gravity="right|top"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium"  />
+
+    </LinearLayout>
+
+</LinearLayout>

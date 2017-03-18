@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="55dp"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:id="@+id/player_entry"
+    android:weightSum="1.0">
+
+    <View
+        android:id="@+id/player_color"
+        android:layout_height="fill_parent"
+        android:layout_width="@dimen/player_color_dim" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <AutoCompleteTextView
+            android:padding="10dp"
+            android:layout_marginTop="@dimen/item_space"
+            android:layout_marginLeft="@dimen/item_space"
+            android:layout_marginRight="@dimen/item_space"
+            android:id="@+id/player_entry_auto_complete"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/str_player_name"
+            android:textColorHint="@color/light_gray"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/light_gray"
+            android:popupBackground="@color/activity_background_color"
+            android:inputType="text"
+            android:imeOptions="actionNext"
+            android:maxLines="1">
+        </AutoCompleteTextView>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/player_entry_remove"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:scaleType="center"
+        android:clickable="true"
+        android:visibility="invisible"
+        android:contentDescription="@string/str_image"
+        android:src="@drawable/content_remove" />
+
+</LinearLayout>

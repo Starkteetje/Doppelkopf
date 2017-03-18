@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+	android:focusableInTouchMode="true"
+    tools:context=".game.GameResultActivity" >
+
+    <include layout="@layout/my_toolbar"/>
+
+    <ScrollView
+        android:paddingLeft="@dimen/activity_padding_lr"
+        android:paddingRight="@dimen/activity_padding_lr"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/field_game_result_calc_factor"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:ems="20"
+                android:digits="0123456789.,"
+                android:backgroundTint="@color/light_gray"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:hint="@string/str_game_result_calc_factor"
+                android:inputType="numberDecimal" >
+
+                <requestFocus />
+            </EditText>
+
+            <Button
+                android:layout_marginTop="@dimen/item_space"
+                android:layout_marginBottom="@dimen/item_space"
+                android:id="@+id/btn_game_result_calc"
+                android:padding="15dp"
+                android:textSize="22sp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/light_gray"
+                android:text="@string/str_game_result_calc_btn"
+                android:background="@drawable/bnt_style_1"
+                android:elevation="4dp"/>
+
+
+        <LinearLayout
+            android:id="@+id/game_result_view_container"
+            android:paddingTop="10dp"
+            android:paddingBottom="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

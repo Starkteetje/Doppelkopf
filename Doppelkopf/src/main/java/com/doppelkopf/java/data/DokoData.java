@@ -1,0 +1,137 @@
+package com.doppelkopf.java.data;
+
+import com.doppelkopf.java.R;
+
+import java.util.ArrayList;
+
+public class DokoData {
+	
+	public static final int MAX_PLAYER = 8;
+	public static final int MAX_ACTIVE_PLAYER = 5;
+	public static final int MIN_PLAYER = 4;
+	
+	public static ArrayList<String> PLAYER_NAMES = new ArrayList<String>();
+	public static final String PLAYER_NAMES_XML = "player_names.xml";
+
+	
+	public enum GAME_ROUND_RESULT_TYPE {
+		NORMAL, 
+		WIN_SOLO, 
+		LOSE_SOLO, 
+		FIVEPLAYER_3WIN, 
+		FIVEPLAYER_2WIN,
+        RESTORE_ROUND;
+
+        public static GAME_ROUND_RESULT_TYPE valueForString(String type) {
+            if (type == null ){
+                return RESTORE_ROUND;
+            }
+
+            if (type.equalsIgnoreCase("normal")){
+                return NORMAL;
+            }
+            else if (type.equalsIgnoreCase("win_solo")){
+                return WIN_SOLO;
+            }
+            else if (type.equalsIgnoreCase("lose_solo")){
+                return LOSE_SOLO;
+            }
+            else if (type.equalsIgnoreCase("5Player_3Win")){
+                return FIVEPLAYER_3WIN;
+            }
+            else if (type.equalsIgnoreCase("5Player_2Win")){
+                return FIVEPLAYER_2WIN;
+            }
+
+            return RESTORE_ROUND;
+        }
+
+        public static String stringValueOf(GAME_ROUND_RESULT_TYPE type) {
+            if (type == null) {
+                return "restore";
+            }
+
+            switch (type) {
+                case NORMAL: return "normal";
+                case WIN_SOLO: return "win_solo";
+                case LOSE_SOLO: return "lose_solo";
+                case FIVEPLAYER_3WIN: return "5Player_3Win";
+                case FIVEPLAYER_2WIN: return "5Player_2Win";
+                case RESTORE_ROUND: return  "restore";
+                default:
+                    break;
+            }
+            return "restore";
+        }
+	}
+	
+	public enum PLAYER_ROUND_RESULT_STATE {
+		LOSE_STATE, 
+		WIN_STATE, 
+		SUSPEND_STATE;
+
+		public static PLAYER_ROUND_RESULT_STATE valueOf(int state) {
+			switch (state) {
+				case 0:	return LOSE_STATE;
+				case 1:	return WIN_STATE;
+				case 2:	return SUSPEND_STATE;
+				default:
+					break;
+			}
+			return null;
+		}
+	}
+	
+	public enum GAME_CNT_VARIANT {
+		CNT_VARIANT_NORMAL,
+		CNT_VARIANT_LOSE,
+		CNT_VARIANT_WIN
+	}
+
+	public enum GAME_VIEW_TYPE {
+		ROUND_VIEW_DETAIL,
+		ROUND_VIEW_TABLE
+	}
+	
+	public static final Integer[] mTvTablePlayerName = {
+			R.id.fragment_game_round_view_table_player_1,
+			R.id.fragment_game_round_view_table_player_2,
+			R.id.fragment_game_round_view_table_player_3,
+			R.id.fragment_game_round_view_table_player_4,
+			R.id.fragment_game_round_view_table_player_5,
+			R.id.fragment_game_round_view_table_player_6,
+			R.id.fragment_game_round_view_table_player_7,
+			R.id.fragment_game_round_view_table_player_8,
+	};	
+	
+	// name - description
+	public static final Integer[][] GAME_CNT_VARAINT_ARRAY  = {
+		{R.string.str_info_cnt_cnt_variant_std_name, R.string.str_info_cnt_cnt_variant_standard},
+		{R.string.str_info_cnt_cnt_variant_win_name, R.string.str_info_cnt_cnt_variant_win},
+		{R.string.str_info_cnt_cnt_variant_lose_name, R.string.str_info_cnt_cnt_variant_lose} };
+	
+	
+	public static final String CHANGE_GAME_SETTINGS_KEY = "CHANGE_GAME_SETTINGS";
+	public static final String CHANGE_ROUND_KEY			= "CHANGE_ROUND";
+	public static final String PLAYER_CNT_KEY 			= "PLAYER_CNT";
+	public static final String MARK_SUSPEND_OPTION_KEY 	= "MARK_SUSPEND_OPTION";
+	public static final String BOCKLIMIT_KEY 			= "BOCKLIMIT";
+	public static final String BOCKROUND_KEY 			= "BOCKROUND";
+	public static final String ACTIVE_PLAYER_KEY 		= "ACTIVE_PLAYERS";
+	public static final String GAME_CNT_VARIANT_KEY 	= "GAME_CNT_VARIANT";
+	public static final String ROUND_POINTS_KEY 		= "ROUND_POINTS";
+    public static final String AUTO_BOCK_CALC_KEY 		= "AUTO_BOCK_CALC_KEY";
+	
+	public static final String[] PLAYERS_KEY  = {"PLAYER_1","PLAYER_2","PLAYER_3","PLAYER_4",
+												 "PLAYER_5","PLAYER_6","PLAYER_7","PLAYER_8"};
+
+    public static final String[] PLAYERS_POINTS_KEY = {"PLAYER_1_POINTS","PLAYER_2_POINTS","PLAYER_3_POINTS","PLAYER_4_POINTS",
+            "PLAYER_5_POINTS","PLAYER_6_POINTS","PLAYER_7_POINTS","PLAYER_8_POINTS"};
+
+    public static final Integer[] PLAYERS_COLORS_KEY = {R.color.player_1_color, R.color.player_2_color, R.color.player_3_color, R.color.player_4_color,
+            R.color.player_5_color,R.color.player_6_color, R.color.player_7_color, R.color.player_8_color};
+
+	public static final int CHANGE_GAME_SETTINGS_ACTIVITY_CODE = 1122;
+	public static final int EDIT_ROUND_ACTIVITY_CODE = 1133;
+    public static final int GAME_RESULT_ACTIVITY = 1144;
+}

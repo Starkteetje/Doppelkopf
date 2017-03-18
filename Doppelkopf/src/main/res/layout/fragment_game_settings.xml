@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+	android:focusableInTouchMode="true"
+    tools:context=".game.ChangeGameSettingActivity" >
+
+    <include layout="@layout/my_toolbar"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="@dimen/activity_padding_lr"
+        android:paddingRight="@dimen/activity_padding_lr">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:weightSum="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/item_space"
+                android:id="@+id/player_view_holder" >
+
+                
+            </LinearLayout>
+
+            <include
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="@dimen/item_space"
+                android:layout_height="70dp"
+                layout="@layout/player_entry_add" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="@dimen/item_space"
+                layout="@layout/new_game_settings_entry" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_space"
+                android:layout_marginRight="@dimen/item_space"
+                android:orientation="vertical">
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    layout="@layout/set_active_player_with_icon" />
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    android:visibility="gone"
+                    layout="@layout/set_bock_cnt_with_icon" />
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    android:visibility="gone"
+                    layout="@layout/set_game_cnt_variant_icon" />
+
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    layout="@layout/set_auto_bock_calc_with_icon" />
+
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    layout="@layout/set_y_n_suspend_mark_with_icon" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:layout_marginTop="@dimen/item_space"
+                android:layout_marginBottom="@dimen/item_space"
+                android:id="@+id/change_game_settings_apply_button"
+                android:padding="15dp"
+                android:textSize="22sp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/light_gray"
+                android:text="@string/str_apply"
+                android:background="@drawable/bnt_style_1"
+                android:elevation="4dp"/>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

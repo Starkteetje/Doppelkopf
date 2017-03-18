@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- german -->
+
+    <string name="app_name">Doppelkopf</string>
+    <string name="app_version">v3.0</string>
+    <string name="start_action_about">Über die App</string>
+    <string name="str_saved_game">Speicherstände</string>
+    <string name="str_saved_game_delete_all">Speicherstände löschen</string>
+    <string name="str_saved_game_delete_all_q">Sind Sie sicher das sie alle Speicherstände löschen möchten?</string>
+    <string name="str_saved_game_delete_q">Sind Sie sicher das sie das Speicherstand löschen möchten?</string>
+    <string name="str_saved_game_via_mail_text_1">Doppelkopf Runde vom:</string>
+    <string name="str_saved_game_via_mail_text_excel">*Die Daten können in Excel importiert werden.
+        Dazu die Daten als Textdatei abspeichern und in Excel importieren um z.B. eine Auswertung anzufertigen.
+        Semikolon als Trennzeichen auswählen. WICHTIG: Dezimaltrennzeichen auf \".\" (Punkt) einstellen</string>
+    <string name="str_saved_game_via_mail_intent">Als E-Mail verschicken...</string>
+    <string name="str_new_game">Neue Runde</string>
+    <string name="str_player_name">Spielername</string>
+    <string name="str_player_add">Spieler hinzufügen</string>
+    <string name="str_player_required">Bitte mindestens vier Spieler anlegen</string>
+    <string name="str_number_short">Nr.</string>
+    
+    <string name="str_game_settings">Einstellungen</string>
+    <string name="str_change_game_settings_save">Einstellungen speichern</string>
+    <string name="str_change_game_settings_finish">Einstellungen geändert</string>
+    <string name="str_change_game_settings_save_q">Möchten sie die Einstellungen speichern?</string>
+    <string name="str_change_game_settings_delete_bockrounds">Bockrunden löschen</string>
+    <string name="str_change_game_settings_delete_bockrounds_q">Vorhandene Bockrunden werden überschrieben (gelöscht)</string>    
+    <string name="str_edit_round">Spiel bearbeiten</string>
+
+    <string name="str_edit_round_not_possible">Diese Spiel kann nicht bearbeitet werden</string>
+    <string name="str_edit_round_info">Bearbeiten durch langes Drücken des Eintrag</string>
+    <string name="str_edit_round_finish">Erfolgreich bearb</string>
+    <string name="str_edit_round_error">Fehler: Spiel konnte nicht geändert!</string>
+    <string name="str_active_player">Aktive Spieler</string>
+    <string name="str_bock_limit">Bocklimit</string>
+    <string name="str_bock">Bock</string>
+    <string name="str_bockround">Bockrunde</string>
+    <string name="str_bockrounds">Bockrunden</string>
+    <string name="str_bock_auto_calc">Auto. Bock Berechnung</string>
+    <string name="str_mark_suspend">Markiere ausgesetzte</string>
+    <string name="str_start_game">Beginnen</string>
+    <string name="str_start">Start</string>
+    <string name="str_error_player_name">Fehlender oder gleiche Spielername</string>
+    <string name="str_image">Bild</string>
+    <string name="anim_inout">300</string>
+
+    <string name="str_game_result_calc">Abrechnung</string>
+    <string name="str_game_result_calc_btn">Berechnen</string>
+    <string name="str_game_result_calc_factor">Faktor z.B. 0,10 (nur 0-9 , . gülitge Zeichen)</string>
+    <string name="str_game_result_calc_factor_error">Fehler: Bitte geben die einen gültigen Faktor ein (z.B. 0,05 - 0,10 - 1 - 1,5 - 2 - 10)</string>
+    <string name="str_game_load">Runde wird geladen...</string>
+    <string name="str_saved_games_load">Speicherstände werden geladen...</string>
+    <string name="str_game">Doppelkopf</string>
+    <string name="str_game_cnt_variant">Zählvariante</string>
+    <string name="str_game_cnt_variant_win">Gewinner</string>
+    <string name="str_game_add_round_here">Neue Runde eintragen (wischen)</string>
+    <string name="str_game_new_round">Spiel hinzufügen</string>
+    <string name="str_game_add_new_round">Hinzufügen</string>
+    <string name="str_game_round">Runde</string>
+
+
+    <string name="str_game_points">Punkte</string>
+    <string name="str_game_points_winner_select_text">gewonnen</string>
+    <string name="str_game_points_lose_select_text">verloren</string>
+    <string name="str_game_points_suspend_select_text">AUSGESETZT</string>
+    <string name="str_game_points_choose_winner">Wähle: Gewinner (tap)</string>
+    <string name="str_game_points_choose_winner_and_suspend">Gewinner (tap) + Ausgesetzte/r (long press)</string>
+    <string name="str_game_points_choose_bock">Neue Bockrunden</string>
+    <string name="str_error_game_new_round_data">Ungültige Werte. Bitte Punkte, Anzahl Gewinner/(Ausgesetzt) prüfen</string>
+    <string name="str_round_type_solo">Solo</string>
+    <string name="str_round_type_2vs2">2vs2</string>
+    <string name="str_round_type_3vs2">3vs2</string>
+       
+    <string name="str_delete_file">Datei löschen</string>
+    <string name="str_delete_files">Dateien löschen</string>
+    <string name="str_file_absolute_path">Dateipfad</string>
+    <string name="str_file_create_date">Erstellt</string>
+    <string name="str_error">Fehler</string>
+    <string name="str_exit_game">Runde beenden</string>
+    <string name="str_exit_game_q">Möchten Sie die Runde wirklich beenden?</string>
+    <string name="str_error_game_start">Fehler: Runde konnte nicht gestartet werden</string>
+    <string name="str_error_load_game_for_change_game_settings">Fehler: Spieleinstellungen konnten nicht geladen werden</string> 
+
+    <string name="str_dp_seperator">:</string>
+    <string name="str_edit">bearbeiten</string>
+    <string name="str_yes">Ja</string>
+    <string name="str_no">Nein</string>
+    <string name="str_accept">Ok</string>
+    <string name="str_abort">Abbrechen</string>
+    <string name="str_plz_wait">Bitte warten</string>
+    <string name="str_help">Hilfe</string>
+    <string name="str_apply">Übernehmen</string>
+    <string name="str_hint">Hinweis</string>
+
+    <!-- Storage Permisson -->
+    <string name="str_external_storage">Um die Spielstände innerhalb des
+        externen Speichers abzuspeichern und damit Spielstände als CSV-Datei
+        per E-Mail verschickt werden können wird der Zugriff auf den externen Speicher benötigt.</string>
+    
+    <!-- INFO/HELP -->
+    <string name="str_info_cnt_cnt_variants">Zählvarianten</string>
+    <string name="str_info_cnt_cnt_variant_std_name">Standard</string>
+    <string name="str_info_cnt_cnt_variant_win_name">Verlierer</string>
+    <string name="str_info_cnt_cnt_variant_lose_name">Gewinner</string>
+    <string name="str_info_cnt_cnt_variant_standard">Standard: \nDie Verlierer bekommen Punkte abgezogen, die Gewinner bekommen Punkte hinzu.</string>
+    <string name="str_info_cnt_cnt_variant_lose">Verlierer: \nNur die Verlierer bekommen Punkte abgezogen. Die Punkte der Gewinner &amp; evtl. ausgesetzte Spieler bleiben unverändert. (Umgekehrte Variante Gewinner).</string>
+    <string name="str_info_cnt_cnt_variant_win">Gewinner: \nNur die Gewinner bekommen Punkte dazu. Die Punkte der Verlierer &amp; evtl. ausgesetzte Spieler bleiben unverändert. (Umgekehrte Variante Verlierer).</string>
+    <string name="str_info_active_players_info">Aktive Spieler: Ein Spiel kann mit 5 Spieler gestartet werden und nur 4 aktive Spieler geben. D.h. jede Runde gibt es einen Spieler der ausetzt (Dieser kann jede Runde frei festgelegt werden).</string>
+    <string name="str_info_bock_cnt_info">Bei einer Bockrunde werden die Punkte verdoppelt. Bockrundenlimit von 0&#8211;4 einstellbar (0=keine Verdopplung, I = Punkte x2, II = Punkte x4,III = Punkte x8 usw.).</string>
+    <string name="str_info_bock_auto_calc">Ist für das aktuelle Spiel eine Verdopplung durch Bock gegeben, kann die Verdopplung automatisch mitberechnet werden, sodass diese nicht vom Nutzer berechnet und eingeben werden muss</string>
+
+    <string name="str_info_game">Eintragen eines Spiels:\n\nUm ein neues Spiel einzutragen müssen die in die entsprechende Anischt wechseln wenn nicht schon geschehen.
+        Dies können sie über "wischen nach links" (swipe to left) Geeste errreichen.\n\nFür ein neues Spiel werden die Punke und die Gewinner sowie Verlierer benötigt. (Evtl. noch Spieler die ausgesetzt haben).\n\nDie Punkte werden über die Zahlentasten eingestellt.\n\nDer Status eines Spieler ob er gewonnen oder verloren hat kann über das Drücken (Tap) auf den Spielernamen verändert werden.\n\nUm einen Spieler als ausgesetzt zu markieren länger auf den Spielernamen drüclen (long press).</string>
+
+
+    <string name="str_disclaimer">
+		    Disclaimer of Warranty: \nThis Software (Android-Application) are provided on an "as-is" basis, without warranty of any kind, 
+		    including without limitation the warranties of merchantability, fitness for a particular purpose and 
+		    non-infringement. The entire risk as to the quality and performance of the computations is borne by you. 
+		    Should the results prove to be in error, you assume the entire cost of any required service and repair, 
+		    and any consequential damage. Use at your own risk. Use of the Software for your own personal and private use only. All rights reserved\n\nHaftungsausschluss:\nDiese Software (Android-Applikation) "wie sie ist" wird ohne jegliche Gewährleistung für Funktion, 
+			Korrektheit oder Fehlerfreiheit zur Verfügung gestellt. Für jeden direkten oder indirekten Schaden - 
+			insbesondere Schaden an anderer Software, schaden an Hardware, Schaden durch Nutzungsausfall, 
+			Schaden durch Funktionsuntüchtigkeit oder Fehler der Software, kann der Autor nicht haftbar gemacht werden. 
+			Ausschließlich der Benutzer haftet für die Folgen der Benutzung dieser Software. 
+			Diese Software wurde mit größter Sorgfalt entwickelt, jedoch können Fehler niemals ausgeschlossen werden. 
+			Es kann daher keine Gewähr für die Sicherheit ihrer Daten übernommen werden. Benutzung auf eigene Gefahr.
+			Diese App darf ausschließlich nur von Privatpersonen und nur für private Zwecke benutzt und eingesetzt werden\n\n
+			\n\nDruch die Verwendung der Software stimmen sie dem Haftungsausschluss zu.
+            \n\nAlle Rechte vorbehalten
+
+
+            \n\nLibs:
+            \nMaterialDrawer:
+            \nCopyright 2016 Mike Penz
+
+            \n\nLicensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at
+
+            \n\nhttp://www.apache.org/licenses/LICENSE-2.0
+
+            \n\nUnless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+    </string>
+</resources>

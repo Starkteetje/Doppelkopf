@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/point_grid">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:weightSum="1.0">
+
+        <TextView
+            android:id="@+id/point_grid_top_left"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="1" />
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="0.02"
+            android:layout_height="fill_parent"/>
+        <TextView
+            android:id="@+id/point_grid_top_center"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="2" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="0.02"
+            android:layout_height="fill_parent"/>
+
+        <TextView
+            android:id="@+id/point_grid_top_right"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:text="3" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:weightSum="1.0">
+
+        <TextView
+            android:id="@+id/point_grid_center_left"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:text="4" />
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="0.02"
+            android:layout_height="fill_parent"/>
+        <TextView
+            android:id="@+id/point_grid_center_center"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            app:backgroundTint="@color/gray"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            android:text="5" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="0.02"
+            android:layout_height="fill_parent"/>
+
+        <TextView
+            android:id="@+id/point_grid_center_right"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:text="6" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:weightSum="1.0">
+
+        <TextView
+            android:id="@+id/point_grid_bottom_left"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:text="7" />
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="0.02"
+            android:layout_height="fill_parent"/>
+        <TextView
+            android:id="@+id/point_grid_bottom_center"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:text="8" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="0.02"
+            android:layout_height="fill_parent"/>
+
+        <TextView
+            android:id="@+id/point_grid_bottom_right"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:text="9" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:weightSum="1.0">
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="false"
+            android:text="" />
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="0.02"
+            android:layout_height="fill_parent"/>
+        <TextView
+            android:id="@+id/point_grid_footer_center"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:text="0" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="0.02"
+            android:layout_height="fill_parent"/>
+
+        <TextView
+            android:id="@+id/point_grid_footer_right"
+            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_weight="0.32"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/primary"
+            android:background="@drawable/border_std"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            app:backgroundTint="@color/gray"
+            android:text="×" />
+
+    </LinearLayout>
+
+</LinearLayout>
