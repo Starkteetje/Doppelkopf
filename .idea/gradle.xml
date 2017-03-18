@@ -8,7 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Doppelkopf" />
+            <option value="$PROJECT_DIR$/DoppelkopfApp" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
