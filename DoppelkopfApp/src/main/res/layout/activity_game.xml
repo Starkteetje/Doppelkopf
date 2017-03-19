@@ -9,7 +9,9 @@
 
 	<include layout="@layout/my_toolbar"/>
 
+
 	<android.support.v4.view.ViewPager
+		android:layout_marginTop="@dimen/drop_shadow_height_negative"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:id="@+id/game_pager"/>

@@ -10,6 +10,7 @@
     <include layout="@layout/my_toolbar"/>
 
     <ScrollView
+        android:layout_marginTop="@dimen/drop_shadow_height_negative"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:paddingLeft="@dimen/activity_padding_lr"
@@ -76,19 +77,6 @@
                     android:visibility="gone"
                     layout="@layout/set_game_cnt_variant_icon" />
 
-
-                <include
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/item_space"
-                    layout="@layout/set_auto_bock_calc_with_icon" />
-
-
-                <include
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/item_space"
-                    layout="@layout/set_y_n_suspend_mark_with_icon" />
 
             </LinearLayout>
 

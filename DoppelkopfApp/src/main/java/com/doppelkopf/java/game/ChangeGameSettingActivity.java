@@ -32,8 +32,6 @@ public class ChangeGameSettingActivity extends DokoActivity {
 	private Spinner mSpBockLimit;
     private Spinner mSpGameCntVariant;
     private TextView mTvPlayerCnt;
-    private CheckBox mCbBockAutoCalc;
-    private CheckBox mCbMarkSuspendedPlayers;
 
 	private Button mBtnChangeGameSettings;
     private LinearLayout mAddPlayerButton;
@@ -89,16 +87,14 @@ public class ChangeGameSettingActivity extends DokoActivity {
         	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
 
-        	boolean mMarkSuspendedPlayers = extras.getBoolean(DokoData.MARK_SUSPEND_OPTION_KEY,false);
         	mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
-            boolean mAutoBockCalc = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY,true);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER || 
         			(mPlayerCnt == 0 || mActivePlayers == 0))
         		return null;
         	
-        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint, mMarkSuspendedPlayers, mAutoBockCalc);
+        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint);
         	for(int k=0;k<mPlayerCnt;k++){
         		mTmp = extras.getString(DokoData.PLAYERS_KEY[k],"");
         		if(mTmp == null || mTmp.length() == 0) return null;
@@ -152,15 +148,6 @@ public class ChangeGameSettingActivity extends DokoActivity {
     	mSpActivePlayer = (Spinner)findViewById(R.id.sp_act_player_cnt);
     	mSpBockLimit = (Spinner)findViewById(R.id.sp_bock_cnt);
 
-        mCbBockAutoCalc = (CheckBox)findViewById(R.id.cb_bock_auto_calc);
-        if (mCbBockAutoCalc != null) {
-            mCbBockAutoCalc.setChecked(mGameHolder.isAutoBockCalculationOn());
-        }
-
-        mCbMarkSuspendedPlayers  = (CheckBox)findViewById(R.id.cb_suspend);
-        if (mCbMarkSuspendedPlayers != null) {
-            mCbMarkSuspendedPlayers.setChecked(mGameHolder.isMarkSuspendedPlayersEnable());
-        }
 
         mSpBockLimitChangeListener = new bockLimitChangeSpListener();
         mSpBockLimit.setOnItemSelectedListener(mSpBockLimitChangeListener);
@@ -433,8 +420,6 @@ public class ChangeGameSettingActivity extends DokoActivity {
 		i.putExtra(DokoData.PLAYER_CNT_KEY, mPlayerCnt);
 		i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 		i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
-        i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mCbBockAutoCalc.isChecked());
-        i.putExtra(DokoData.MARK_SUSPEND_OPTION_KEY, mCbMarkSuspendedPlayers.isChecked());
 		
 		ArrayList<String> mPlayerNames = getPlayerNames();
 		for(int k=0;k<mPlayerCnt && k<mPlayerNames.size();k++){
@@ -449,8 +434,12 @@ public class ChangeGameSettingActivity extends DokoActivity {
 
     @Override
     public void onBackPressed(){
-    	if(mGameSettingsChanged) showExitDialog();
-    	else finish();
+    	if(mGameSettingsChanged) {
+			showExitDialog();
+		}
+    	else {
+			finish();
+		}
     	return;
     }
 
@@ -459,8 +448,12 @@ public class ChangeGameSettingActivity extends DokoActivity {
     	// same as using a normal menu
     	switch(item.getItemId()) {
     	case android.R.id.home:
-        	if(mGameSettingsChanged) showExitDialog();
-        	else finish();
+        	if(mGameSettingsChanged) {
+				showExitDialog();
+			}
+        	else {
+				finish();
+			}
     	}
     	return true;
     }

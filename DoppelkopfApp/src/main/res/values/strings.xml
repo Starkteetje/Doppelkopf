@@ -37,8 +37,6 @@
     <string name="str_bock">Bock</string>
     <string name="str_bockround">Bockround</string>
     <string name="str_bockrounds">Bockrounds</string>
-    <string name="str_bock_auto_calc">Auto. bock calculation</string>
-    <string name="str_mark_suspend">Mark suspended players</string>
     <string name="str_start_game">Start</string>
     <string name="str_start">Start</string>
     <string name="str_error_player_name">Invalid, duplication or missing player name</string>
@@ -106,7 +104,6 @@
     <string name="str_info_cnt_cnt_variant_win">Winner: \nOnly the winning player get points added. The points of the losing or suspended players will be untouched. (reverse of count variant loser).</string>
     <string name="str_info_active_players_info">You can start a game with 5 players which have only 4 active player. This means that every round 1 player has to be suspended (This player can be set every round individually).</string>
     <string name="str_info_bock_cnt_info">On a bock round the round points will be doubled. Bock round limit can bet set between 0&#8211;4 (0=no doubling, I = points x2, II = points x4,III = points x8 etc.).</string>
-    <string name="str_info_bock_auto_calc">Is the current round a bock round points will be doubled. This doubling can be auto. calculated and the user don\'t have enter the doubled points for this round</string>
 
     <string name="str_info_game">Add a new round:\n\n
     To add a new round you have to change to the add round view. You can do this by a swipe to left gesture.\n\n

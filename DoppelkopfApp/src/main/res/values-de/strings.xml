@@ -39,8 +39,6 @@
     <string name="str_bock">Bock</string>
     <string name="str_bockround">Bockrunde</string>
     <string name="str_bockrounds">Bockrunden</string>
-    <string name="str_bock_auto_calc">Auto. Bock Berechnung</string>
-    <string name="str_mark_suspend">Markiere ausgesetzte</string>
     <string name="str_start_game">Beginnen</string>
     <string name="str_start">Start</string>
     <string name="str_error_player_name">Fehlender oder gleiche Spielername</string>
@@ -114,7 +112,6 @@
     <string name="str_info_cnt_cnt_variant_win">Gewinner: \nNur die Gewinner bekommen Punkte dazu. Die Punkte der Verlierer &amp; evtl. ausgesetzte Spieler bleiben unverändert. (Umgekehrte Variante Verlierer).</string>
     <string name="str_info_active_players_info">Aktive Spieler: Ein Spiel kann mit 5 Spieler gestartet werden und nur 4 aktive Spieler geben. D.h. jede Runde gibt es einen Spieler der ausetzt (Dieser kann jede Runde frei festgelegt werden).</string>
     <string name="str_info_bock_cnt_info">Bei einer Bockrunde werden die Punkte verdoppelt. Bockrundenlimit von 0&#8211;4 einstellbar (0=keine Verdopplung, I = Punkte x2, II = Punkte x4,III = Punkte x8 usw.).</string>
-    <string name="str_info_bock_auto_calc">Ist für das aktuelle Spiel eine Verdopplung durch Bock gegeben, kann die Verdopplung automatisch berechnet werden, sodass diese nicht vom Nutzer berechnet und eingeben werden muss</string>
 
     <string name="str_info_game">Eintragen eines Spiels:\n\nUm ein neues Spiel einzutragen müssen die in die entsprechende Ansicht wechseln wenn nicht schon geschehen.
         Dies können sie über "wischen nach links" (swipe to left) Geste erreichen.\n\nFür ein neues Spiel werden die Punkte und die Gewinner sowie Verlierer benötigt. (Evtl. noch Spieler die ausgesetzt haben).\n\nDie Punkte werden über die Zahlentasten eingestellt.\n\nDer Status eines Spieler ob er gewonnen oder verloren hat kann über das Drücken (Tap) auf den Spielernamen verändert werden.\n\nUm einen Spieler als ausgesetzt zu markieren länger auf den Spielernamen drücken (long press).</string>

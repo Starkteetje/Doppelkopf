@@ -10,7 +10,9 @@
 
 	<include layout="@layout/my_toolbar"/>
 
+
     <ScrollView
+		android:layout_marginTop="@dimen/drop_shadow_height_negative"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/activity_padding_lr"
@@ -71,47 +73,6 @@
 
 			</LinearLayout>
 
-
-            <LinearLayout
-                android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="1.0"
-				android:layout_marginTop="@dimen/item_space"
-				android:paddingTop="@dimen/round_new_edit_padding_tb"
-				android:paddingBottom="@dimen/round_new_edit_padding_tb">
-
-
-				<TextView
-					android:id="@+id/game_add_round_bock_points"
-					android:layout_width="0dip"
-					android:layout_height="wrap_content"
-					android:layout_weight="0.40"
-					android:textAppearance="?android:attr/textAppearanceSmall"
-					android:textColor="@color/gray_dark" />
-
-				<TextView
-					android:id="@+id/game_add_round_bock_auto_calc_text"
-					android:layout_width="0dip"
-					android:layout_height="wrap_content"
-					android:textAppearance="?android:attr/textAppearanceSmall"
-					android:text="@string/str_bock_auto_calc"
-					android:textColor="@color/gray_dark"
-					android:layout_weight="0.45"
-					android:gravity="right"/>
-
-				<TextView
-					android:id="@+id/game_add_round_bock_auto_calc_onoff"
-					android:layout_width="0dip"
-					android:layout_height="wrap_content"
-					android:textAppearance="?android:attr/textAppearanceSmall"
-					android:text=""
-					android:layout_weight="0.15"
-					android:textColor="@color/black"
-					android:layout_marginLeft="4dp"/>
-
-
-            </LinearLayout>
 
             <include layout="@layout/fragment_game_new_round_grid_point"/>
 

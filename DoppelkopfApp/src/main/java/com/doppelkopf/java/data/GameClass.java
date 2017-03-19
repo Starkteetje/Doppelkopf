@@ -17,8 +17,6 @@ public class GameClass  implements Serializable{
 	
 	private GAME_CNT_VARIANT cntVariant;
 
-    private boolean mAutoBockCalculation;
-	
 	private ArrayList<PlayerClass> mPlayers;
 	private ArrayList<RoundClass> mRoundList;
 	private ArrayList<RoundClass> mPreRoundList;
@@ -26,7 +24,6 @@ public class GameClass  implements Serializable{
 	private int mPlayerCount;
 	private int mActivePlayerCount;
 	private int mBockRoundLimit;
-	private boolean mMarkSuspendedPlayers;
 	private String mCurrentFilename;
 
     private java.sql.Timestamp createDate;
@@ -36,14 +33,13 @@ public class GameClass  implements Serializable{
 		this.mCurrentFilename = fromFile;
 	}
 	
-	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant, boolean markSuspendedPlayers, boolean autoBockCalculation){
+	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant){
 		this.mPlayers = new ArrayList<PlayerClass>();
 		this.mRoundList = new ArrayList<RoundClass>();
 		this.mPreRoundList = new ArrayList<RoundClass>();
     	this.mPlayerCount = playerCount;
     	this.mActivePlayerCount = activePlayer;    
     	this.mBockRoundLimit = bockLimit;
-    	this.setMarkSuspendedPlayers(markSuspendedPlayers);
 
     	this.cntVariant = cntVariant;
     	
@@ -52,8 +48,6 @@ public class GameClass  implements Serializable{
     	}
 
         this.createDate = new Timestamp(System.currentTimeMillis());
-
-        this.mAutoBockCalculation = autoBockCalculation;
 
 	}
 	
@@ -65,7 +59,6 @@ public class GameClass  implements Serializable{
     	this.mActivePlayerCount = 0;    
     	this.mBockRoundLimit = 0;
     	this.cntVariant = GAME_CNT_VARIANT.CNT_VARIANT_NORMAL;
-    	this.setMarkSuspendedPlayers(false);
 	}
 	
 	public void setPlayers(ArrayList<PlayerClass> playerList){
@@ -81,12 +74,8 @@ public class GameClass  implements Serializable{
         this.mPreRoundList = preRoundList;
     }
 
-    public void setAutoBockCalculation(boolean autoBockCalculation) {
-        this.mAutoBockCalculation = autoBockCalculation;
-    }
-
     public boolean isAutoBockCalculationOn() {
-        return this.mAutoBockCalculation;
+        return true;
     }
 
 	public void setGameCntVariant(GAME_CNT_VARIANT variant){
@@ -102,12 +91,9 @@ public class GameClass  implements Serializable{
 	}
 	
 	public boolean isMarkSuspendedPlayersEnable() {
-		return mMarkSuspendedPlayers;
+		return true;
 	}
 
-	public void setMarkSuspendedPlayers(boolean mMarkSuspendedPlayers) {
-		this.mMarkSuspendedPlayers = mMarkSuspendedPlayers;
-	}
 
 	public void addRound(RoundClass round){
 		this.mRoundList.add(round);

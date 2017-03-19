@@ -71,15 +71,11 @@ public class GameActivity extends DokoActivity {
 	
 	private static boolean mBockPreviewOnOff = true;
 
-	private TextView mTvPlayerCnt;
 	private static TextView mTvAddRoundBockPoints;
-    private static LinearLayout mTvRoundBockPointsContainer;
-    private static TextView mTvRoundBockPointsAutoCalcOnOff;
 
 	private int mPlayerCnt;
 	private Spinner mSpActivePlayer;
 	private Spinner mSpBockLimit;
-	private Boolean mMarkSuspendedPlayers;
 
 	private static Button mBtnAddRound;
 	private static TextView mEtNewRoundPoints;
@@ -132,6 +128,11 @@ public class GameActivity extends DokoActivity {
 
         loadSwipeViews();
 
+		View v = findViewById(R.id.my_toolbar_shadow);
+		if (v != null) {
+			v.setVisibility(View.GONE);
+		}
+
         mAddRoundPlayernameClickListener = new GameAddRoundPlayernameClickListener();
         mAddRoundPlayernameLongClickListener = new GameAddRoundPlayernameLongClickListener();
         mBtnAddRoundClickListener = new btnAddRoundClickListener();
@@ -168,17 +169,9 @@ public class GameActivity extends DokoActivity {
 	  				mStr = getResources().getString(R.string.str_bockround)+" ";
 	  				mStr += Functions.getBockCountAsString(mGame.getPreRoundList().get(0).getBockCount());
 	  				mTvAddRoundBockPoints.setText(mStr);
-
-                    mTvRoundBockPointsContainer.setVisibility(View.VISIBLE);
-                    if(mGame.isAutoBockCalculationOn()){
-                        mTvRoundBockPointsAutoCalcOnOff.setText(mContext.getResources().getString(R.string.str_yes));
-                    } else {
-                        mTvRoundBockPointsAutoCalcOnOff.setText(mContext.getResources().getString(R.string.str_no));
-                    }
 	  			}
 	  			else {
                     mTvAddRoundBockPoints.setText(mStr);
-                    mTvRoundBockPointsContainer.setVisibility(View.INVISIBLE);
                 }
 	  			
 	  			return;
@@ -234,17 +227,15 @@ public class GameActivity extends DokoActivity {
         	mPlayerCnt 		= extras.getInt(DokoData.PLAYER_CNT_KEY,0);
         	mActivePlayers 	= extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockLimit		= extras.getInt(DokoData.BOCKLIMIT_KEY,0);
-        	mMarkSuspendedPlayers = extras.getBoolean(DokoData.MARK_SUSPEND_OPTION_KEY,false);
         	mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
-            mAutoBockCalc = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY,true);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
         			|| (mPlayerCnt == 0 || mActivePlayers == 0))
         		return null;
-        	Log.d(TAG,"ng:"+mMarkSuspendedPlayers);
-        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint,mMarkSuspendedPlayers, mAutoBockCalc);
-        	Log.d(TAG,"bl:"+mBockLimit+" - prercnt"+mGame.getPreRoundList().size());
+
+        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint);
+
         	for(int k=0;k<mPlayerCnt;k++){
         		//Log.d(TAG,mTmp+"k:"+k);
         		mTmp = extras.getString(DokoData.PLAYERS_KEY[k],"");
@@ -254,7 +245,7 @@ public class GameActivity extends DokoActivity {
         	}
         }
         else{
-        	mGame = new GameClass(5, 4, 1, GAME_CNT_VARIANT.CNT_VARIANT_NORMAL,false,true);
+        	mGame = new GameClass(5, 4, 1, GAME_CNT_VARIANT.CNT_VARIANT_NORMAL);
 	    	
         	mGame.getPlayer(0).setName("Johannes");
         	mGame.getPlayer(1).setName("Christoph");
@@ -404,10 +395,6 @@ public class GameActivity extends DokoActivity {
 		mBtnAddRound.setOnClickListener(mBtnAddRoundClickListener);
 		
 		mTvAddRoundBockPoints = (TextView)rootView.findViewById(R.id.game_add_round_bock_points);
-
-
-        mTvRoundBockPointsContainer = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_info_container);
-        mTvRoundBockPointsAutoCalcOnOff = (TextView)rootView.findViewById(R.id.game_add_round_bock_auto_calc_onoff);
 
 
         mCBNewBockRound = (CheckBox)rootView.findViewById(R.id.game_add_round_bock_cb);
@@ -921,8 +908,6 @@ public class GameActivity extends DokoActivity {
     			i.putExtra(DokoData.PLAYER_CNT_KEY, mGame.getPlayerCount());
     			i.putExtra(DokoData.BOCKLIMIT_KEY, mGame.getBockRoundLimit());
     			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mGame.getActivePlayerCount());
-                i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mGame.isAutoBockCalculationOn());
-                i.putExtra(DokoData.MARK_SUSPEND_OPTION_KEY, mGame.isMarkSuspendedPlayersEnable());
     			startActivityForResult(i,DokoData.CHANGE_GAME_SETTINGS_ACTIVITY_CODE);
     		break;
     		
@@ -1060,16 +1045,13 @@ public class GameActivity extends DokoActivity {
     	Bundle extras = null;
     	int mActivePlayers,mBockLimit,mPlayerCnt,mOldPlayerCnt;
     	String mName = "";
-        boolean mBockAutoCalc;
-        boolean mMarkSuspendedPlayers;
+
     	    	   	
     	if(data != null) extras = data.getExtras();
     	if(extras != null && extras.getBoolean(DokoData.CHANGE_GAME_SETTINGS_KEY,false)){
     		mPlayerCnt = extras.getInt(DokoData.PLAYER_CNT_KEY,0);
         	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
-            mBockAutoCalc = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY, true);
-            mMarkSuspendedPlayers = extras.getBoolean(DokoData.MARK_SUSPEND_OPTION_KEY, true);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
@@ -1081,11 +1063,8 @@ public class GameActivity extends DokoActivity {
         	mGame.setPlayerCount(mPlayerCnt);
         	mGame.setActivePlayerCount(mActivePlayers);
         	mGame.setBockRoundLimit(mBockLimit);
-            mGame.setAutoBockCalculation(mBockAutoCalc);
-            mGame.setMarkSuspendedPlayers(mMarkSuspendedPlayers);
 
 
-        	
         	for(int k=mOldPlayerCnt;k<mPlayerCnt;k++){
         		mName = extras.getString(DokoData.PLAYERS_KEY[k],"");
         		if(mName == null || mName.length() == 0) return;
@@ -1115,8 +1094,6 @@ public class GameActivity extends DokoActivity {
 		saveStateData(outState);
 	    super.onSaveInstanceState(outState);
     }
-    
-    
-    
+
     
 }

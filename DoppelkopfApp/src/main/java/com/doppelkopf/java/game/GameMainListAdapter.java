@@ -366,7 +366,6 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 				i.putExtra(DokoData.PLAYER_CNT_KEY, mGame.getPlayerCount());
 				i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mGame.getActivePlayerCount());
 				i.putExtra(DokoData.ROUND_POINTS_KEY, mGame.getRoundList().get(roundNumber-1).getPointsWithoutBock());
-                i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mGame.isAutoBockCalculationOn());
 				i.putExtra(DokoData.ROUND_ID, mGame.getRoundList().get(roundNumber-1).getID());
 
 				((Activity) mContext).startActivityForResult(i,DokoData.EDIT_ROUND_ACTIVITY_CODE);

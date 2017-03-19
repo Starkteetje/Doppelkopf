@@ -11,6 +11,7 @@
     <ScrollView
         android:paddingLeft="@dimen/activity_padding_lr"
         android:paddingRight="@dimen/activity_padding_lr"
+        android:layout_marginTop="@dimen/drop_shadow_height_negative"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 

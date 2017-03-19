@@ -33,8 +33,6 @@ public class NewGameActivity extends DokoActivity {
 
 
 	private LinearLayout mLayout;
-	private LinearLayout mMarkSuspendedLayout;
-	private Boolean isMarkSuspendedPlayerSelected = false;
 	private ImageView mIv;
 	private TextView mTvPlayerCnt;
 	private int mPlayerCnt = DokoData.MIN_PLAYER;
@@ -42,7 +40,6 @@ public class NewGameActivity extends DokoActivity {
 	private Spinner mSpBockLimit;
 	private Spinner mSpGameCntVariant;
 	private CheckBox mCbSuspendMark;
-    private CheckBox mCbAutoBockCalc;
     private LinearLayout mGameSettingsEntry;
     private LinearLayout mGameSettingsList;
 	
@@ -79,9 +76,6 @@ public class NewGameActivity extends DokoActivity {
     	mSpActivePlayer	 	= (Spinner)findViewById(R.id.sp_act_player_cnt);
     	mSpBockLimit 		= (Spinner)findViewById(R.id.sp_bock_cnt);
     	mSpGameCntVariant	= (Spinner)findViewById(R.id.sp_game_cnt_variant);
-    	mCbSuspendMark		= (CheckBox)findViewById(R.id.cb_suspend);
-        mCbAutoBockCalc     = (CheckBox)findViewById(R.id.cb_bock_auto_calc);
-        mCbSuspendMark     = (CheckBox)findViewById(R.id.cb_suspend);
 
         mGameSettingsEntry = (LinearLayout)findViewById(R.id.new_game_settings_entry);
         mGameSettingsEntry.setOnClickListener(new showGameSettingsClickListener());
@@ -91,15 +85,6 @@ public class NewGameActivity extends DokoActivity {
     	
     	mTvPlayerCnt = (TextView)findViewById(R.id.player_add_player_cnt);
 
-        
-        mMarkSuspendedLayout = (LinearLayout)findViewById(R.id.fragment_game_set_mark_suspend_entry);
-        if (mCbSuspendMark != null) {
-        	mCbSuspendMark.setChecked(true);
-        }
-
-        if (mCbAutoBockCalc != null) {
-            mCbAutoBockCalc.setChecked(true); // default on
-        }
 
     	mBtnStart = (Button)findViewById(R.id.btn_start_new_game);
     	mBtnStart.setOnClickListener(new startBtnClickListener());
@@ -117,15 +102,6 @@ public class NewGameActivity extends DokoActivity {
     	mSPActivePlayerArrayAdapter = new ArrayAdapter<Integer>(getApplicationContext(), R.layout.spinner_item,R.id.spinner_text,mActivePlayerArrayList);
         mSPActivePlayerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
    	    mSpActivePlayer.setAdapter(mSPActivePlayerArrayAdapter);
-   	    mSpActivePlayer.setOnItemSelectedListener(new OnItemSelectedListener(){
-			@Override
-			public void onItemSelected(AdapterView<?> adapterView, View view, int arg2, long arg3) {
-				updateMarkPlayerOption();				
-			}
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {}
-   	    });
-
 		mSpActivePlayer.setSelection(0);
 
    	    int i = 0;
@@ -221,26 +197,9 @@ public class NewGameActivity extends DokoActivity {
 
         mTvPlayerCnt.setText(String.valueOf(mPlayerCnt));
 
-    	updateMarkPlayerOption();
     	setSpinnerValues();
     }
-	
-	private void updateMarkPlayerOption() {
-		if (mMarkSuspendedLayout == null) {
-			return;
-		}
-		CheckBox cb = (CheckBox)mMarkSuspendedLayout.findViewById(R.id.cb_suspend);
-        if (cb != null) {
-        	if (mSpActivePlayer.getSelectedItemPosition()+4 < mPlayerCnt) {
-        		mMarkSuspendedLayout.setVisibility(View.VISIBLE);
-        	} else {
-        		mMarkSuspendedLayout.setVisibility(View.GONE);
-        		cb.setSelected(false);
-        		isMarkSuspendedPlayerSelected = false;
-        	}
-        }
-	}
-	
+
 	private class startBtnClickListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
@@ -254,11 +213,9 @@ public class NewGameActivity extends DokoActivity {
 				i.putExtra(DokoData.PLAYERS_KEY[k], mPlayerNames.get(k).toString());
 			}
 			i.putExtra(DokoData.PLAYER_CNT_KEY, mPlayerCnt);
-			i.putExtra(DokoData.MARK_SUSPEND_OPTION_KEY, mCbSuspendMark.isChecked());
 			i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
 			i.putExtra(DokoData.GAME_CNT_VARIANT_KEY, GAME_CNT_VARIANT.values()[mSpGameCntVariant.getSelectedItemPosition()]);
-            i.putExtra(DokoData.AUTO_BOCK_CALC_KEY, mCbAutoBockCalc.isChecked());
 
 			startActivity(i);
 		}
@@ -379,11 +336,6 @@ public class NewGameActivity extends DokoActivity {
 		text += getResources().getString(R.string.str_info_cnt_cnt_variant_lose);
 		text += "\n\n";
 		text += getResources().getString(R.string.str_info_cnt_cnt_variant_win);
-
-		text += "\n\n";
-		text += getResources().getString(R.string.str_bock_auto_calc);
-		text += ":\n\n";
-		text += getResources().getString(R.string.str_info_bock_auto_calc);
 
 		return text;
 	}

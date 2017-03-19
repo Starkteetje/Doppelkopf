@@ -20,6 +20,8 @@
     <color name="gray">#D8D8D8</color>
     <color name="gray_dark">#777777</color>
 
+    <color name="light_gray_alhpa05">#A8F1F1F1</color>
+
     <color name="primary">#03A9F4 </color>
     <color name="primary_dark">#0288D1</color>
 

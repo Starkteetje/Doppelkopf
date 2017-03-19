@@ -548,8 +548,6 @@ public class DokoXMLClass {
         int mPlayerCnt = 0, mActivePlayers = 0, mBockRoundLimit = 0;
         String mCreateDate = "";
         GAME_CNT_VARIANT mGameCntVariant = GAME_CNT_VARIANT.CNT_VARIANT_NORMAL;
-        boolean mMarkSuspendedPlayers = false; // default
-        boolean mBockAutoCalc = true; // default
 
         NodeList mSettingsNodes = n.getChildNodes();
 
@@ -584,17 +582,9 @@ public class DokoXMLClass {
                 mBockRoundLimit = Integer.valueOf(settingsSubNode.getTextContent());
                 mGame.setBockRoundLimit(mBockRoundLimit);
             }
-            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_BOCK_AUTO_CALC)) {
-                mBockAutoCalc = Boolean.valueOf(settingsSubNode.getTextContent());
-                mGame.setAutoBockCalculation(mBockAutoCalc);
-            }
             else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_COUNT_VARIANT)) {
                 mGameCntVariant = GAME_CNT_VARIANT.valueOf(settingsSubNode.getTextContent());
                 mGame.setGameCntVariant(mGameCntVariant);
-            }
-            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_SETTINGS_MARK_SUSPENDED_PLAYERS)){
-                mMarkSuspendedPlayers = Boolean.valueOf(settingsSubNode.getTextContent());
-                mGame.setMarkSuspendedPlayers(mMarkSuspendedPlayers);
             }
         }
 

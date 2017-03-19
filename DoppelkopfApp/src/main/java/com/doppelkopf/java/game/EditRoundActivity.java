@@ -29,8 +29,6 @@ public class EditRoundActivity extends DokoActivity {
 	private static String TAG = "EditRound";
 
 	private static TextView mTvAddRoundBockPoints;
-    private static TextView mTvRoundBockPointsAutoCalc;
-    private static TextView mTVRoundBockPointsAutoCalcText;
 	private static RadioGroup mNewRoundBockRadioGroup; 
 	private static Button mBtnEditRound;
 	private static TextView mEtNewRoundPoints;
@@ -88,7 +86,6 @@ public class EditRoundActivity extends DokoActivity {
         	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockRound = extras.getInt(DokoData.BOCKROUND_KEY,0);
         	mRoundPoints = extras.getInt(DokoData.ROUND_POINTS_KEY,0);
-            mBockAutoCalcEnable = extras.getBoolean(DokoData.AUTO_BOCK_CALC_KEY, true);
             mRoundNr = extras.getInt(DokoData.ROUND_ID,0);
             mRoundNr++;
 
@@ -147,26 +144,6 @@ public class EditRoundActivity extends DokoActivity {
 			mTvAddRoundBockPoints.setVisibility(View.VISIBLE);
 		}
 
-        mTVRoundBockPointsAutoCalcText = (TextView)rootView.findViewById(R.id.game_add_round_bock_auto_calc_text);
-        mTvRoundBockPointsAutoCalc = (TextView)rootView.findViewById(R.id.game_add_round_bock_auto_calc_onoff);
-        if(mBockAutoCalcEnable){
-            mTvRoundBockPointsAutoCalc.setText(rootView.getResources().getString(R.string.str_yes));
-        } else {
-            mTvRoundBockPointsAutoCalc.setText(rootView.getResources().getString(R.string.str_no));
-        }
-		if (mBockRound == 0) {
-            mTVRoundBockPointsAutoCalcText.setVisibility(View.INVISIBLE);
-            mTvRoundBockPointsAutoCalc.setVisibility(View.INVISIBLE);
-        } else {
-            mTVRoundBockPointsAutoCalcText.setVisibility(View.VISIBLE);
-            mTvRoundBockPointsAutoCalc.setVisibility(View.VISIBLE);
-        }
-		/*mNewRoundBockRadioGroup = (RadioGroup)rootView.findViewById(R.id.game_add_round_bock_radio);
-		mRNewRoundBockYes = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_yes);
-		mRNewRoundBockNo = (RadioButton)rootView.findViewById(R.id.game_add_round_bock_radio_no);
-		mNewRoundBockRadioGroup.setEnabled(false);
-		mRNewRoundBockYes.setEnabled(false);
-		mRNewRoundBockNo.setEnabled(false);*/
 
 		LinearLayout mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_container);
 		if (mLayout != null) {

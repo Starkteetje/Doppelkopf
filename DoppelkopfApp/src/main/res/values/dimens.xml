@@ -12,4 +12,6 @@
 
     <dimen name="round_new_edit_padding_lr">16dp</dimen>
     <dimen name="round_new_edit_padding_tb">12dp</dimen>
+    <dimen name="drop_shadow_height">4dp</dimen>
+    <dimen name="drop_shadow_height_negative">-0dp</dimen>
 </resources>
