@@ -134,12 +134,7 @@
                 android:paddingTop="@dimen/round_new_edit_padding_tb"
                 android:paddingBottom="@dimen/round_new_edit_padding_tb">
 
-                <TextView
-					android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/str_game_cnt_variant_win"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
 
 	        </LinearLayout>
 

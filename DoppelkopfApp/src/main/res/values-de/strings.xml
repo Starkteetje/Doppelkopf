@@ -28,6 +28,7 @@
     <string name="str_change_game_settings_delete_bockrounds">Bockrunden löschen</string>
     <string name="str_change_game_settings_delete_bockrounds_q">Vorhandene Bockrunden werden überschrieben (gelöscht)</string>    
     <string name="str_edit_round">Spiel bearbeiten</string>
+    <string name="str_edit_round_nr">Spiel %1$d bearbeiten</string>
 
     <string name="str_edit_round_not_possible">Diese Spiel kann nicht bearbeitet werden</string>
     <string name="str_edit_round_info">Bearbeiten durch langes Drücken des Eintrag</string>
@@ -58,7 +59,7 @@
     <string name="str_game_add_round_here">Neue Runde eintragen (wischen)</string>
     <string name="str_game_new_round">Spiel hinzufügen</string>
     <string name="str_game_add_new_round">Hinzufügen</string>
-    <string name="str_game_round">Runde</string>
+    <string name="str_game_round">Spiel</string>
 
 
     <string name="str_game_points">Punkte</string>

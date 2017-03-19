@@ -672,11 +672,12 @@ public class GameActivity extends DokoActivity {
 		}
     }
 
-    private void changePlayerViewState(TextView mTvStateView, Drawable newDrawable, int stringID, boolean animate) {
-        changePlayerViewState(mTvStateView, newDrawable, stringID, animate, mContext);
-    }
+	private void changePlayerViewState(TextView mTvStateView, Drawable newDrawable, int stringID, boolean animate) {
+		changePlayerViewState(mTvStateView, newDrawable, stringID, animate, mContext);
+	}
 
-    private static void changePlayerViewState(TextView mTvStateView, Drawable newDrawable, int stringID, boolean animate, Context context) {
+
+    public static void changePlayerViewState(TextView mTvStateView, Drawable newDrawable, int stringID, boolean animate, Context context) {
         if (animate) {
             Drawable backgrounds[] = new Drawable[2];
             Resources res = context.getResources();

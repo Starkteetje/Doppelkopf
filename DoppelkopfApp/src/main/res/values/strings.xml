@@ -27,6 +27,7 @@
     <string name="str_change_game_settings_delete_bockrounds">Delete bockround</string>
     <string name="str_change_game_settings_delete_bockrounds_q">Existing bockrounds will be overwritten (deleted)</string>
     <string name="str_edit_round">Edit round</string>
+    <string name="str_edit_round_nr">Edit round %1$d</string>
     <string name="str_edit_round_not_possible">You can\'t edit this round</string>
     <string name="str_edit_round_info">Edit a round with a long press on the round entry</string>
     <string name="str_edit_round_finish">Round successfully changed</string>
