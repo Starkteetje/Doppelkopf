@@ -104,18 +104,19 @@ public class GameResultActivity extends DokoActivity {
                 TextView mTv = (TextView)playerEntry.findViewById(R.id.player_entry_game_result_name);
                 mTv.setText(name);
 
+                mTv = (TextView)playerEntry.findViewById(R.id.player_entry_game_result_name_points);
+                mTv.setText(Float.toString(points));
+                if (points < 0) {
+                    //mTv.setTextColor(this.getResources().getColor(R.color.red_dark));
+                } else {
+                    //mTv.setTextColor(this.getResources().getColor(R.color.green_dark));
+                }
+
                 View mPlayercolorView = playerEntry.findViewById(R.id.player_color);
                 if (mPlayercolorView != null) {
                     mPlayercolorView.setBackgroundColor(this.getResources().getColor(DokoData.PLAYERS_COLORS_KEY[i]));
                 }
 
-                mTv = (TextView)playerEntry.findViewById(R.id.player_entry_game_result_name_points);
-                mTv.setText(Float.toString(points));
-                if (points < 0) {
-                    mTv.setTextColor(this.getResources().getColor(R.color.red_dark));
-                } else {
-                    mTv.setTextColor(this.getResources().getColor(R.color.green_dark));
-                }
 
                 mTv = (TextView)playerEntry.findViewById(R.id.player_entry_game_result_factor);
                 mTv.setText(Float.toString(factor));
