@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class DokoData {
 	
 	public static final int MAX_PLAYER = 8;
-	public static final int MAX_ACTIVE_PLAYER = 5;
+	public static final int MAX_ACTIVE_PLAYER = 6;
 	public static final int MIN_PLAYER = 4;
 	
 	public static ArrayList<String> PLAYER_NAMES = new ArrayList<String>();
@@ -20,6 +20,9 @@ public class DokoData {
 		LOSE_SOLO, 
 		FIVEPLAYER_3WIN, 
 		FIVEPLAYER_2WIN,
+        SIXPLAYER_3WIN,
+        SIXPLAYER_2WIN,
+        SIXPLAYER_4WIN,
         RESTORE_ROUND;
 
         public static GAME_ROUND_RESULT_TYPE valueForString(String type) {
@@ -42,6 +45,15 @@ public class DokoData {
             else if (type.equalsIgnoreCase("5Player_2Win")){
                 return FIVEPLAYER_2WIN;
             }
+            else if (type.equalsIgnoreCase("6Player_2Win")){
+                return SIXPLAYER_2WIN;
+            }
+            else if (type.equalsIgnoreCase("6Player_4Win")){
+                return SIXPLAYER_4WIN;
+            }
+            else if (type.equalsIgnoreCase("6Player_3Win")){
+                return SIXPLAYER_3WIN;
+            }
 
             return RESTORE_ROUND;
         }
@@ -57,6 +69,9 @@ public class DokoData {
                 case LOSE_SOLO: return "lose_solo";
                 case FIVEPLAYER_3WIN: return "5Player_3Win";
                 case FIVEPLAYER_2WIN: return "5Player_2Win";
+                case SIXPLAYER_2WIN: return "6Player_2Win";
+                case SIXPLAYER_4WIN: return "6Player_4Win";
+                case SIXPLAYER_3WIN: return "6Player_3Win";
                 case RESTORE_ROUND: return  "restore";
                 default:
                     break;

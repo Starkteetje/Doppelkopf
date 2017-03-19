@@ -72,7 +72,10 @@
     <string name="str_round_type_solo">Solo</string>
     <string name="str_round_type_2vs2">2vs2</string>
     <string name="str_round_type_3vs2">3vs2</string>
-       
+    <string name="str_round_type_4vs2">4vs2</string>
+    <string name="str_round_type_3vs3">3vs3</string>
+
+
     <string name="str_delete_file">Datei löschen</string>
     <string name="str_delete_files">Dateien löschen</string>
     <string name="str_file_absolute_path">Dateipfad</string>

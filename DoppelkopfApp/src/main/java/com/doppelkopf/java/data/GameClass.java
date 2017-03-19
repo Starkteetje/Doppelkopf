@@ -256,36 +256,30 @@ public class GameClass  implements Serializable{
 	}
 	
 	private void updatePlayerPoints(RoundClass mRound, int[] mWinnerList,int[] mSuspendList) {
-		int mWinnerCnt = 0;
 		int mSoloWinPos = 0;
 		int mSoloLosePos = 0;
-		
 		
 		for(int i=0;i<getPlayerCount();i++){
 			if(mSuspendList[i] == 1)
 				getPlayer(i).updatePoints(mRound.getID(),(float) 0);
 			else if(mWinnerList[i] == 1){
-				mWinnerCnt++;
 				mSoloWinPos = i;
 			}
-			else mSoloLosePos = i;
+			else {
+                mSoloLosePos = i;
+            }
 		}
 		
-		
-		if(mWinnerCnt == 1){
-			//Win solo
+		if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.WIN_SOLO){
+			//Win solo 1vs3, 1vs4, 1vs5
 			soloPointUpdate(mRound,true,mSoloWinPos,mSuspendList);
 		}
-		else if(mWinnerCnt == 3 && getActivePlayerCount() == 4){
-			//Lose solo
+		else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.LOSE_SOLO){
+			//Lose solo - 3vs1, 4vs1, 5vs1
 			soloPointUpdate(mRound,false,mSoloLosePos,mSuspendList);
 		}
-		else if(mWinnerCnt == 4 && getActivePlayerCount() == 5){
-			//Lose solo
-			soloPointUpdate(mRound,false,mSoloLosePos,mSuspendList);
-		}
-		else if(mWinnerCnt == 3 && getActivePlayerCount() == 5){
-			//3 win vs. 2 lose
+		else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.FIVEPLAYER_3WIN){
+			//3vs2
 			for(int i=0;i<getPlayerCount();i++){
 				if(mWinnerList[i] == 1){
 					//Win
@@ -301,22 +295,38 @@ public class GameClass  implements Serializable{
 			}
 		}
 		else {
-			//2 win vs. 3 lose || 2vs2
-			float mFactor = 1;
-			if(mWinnerCnt == 2 && getActivePlayerCount() == 5) mFactor = (float) 1.5;
-			//Log.d("GAMECLASS",mWinnerCnt+"#"+getActivePlayerCount()+"#"+mFactor);
-			
+			float mWinFactor = 1.0f; // 2vs2 & 3vs3
+            double mLoseFactor = 1.0f;
+
+			if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.FIVEPLAYER_2WIN) {
+                // 2vs3
+				mWinFactor = 1.5f;
+			} else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.SIXPLAYER_2WIN) {
+                // 2vs4
+                mWinFactor = 2.0f;
+
+            } else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.SIXPLAYER_4WIN) {
+                // 4vs2
+                mLoseFactor = 2.0f;
+            }
+
 			for(int i=0;i<getPlayerCount();i++){
 				if(mWinnerList[i] == 1){
 					//Win
-					if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_WIN)
-						getPlayer(i).updatePoints(mRound.getID(),(float)(mRound.getPoints()*mFactor));
-					else getPlayer(i).updatePoints(mRound.getID(),(float)0);
+					if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_WIN) {
+						getPlayer(i).updatePoints(mRound.getID(), (mRound.getPoints() * mWinFactor));
+					}
+					else {
+						getPlayer(i).updatePoints(mRound.getID(), 0.0f);
+					}
 				}
 				else if(mSuspendList[i] != 1){
-					if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_LOSE)
-						getPlayer(i).updatePoints(mRound.getID(),(float)(mRound.getPoints()*-1));
-					else getPlayer(i).updatePoints(mRound.getID(),(float)0);
+					if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_LOSE) {
+						getPlayer(i).updatePoints(mRound.getID(), (float) (-mRound.getPoints() * mLoseFactor));
+					}
+					else {
+						getPlayer(i).updatePoints(mRound.getID(), 0.0f);
+					}
 				}
 			}
 		}
@@ -331,24 +341,32 @@ public class GameClass  implements Serializable{
 	private void soloPointUpdate(RoundClass mRound, boolean isSoloWinner, int mSoloPos, int[] mSuspendList) {
 		int mPoints = 0;
 		
-		if(isSoloWinner)
-			mPoints = mRound.getPoints()*-1;
-		else
-			mPoints = mRound.getPoints();
+		if(isSoloWinner) {
+            mPoints = mRound.getPoints() * -1;
+        }
+		else {
+            mPoints = mRound.getPoints();
+        }
 
 		
 		for(int i=0; i<getPlayerCount();i++){
 			if(i!=mSoloPos &&  mSuspendList[i] != 1){
 				if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || (isSoloWinner &&  cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_LOSE)
-						|| (!isSoloWinner &&  cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_WIN))
-					getPlayer(i).updatePoints(mRound.getID(),(float)mPoints);
-				else getPlayer(i).updatePoints(mRound.getID(),(float)0);
+						|| (!isSoloWinner &&  cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_WIN)) {
+					getPlayer(i).updatePoints(mRound.getID(), (float) mPoints);
+				}
+				else {
+					getPlayer(i).updatePoints(mRound.getID(),(float)0);
+				}
 			}	
 		}
 		if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || (isSoloWinner &&  cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_WIN)
-				 || (!isSoloWinner &&  cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_LOSE))
-			getPlayer(mSoloPos).updatePoints(mRound.getID(),(float)(getActivePlayerCount()-1)*mPoints*-1);
-		else getPlayer(mSoloPos).updatePoints(mRound.getID(),(float)0);
+				 || (!isSoloWinner &&  cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_LOSE)) {
+			getPlayer(mSoloPos).updatePoints(mRound.getID(), (float) (getActivePlayerCount() - 1) * mPoints * -1);
+		}
+		else {
+			getPlayer(mSoloPos).updatePoints(mRound.getID(),(float)0);
+		}
 	}
 
 

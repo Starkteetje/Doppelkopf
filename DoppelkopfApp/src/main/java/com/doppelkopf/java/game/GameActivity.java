@@ -539,80 +539,6 @@ public class GameActivity extends DokoActivity {
         });
     }
 
-    
-    private void setSpinnerValues(){
-    	int mSelction;
-    	
-    	mSelction = mSpActivePlayer.getSelectedItemPosition();
-    	mActivePlayerArrayList.clear();
-    	for(int k=DokoData.MIN_PLAYER;k<=mPlayerCnt;k++) mActivePlayerArrayList.add(k);
-    	mSPActivePlayerArrayAdapter = new ArrayAdapter<Integer>(this, R.layout.spinner_item,R.id.spinner_text,mActivePlayerArrayList);
-        mSPActivePlayerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        mSpActivePlayer.setAdapter(mSPActivePlayerArrayAdapter);
-
-   	    
-   	    if(mSpActivePlayer.getAdapter().getCount() > mSelction) mSpActivePlayer.setSelection(mSelction);
-   	    
-   	 	mSelction = mSpBockLimit.getSelectedItemPosition();
-    	mBockLimitArrayList.clear();
-    	for(int k=0;k<=mPlayerCnt;k++) mBockLimitArrayList.add(k);
-    	mSPBockLimitArrayAdapter = new ArrayAdapter<Integer>(this, R.layout.spinner_item,R.id.spinner_text,mBockLimitArrayList);
-        mSPBockLimitArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        mSpBockLimit.setAdapter(mSPBockLimitArrayAdapter);
-   	    
-   	    if(mSpBockLimit.getAdapter().getCount() > mSelction) mSpBockLimit.setSelection(mSelction);
-    }
-    
-    private void setAutoCompleteNames(){
-    	View v;
-    	mLayout = (LinearLayout)findViewById(R.id.player_view_holder);
-    	loadPlayerNames();
-    	for(int i=0;i<mLayout.getChildCount();i++){
-    	    v = mLayout.getChildAt(i);
-    	    if (v.getId() == R.id.player_entry){
-    	    	v = (AutoCompleteTextView)v.findViewById(R.id.player_entry_auto_complete);
-    	    	   ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,DokoData.PLAYER_NAMES);
-    	    	((AutoCompleteTextView) v).setAdapter(adapter);
-    	    	((AutoCompleteTextView) v).setOnTouchListener(new View.OnTouchListener(){
-    	    		   @Override
-    	    		   public boolean onTouch(View v, MotionEvent event){
-    	    			   ((AutoCompleteTextView) v).showDropDown();    return false;
-    	    		   }
-    	    		});
-    	    }  
-    	}
-    }
-    
-    private void loadPlayerNames() {
-		if(!DokoXMLClass.isAppDirOK(mContext)) return;
-		DokoXMLClass.isXMLPresent(mContext,DokoData.PLAYER_NAMES_XML,true);
-		DokoXMLClass.getPlayerNamesFromXML(mContext,DokoData.PLAYER_NAMES_XML,DokoData.PLAYER_NAMES);
-	}
-
-
-	private void updatePlayerCnt(){
-    	View v;
-    	mLayout = (LinearLayout)findViewById(R.id.player_view_holder);
-    	mPlayerCnt = 0;
-    	for(int i=0;i<mLayout.getChildCount();i++){
-    	    v = mLayout.getChildAt(i);
-    	    if (v.getId() == R.id.player_entry) mPlayerCnt++;
-    	}
-    	mTvPlayerCnt.setText(String.valueOf(mPlayerCnt));
-    	
-    	setSpinnerValues();
-    }
-	
-	private class btnStartClickListener implements OnClickListener{
-		@Override
-		public void onClick(View v) {
-			if(!isPlayerNameSet(true)){
-				Toast.makeText(v.getContext(), R.string.str_error_player_name, Toast.LENGTH_SHORT).show();
-				return;
-			}
-		}
-	}
-	
 	public class btnAddRoundClickListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
@@ -645,8 +571,9 @@ public class GameActivity extends DokoActivity {
 			mViewPager.setCurrentItem(0,true);
 			mLvRounds.requestFocus();
 			
-			if(mLvRounds.getCount() >= 1)
-				mLvRounds.setSelection(mLvRounds.getCount()-1);
+			if(mLvRounds.getCount() >= 1) {
+                mLvRounds.setSelection(mLvRounds.getCount() - 1);
+            }
 			
 			resetNewRoundFields(mContext);
 			
@@ -770,8 +697,12 @@ public class GameActivity extends DokoActivity {
     }
 	
 	private boolean isNewRoundDataOK() {
-		if(getNewRoundPoints() == -1) return false;
-		if(getNewRoundPoints() != 0 && (!isWinnerCntOK() || !isSuspendCntOK())) return false;
+		if(getNewRoundPoints() == -1) {
+            return false;
+        }
+		if(getNewRoundPoints() != 0 && (!isWinnerCntOK() || !isSuspendCntOK())) {
+            return false;
+        }
 		return true;
 	}
 	
@@ -821,14 +752,20 @@ public class GameActivity extends DokoActivity {
 
 	
 	private boolean isSuspendCntOK(){
-		if(mGame.getPlayerCount()-mGame.getActivePlayerCount() == 0) return true;
-		if(getSuspendCnt() == (mGame.getPlayerCount()-mGame.getActivePlayerCount())) return true;
+		if(mGame.getPlayerCount()-mGame.getActivePlayerCount() == 0){
+            return true;
+        }
+		if(getSuspendCnt() == (mGame.getPlayerCount()-mGame.getActivePlayerCount())) {
+            return true;
+        }
 		return false;
 	}
 	
 	private boolean isWinnerCntOK(){
 		int mWinnerCnt = getWinnerCnt();
-		if(mWinnerCnt >= mGame.getActivePlayerCount() || mWinnerCnt == 0) return false;
+		if(mWinnerCnt >= mGame.getActivePlayerCount() || mWinnerCnt == 0) {
+            return false;
+        }
 		return true;
 	}
 	

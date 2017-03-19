@@ -16,12 +16,11 @@ public class PlayerClass implements Serializable  {
 	
 	
 	public PlayerClass(){
+		this.mID = 0;
 		this.mCurrentPoints	= 0;
 		this.mStartPoints = 0;
 		this.mName = "";
 	}
-	
-	
 	
 	public PlayerClass(int id){
 		this.mID 	= id;
@@ -36,7 +35,15 @@ public class PlayerClass implements Serializable  {
 		this.mStartPoints = startPoints;
 		this.mName = name;
 	}
-	
+
+    public PlayerClass(int id, String name, ArrayList<Float> historyPoints, ArrayList<Float> historyPointsAtRounds){
+        this.mID 	= id;
+        this.mCurrentPoints	= 0;
+        this.mStartPoints = 0;
+        this.mName = name;
+
+        setPointHistoy(historyPoints, historyPointsAtRounds);
+    }
 	
 
 	public boolean isActive(){
@@ -130,7 +137,7 @@ public class PlayerClass implements Serializable  {
         updatePoints(0,(float)0);
     }
 
-    public void setPointHistoy(ArrayList<Float> points, ArrayList<Float> pointsAtRounds) {
+    private void setPointHistoy(ArrayList<Float> points, ArrayList<Float> pointsAtRounds) {
         mPointHistroy = points;
         mPointHistroyATRound = pointsAtRounds;
 

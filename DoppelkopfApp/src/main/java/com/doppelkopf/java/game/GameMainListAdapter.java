@@ -65,16 +65,15 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
     
     private View getRoundViewTable(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-		LinearLayout mPlayerRow = null;
 		TextView mRoundNumber, mRoundPoints, mRoundPointsSolo, mPlayerPoints, mBockCountInfo;
-		String mStr = "";
 
-		int mPlayerPerRow = 2, mRoundType, mTmp;
-		float mPoints, mPointsDiff;
+		float mPoints;
 
 		final RoundClass mRound = mRounds.get(position);
 
-		if (mRound == null) return v;
+		if (mRound == null) {
+			return v;
+		}
 		if (v == null) {
 			if (mGame.getPlayerCount() == 4)
 				v = mInflater.inflate(R.layout.fragment_game_round_view_table_4_player, parent, false);
@@ -144,16 +143,26 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 			mPlayerPoints = (TextView)v.findViewById(DokoData.mTvTablePlayerName[i]);
     		
     		mPlayerPoints.setText(Functions.getFloatAsString(mPoints));
-    		if(mPoints < 0) mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_negative));
-    		else mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_positive));
+
+    		if(mPoints < 0) {
+				mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_negative));
+			}
+    		else {
+				mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_positive));
+			}
 			
 			// if points don't change player was suspended
 			if (mGame.isMarkSuspendedPlayersEnable() &&
-				mRound.getID() > 0 && 
-				mPoints  == mGame.getPlayer(i).getPointHistory(mRound.getID() - 1)) {
+					mRound.getID() > 0 &&
+					mPoints  == mGame.getPlayer(i).getPointHistory(mRound.getID() - 1)) {
+
 				mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_suspended));
 			}
 
+			// if first round und player has 0 points he must be suspended
+			if (mGame.isMarkSuspendedPlayersEnable() && mRound.getID() == 0 && mPoints == 0) {
+				mPlayerPoints.setTextColor(parent.getResources().getColor(R.color.table_entry_points_suspended));
+			}
     		
 		}
 		v.setOnLongClickListener(mRoundNrLongListerner);
@@ -194,8 +203,12 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 		mRoundPointsSolo = (TextView)v.findViewById(R.id.fragment_game_round_points_solo);
 		
 		
-		if(mRound.getPoints() > 0)mStrHeader.setText(mRound.getRoundTypeAsAtring(mContext));
-		else mStrHeader.setText(null);
+		if(mRound.getPoints() > 0) {
+            mStrHeader.setText(mRound.getRoundTypeAsAtring(mContext));
+        }
+		else {
+            mStrHeader.setText(null);
+        }
 		
 		mRoundNumber.setText("#"+String.valueOf(mRound.getID()+1));
 		

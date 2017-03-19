@@ -683,15 +683,15 @@ public class DokoXMLClass {
 
                 if(mName.length() > 0){
                     //player found
-
-                    // add round history
                     PlayerClass player;
                     if (mPlayerPointsHistoryPoints.size() > 0 && mPlayerPointsHistoryPointsATRound.size() > 0) {
-                        player = new PlayerClass(mPID++,mName,mPlayerPointsHistoryPoints.get(mPlayerPointsHistoryPoints.size() - 1));
-                        player.setPointHistoy(mPlayerPointsHistoryPoints, mPlayerPointsHistoryPointsATRound);
+                        // add round history
+                        player = new PlayerClass(mPID++,mName,mPlayerPointsHistoryPoints, mPlayerPointsHistoryPointsATRound);
                     }
                     else {
+                        // no round history only use start points value
                         player = new PlayerClass(mPID++,mName,mPoints);
+                        // add one round for start
                         player.updatePoints(0,(float)0);
                     }
 
@@ -736,7 +736,8 @@ public class DokoXMLClass {
         }
 
         for(int i=mPlayers.size();i<DokoData.MAX_PLAYER;i++) {
-            PlayerClass pInactive = new PlayerClass(i, "", 0);
+            PlayerClass pInactive = null;
+
             if (mHistoryCnt > 0) {
                 // fill points history only 0.0f
                 mPlayerPointsHistoryPoints = new ArrayList<Float>();
@@ -746,8 +747,15 @@ public class DokoXMLClass {
                     mPlayerPointsHistoryPointsATRound.add(0.0f);
                 }
 
-                pInactive.setPointHistoy(mPlayerPointsHistoryPoints, mPlayerPointsHistoryPointsATRound);
+                pInactive = new PlayerClass(i, "", mPlayerPointsHistoryPoints, mPlayerPointsHistoryPointsATRound);
             }
+
+            if (pInactive == null) {
+                pInactive = new PlayerClass(i, "", 0);
+                // add one round for start
+                pInactive.updatePoints(0,(float)0);
+            }
+
             mPlayers.add(pInactive);
         }
 

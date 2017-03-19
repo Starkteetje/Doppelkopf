@@ -17,8 +17,7 @@ public class RoundClass implements Serializable  {
 	private int mPoints;
 	private int mBockCount;
 	private GAME_ROUND_RESULT_TYPE mRoundType;
-	String mResultText;
-	
+
 	
 	public RoundClass(int id,int points,int bockCount){
 		this.mID = id;
@@ -40,17 +39,9 @@ public class RoundClass implements Serializable  {
 	public void setID(int id){
 		this.mID =  id;
 	}
-	
-	public void setResultText(String rT){
-		this.mResultText = rT;
-	}
-	
-	public String getResultText(){
-		return this.mResultText;
-	}
-	
+
 	public int getPoints(){
-		return this.mPoints*(this.mBockCount!=0 ? this.mBockCount*2 : 1 );
+		return this.mPoints*(this.mBockCount!=0 ? this.mBockCount * 2 : 1 );
 	}
 	
 	public int getPointsWithoutBock(){
@@ -78,31 +69,45 @@ public class RoundClass implements Serializable  {
 		if(winner_count == 1){
 			//Win solo
 			this.mRoundType = GAME_ROUND_RESULT_TYPE.WIN_SOLO;
-			this.setResultText(String.valueOf(this.mPoints+"/"+((active_player-1)*this.mPoints) ));
 		}
 		else if(winner_count == 3 && active_player == 4){
 			//Lose solo
 			this.mRoundType = GAME_ROUND_RESULT_TYPE.LOSE_SOLO;
-			this.setResultText(String.valueOf(this.mPoints+"/"+((active_player-1)*this.mPoints) ));
 		}
+
+		// 5 active
 		else if(winner_count == 4 && active_player == 5){
 			//Lose solo
 			this.mRoundType = GAME_ROUND_RESULT_TYPE.LOSE_SOLO;
-			this.setResultText(String.valueOf(this.mPoints+"/"+((active_player-1)*this.mPoints) ));
 		}
 		else if(winner_count == 3 && active_player == 5){
 			//3 win vs. 2 lose
 			this.mRoundType = DokoData.GAME_ROUND_RESULT_TYPE.FIVEPLAYER_3WIN;
-			this.setResultText(String.valueOf(this.mPoints+"/"+((active_player-2)*this.mPoints/2) ));
 		}
 		else if(winner_count == 2 && active_player == 5){
 			//2 win vs. 3 lose
 			this.mRoundType = GAME_ROUND_RESULT_TYPE.FIVEPLAYER_2WIN;
-			this.setResultText(String.valueOf(this.mPoints+"/"+((active_player-2)*this.mPoints/2) ));
+		}
+
+		//6 active
+		else if(winner_count == 5 && active_player == 6){
+			//Lose solo
+			this.mRoundType = GAME_ROUND_RESULT_TYPE.LOSE_SOLO;
+		}
+		else if(winner_count == 2 && active_player == 6){
+			//2 win vs. 4 lose
+			this.mRoundType = GAME_ROUND_RESULT_TYPE.SIXPLAYER_2WIN;
+		}
+		else if(winner_count == 3 && active_player == 6){
+			//3 win vs. 3 lose
+			this.mRoundType = GAME_ROUND_RESULT_TYPE.SIXPLAYER_3WIN;
+		}
+		else if(winner_count == 4 && active_player == 6){
+			//4 win vs. 2 lose
+			this.mRoundType = GAME_ROUND_RESULT_TYPE.SIXPLAYER_4WIN;
 		}
 		else{
 			this.mRoundType = GAME_ROUND_RESULT_TYPE.NORMAL;
-			this.setResultText(String.valueOf(this.mPoints));
 		}
 	}
 		
@@ -124,6 +129,21 @@ public class RoundClass implements Serializable  {
 					return res;
 				} else {
 					return "3vs2";
+				}
+			case SIXPLAYER_2WIN:
+			case SIXPLAYER_4WIN:
+				res = c.getResources().getString(R.string.str_round_type_4vs2);
+				if (res != null) {
+					return res;
+				} else {
+					return "4vs2";
+				}
+			case SIXPLAYER_3WIN:
+				res = c.getResources().getString(R.string.str_round_type_3vs3);
+				if (res != null) {
+					return res;
+				} else {
+					return "3vs3";
 				}
 			default:
 				res = c.getResources().getString(R.string.str_round_type_2vs2);
