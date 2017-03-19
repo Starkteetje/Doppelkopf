@@ -121,7 +121,7 @@ public class GameResultActivity extends DokoActivity {
                 mTv.setText(Float.toString(factor));
 
                 mTv = (TextView)playerEntry.findViewById(R.id.player_entry_game_result_final_result);
-                mTv.setText(String.format("%.2f",factor * points));
+                mTv.setText(String.format("%.2f",factor * (float)points));
 
                 if (points < 0) {
                     mTv.setTextColor(this.getResources().getColor(R.color.red_dark));
@@ -150,7 +150,7 @@ public class GameResultActivity extends DokoActivity {
                 }
             }
 
-            if (counter > 1) {
+            if (counter > 1 || newFactor.length() == 0) {
                 showAlertDialog(R.string.str_error, R.string.str_game_result_calc_factor_error);
                 return;
             }

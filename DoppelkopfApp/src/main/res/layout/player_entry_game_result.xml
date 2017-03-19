@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="90dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="1dp"
 
-    android:background="@color/white"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="5dp"
     android:weightSum="1.0">
 
 
     <LinearLayout
+        android:background="@color/white"
         android:layout_width="fill_parent"
         android:layout_height="35dp"
         android:paddingRight="5dp"
@@ -67,6 +67,7 @@
 
 
     <LinearLayout
+        android:background="@color/white"
         android:paddingRight="5dp"
         android:layout_width="fill_parent"
         android:layout_height="15dip"
@@ -108,24 +109,17 @@
         android:layout_alignParentRight="true"
         android:background="@color/light_gray" />
 
-    <LinearLayout
-        android:paddingRight="5dp"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:orientation="vertical">
 
-        <TextView
-            android:layout_alignParentRight="true"
-            android:id="@+id/player_entry_game_result_final_result"
-            android:background="@color/white"
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:gravity="right|top"
-            android:textColor="@color/black"
-            android:lines="1"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"  />
+    <TextView
+        android:id="@+id/player_entry_game_result_final_result"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textColor="@color/black"
+        android:lines="1"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceMedium"  />
 
-    </LinearLayout>
 
 </LinearLayout>

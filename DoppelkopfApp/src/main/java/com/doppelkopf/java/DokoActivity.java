@@ -92,9 +92,9 @@ public class DokoActivity extends AppCompatActivity {
             drawerSavedGames = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.str_saved_game);
             drawerAbout = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.start_action_about);
 
-            drawerStart.withTextColor(getColor(R.color.black));
-            drawerSavedGames.withTextColor(getColor(R.color.black));
-            drawerAbout.withTextColor(getColor(R.color.gray_dark));
+            drawerStart.withTextColor(mContext.getResources().getColor(R.color.black));
+            drawerSavedGames.withTextColor(mContext.getResources().getColor(R.color.black));
+            drawerAbout.withTextColor(mContext.getResources().getColor(R.color.gray_dark));
 
             AccountHeader header = new AccountHeaderBuilder()
                     .withActivity(this)
