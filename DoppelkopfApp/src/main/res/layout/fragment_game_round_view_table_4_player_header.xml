@@ -40,7 +40,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="0.1875"
+            android:layout_weight="0.175"
             android:layout_height="wrap_content"
             android:layout_width="0dp">
 
@@ -63,7 +63,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="0.1875"
+            android:layout_weight="0.182"
             android:layout_height="wrap_content"
             android:layout_width="0dp">
 
@@ -87,7 +87,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="0.1875"
+            android:layout_weight="0.182"
             android:layout_height="wrap_content"
             android:layout_width="0dp">
 
@@ -110,7 +110,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="0.1875"
+            android:layout_weight="0.182"
             android:layout_height="wrap_content"
             android:layout_width="0dp">
 
@@ -133,7 +133,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="0.13"
+            android:layout_weight="0.165"
             android:layout_height="wrap_content"
             android:layout_width="0dp">
 
