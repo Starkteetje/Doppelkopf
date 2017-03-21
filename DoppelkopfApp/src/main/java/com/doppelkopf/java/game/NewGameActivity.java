@@ -163,8 +163,11 @@ public class NewGameActivity extends DokoActivity {
     }
     
     private void loadPlayerNames() {
-		if(!DokoXMLClass.isAppDirOK(mContext)) return;
+		if(!DokoXMLClass.isAppDirOK(mContext)) {
+			return;
+		}
 		DokoXMLClass.isXMLPresent(mContext,DokoData.PLAYER_NAMES_XML,true);
+
 		DokoXMLClass.getPlayerNamesFromXML(mContext,DokoData.PLAYER_NAMES_XML,DokoData.PLAYER_NAMES);
 		
 	}
@@ -236,7 +239,7 @@ public class NewGameActivity extends DokoActivity {
     			mPlayerNames.add(DokoData.PLAYER_NAMES.get(i));
     	}
 		DokoData.PLAYER_NAMES = mPlayerNames;
-		DokoXMLClass.savePlayerNamesToXML(mContext, DokoData.PLAYER_NAMES_XML,mPlayerNames);
+		DokoXMLClass.savePlayerNamesToXML(mContext,mPlayerNames);
 		return true;
 	}
 	
@@ -346,7 +349,11 @@ public class NewGameActivity extends DokoActivity {
 			case R.id.action_new_game_start_help:
 				showHelp();
 				return true;
-
+			case R.id.action_new_game_start_clear_playernames:
+				boolean success = DokoXMLClass.clearPlayerNamesXML(mContext);
+				showAlertDialog(R.string.str_hint, R.string.str_clear_player_name_list_text);
+				setAutoCompleteNames();
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}

@@ -293,7 +293,7 @@ public class ChangeGameSettingActivity extends DokoActivity {
     			mPlayerNames.add(DokoData.PLAYER_NAMES.get(i));
     	}
 		DokoData.PLAYER_NAMES = mPlayerNames;
-		DokoXMLClass.savePlayerNamesToXML(mContext, DokoData.PLAYER_NAMES_XML,mPlayerNames);
+		DokoXMLClass.savePlayerNamesToXML(mContext,mPlayerNames);
 		return true;
 	}
 	

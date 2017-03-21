@@ -16,6 +16,8 @@
     <string name="str_saved_game_via_mail_intent">Als E-Mail verschicken...</string>
     <string name="str_new_game">Neue Runde</string>
     <string name="str_player_name">Spielername</string>
+    <string name="str_clear_player_name_list">Namenshistorie löschen</string>
+    <string name="str_clear_player_name_list_text">Liste der Spielernamen erfolgeich geleert.</string>
     <string name="str_player_add">Spieler hinzufügen</string>
     <string name="str_player_required">Bitte mindestens vier Spieler anlegen</string>
     <string name="str_round_number">Spiel</string>

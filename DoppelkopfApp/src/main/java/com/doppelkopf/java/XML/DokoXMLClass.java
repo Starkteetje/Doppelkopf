@@ -1041,8 +1041,41 @@ public class DokoXMLClass {
 
 		return false;
 	}
+
+	public static boolean clearPlayerNamesXML(Context context) {
+        if(DokoXMLClass.isAppDirOK(context)){
+            XmlSerializer serializer = Xml.newSerializer();
+            StringWriter writer = new StringWriter();
+            try {
+                serializer.setOutput(writer);
+                serializer.startDocument("UTF-8", false);
+                serializer.text("\n");
+                serializer.startTag("", PLAYER_NAMES_NAMES);
+                serializer.text("\n");
+                serializer.endTag("", PLAYER_NAMES_NAMES);
+                serializer.endDocument();
+                try{
+                    FileOutputStream fos = context.openFileOutput(DokoData.PLAYER_NAMES_XML, MODE_PRIVATE);
+                    OutputStreamWriter osw = new OutputStreamWriter(fos);
+
+                    osw.write(writer.toString());
+                    osw.flush();
+                    fos.flush();
+                    osw.close();
+                    fos.close();
+                    return true;
+                }
+                catch(Exception e){
+                    Log.d(TAG,e.toString());
+                }
+            } catch (Exception e) {
+                Log.d(TAG,e.toString());
+            }
+        }
+        return false;
+    }
 	
-	public static boolean savePlayerNamesToXML(Context c,String file, ArrayList<String> playerNames){
+	public static boolean savePlayerNamesToXML(Context c, ArrayList<String> playerNames){
 		if(playerNames != null && DokoXMLClass.isAppDirOK(c)){
 			XmlSerializer serializer = Xml.newSerializer();
 		    StringWriter writer = new StringWriter();
@@ -1069,7 +1102,7 @@ public class DokoXMLClass {
 		        	//File f = new File(getAppDir(c)+file);
 		        	//f.delete();
 	
-					FileOutputStream fos = c.openFileOutput(file, MODE_PRIVATE);
+					FileOutputStream fos = c.openFileOutput(DokoData.PLAYER_NAMES_XML, MODE_PRIVATE);
 					OutputStreamWriter osw = new OutputStreamWriter(fos); 
 					
 				    osw.write(writer.toString());
