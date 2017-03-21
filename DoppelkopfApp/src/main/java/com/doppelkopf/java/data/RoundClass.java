@@ -41,7 +41,7 @@ public class RoundClass implements Serializable  {
 	}
 
 	public int getPoints(){
-		return this.mPoints * (this.mBockCount!=0 ? (int)Math.pow(this.mBockCount, 2) : 1 );
+		return this.mPoints * (this.mBockCount!=0 ? (int)Math.pow(2, this.mBockCount) : 1 );
 	}
 	
 	public int getPointsWithoutBock(){
