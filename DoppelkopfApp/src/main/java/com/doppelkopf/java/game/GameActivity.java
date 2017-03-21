@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -59,6 +60,8 @@ import com.doppelkopf.java.util.TextDrawable;
 public class GameActivity extends DokoActivity {
 
 	private String TAG = "Game";
+
+    private static DokoActivity dokoActivity;
 		
 	private static ListView mLvRounds;
 	private static GameMainListAdapter mLvRoundAdapter;
@@ -68,23 +71,21 @@ public class GameActivity extends DokoActivity {
 	private static LinearLayout mBottomInfos;
 	private static TextView mBottomInfoBockRoundCount;
 	private static TextView mBottomInfoBockRoundPreview;
-	
-	private static boolean mBockPreviewOnOff = true;
 
 	private static TextView mTvAddRoundBockPoints;
 
-	private int mPlayerCnt;
-	private Spinner mSpActivePlayer;
-	private Spinner mSpBockLimit;
+	private static int mPlayerCnt;
+    private static int mActivePlayerCnt;
+
+
+	private static Spinner mGameBockRoundsCnt;
+	private static Spinner mGameBockRoundsGameCnt;
+	private static ArrayAdapter<Integer> mGameBockRoundsCntAdapter;
+	private static ArrayAdapter<Integer> mGameBockRoundsGameCntAdapter;
 
 	private static Button mBtnAddRound;
 	private static TextView mEtNewRoundPoints;
-	
-	private ArrayList<Integer> mActivePlayerArrayList = new ArrayList<Integer>();
-	private ArrayList<Integer> mBockLimitArrayList = new ArrayList<Integer>();
-	private ArrayAdapter<Integer> mSPActivePlayerArrayAdapter;
-	private ArrayAdapter<Integer> mSPBockLimitArrayAdapter;
-	
+
 	private static ArrayList<TextView> mGameAddRoundPlayerState = new ArrayList<TextView>();
 	
 	private SwipePagerAdapter mDemoCollectionPagerAdapter;
@@ -98,6 +99,8 @@ public class GameActivity extends DokoActivity {
     
 
     private static CheckBox mCBNewBockRound;
+	private static ImageView mBockRoundInfoIcon;
+	private static LinearLayout mGameBockDetailContainer;
 
     private static GameAddRoundPlayernameClickListener mAddRoundPlayernameClickListener;
     private static GameAddRoundPlayernameLongClickListener mAddRoundPlayernameLongClickListener;
@@ -115,6 +118,8 @@ public class GameActivity extends DokoActivity {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_game);
 
+        dokoActivity = this;
+
         setupDrawerAndToolbar(mContext.getResources().getString(R.string.str_game));
 
         mGame = getGame(savedInstanceState);
@@ -125,6 +130,7 @@ public class GameActivity extends DokoActivity {
         }
 
         mPlayerCnt = mGame.getPlayerCount();
+        mActivePlayerCnt = mGame.getActivePlayerCount();
 
         loadSwipeViews();
 
@@ -265,8 +271,7 @@ public class GameActivity extends DokoActivity {
 	 // Since this is an object collection, use a FragmentStatePagerAdapter,
 	 // and NOT a FragmentPagerAdapter.
 	 public class SwipePagerAdapter extends FragmentPagerAdapter {
-	    private static final int mIndexCnt	= 2;  
-	    
+	    private static final int mIndexCnt	= 2;
 
 	    
 	    public SwipePagerAdapter(FragmentManager fm) {
@@ -275,7 +280,7 @@ public class GameActivity extends DokoActivity {
 	
 	    @Override
 	    public Fragment getItem(int i) {
-	        Fragment fragment = new DemoObjectFragment();
+            DemoObjectFragment fragment = new DemoObjectFragment();
 	        Bundle args = new Bundle();
 	        // Our object is just an integer :-P
 	        args.putInt(DemoObjectFragment.mPageIndex, i);
@@ -341,7 +346,7 @@ public class GameActivity extends DokoActivity {
 		mBottomInfos = (LinearLayout)rootView.findViewById(R.id.fragment_game_bottom_infos);
 		mBottomInfoBockRoundCount = (TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_bock_count);
 		mBottomInfoBockRoundPreview = (TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_bock_count_preview);
-		
+
 		if(mGame != null){
 			if(mGame.getBockRoundLimit() == 0 )
 				mBottomInfos.setVisibility(View.GONE);
@@ -396,9 +401,28 @@ public class GameActivity extends DokoActivity {
 		
 		mTvAddRoundBockPoints = (TextView)rootView.findViewById(R.id.game_add_round_bock_points);
 
+		mGameBockDetailContainer = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_details_container);
+        mBockRoundInfoIcon = (ImageView) rootView.findViewById(R.id.game_add_round_bock_info);
+        mBockRoundInfoIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dokoActivity.showAlertDialog(R.string.str_help, R.string.str_game_points_choose_bock_info, dokoActivity);
+            }
+        });
 
         mCBNewBockRound = (CheckBox)rootView.findViewById(R.id.game_add_round_bock_cb);
+		mCBNewBockRound.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mBockRoundInfoIcon != null) {
+					mBockRoundInfoIcon.setVisibility(mCBNewBockRound.isChecked() ? View.VISIBLE : View.INVISIBLE);
+				}
 
+				if (mGameBockDetailContainer != null) {
+                    mGameBockDetailContainer.setVisibility(mCBNewBockRound.isChecked() ? View.VISIBLE : View.GONE);
+				}
+			}
+		});
 
         mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_container);
 		if(mGame.getBockRoundLimit() == 0) {
@@ -407,6 +431,25 @@ public class GameActivity extends DokoActivity {
 		else {
             mLayout.setVisibility(View.VISIBLE);
         }
+
+        // bock spinners
+        mGameBockRoundsCnt = (Spinner)rootView.findViewById(R.id.game_bock_rounds_cnt);
+        mGameBockRoundsGameCnt = (Spinner)rootView.findViewById(R.id.game_bock_rounds_game_cnt);
+
+        ArrayList<Integer>mMaxPlayerInteger = new ArrayList<Integer>();
+        for(int k=1;k<=DokoData.MAX_PLAYER;k++) {
+            mMaxPlayerInteger.add(k);
+        }
+
+        mGameBockRoundsCntAdapter = new ArrayAdapter<Integer>(context, R.layout.spinner_item,R.id.spinner_text,mMaxPlayerInteger);
+        mGameBockRoundsCntAdapter.setDropDownViewResource(R.layout.spinner_item);
+        mGameBockRoundsCnt.setAdapter(mGameBockRoundsCntAdapter);
+        mGameBockRoundsCnt.setSelection(0);
+
+        mGameBockRoundsGameCntAdapter = new ArrayAdapter<Integer>(context, R.layout.spinner_item,R.id.spinner_text,mMaxPlayerInteger);
+        mGameBockRoundsGameCntAdapter.setDropDownViewResource(R.layout.spinner_item);
+        mGameBockRoundsGameCnt.setAdapter(mGameBockRoundsGameCntAdapter);
+        mGameBockRoundsGameCnt.setSelection(mActivePlayerCnt - 1);
 
 		resetNewRoundFields(context);
 		
@@ -550,7 +593,16 @@ public class GameActivity extends DokoActivity {
 			}
 			
 			Log.d(TAG,getNewRoundPoints()+"-"+mGame.toString());
-			mGame.addNewRound(getNewRoundPoints(),isNewBockRoundSet(),mWinnerList,mSuspendList);
+
+            Integer mGameBockRoundsCount =  (Integer)mGameBockRoundsCnt.getSelectedItem();
+            Integer mGameBockRoundsGameCount =  (Integer)mGameBockRoundsGameCnt.getSelectedItem();
+
+            if (!isNewBockRoundSet()) {
+                mGameBockRoundsCount = 0;
+                mGameBockRoundsGameCount = 0;
+            }
+
+			mGame.addNewRound(getNewRoundPoints(),mGameBockRoundsCount, mGameBockRoundsGameCount,mWinnerList,mSuspendList);
 			Log.d(TAG,mGame.toString());
 			notifyDataSetChanged();
 			 
@@ -709,6 +761,11 @@ public class GameActivity extends DokoActivity {
 
         mCBNewBockRound.setChecked(false);
 
+        mGameBockRoundsCnt.setSelection(0);
+        mGameBockRoundsGameCnt.setSelection(mActivePlayerCnt - 1);
+        mGameBockDetailContainer.setVisibility(View.GONE);
+
+
 		if (mBtnAddRound != null && mBtnAddRound.getParent() != null && mBtnAddRound.getParent().getParent() != null && (mBtnAddRound.getParent().getParent() instanceof ScrollView)) {
 			ScrollView sv = (ScrollView)mBtnAddRound.getParent().getParent();
 			sv.fullScroll(ScrollView.FOCUS_UP);
@@ -772,26 +829,7 @@ public class GameActivity extends DokoActivity {
 		}
 		return m;
 	}
-	
 
-	private boolean isPlayerNameSet(boolean saveToXML) {
-		ArrayList<String> mPlayerNames = getPlayerNames();
-		//Log.d(TAG,mPlayerNames.size()+"+"+ mPlayerCnt);
-		if(mPlayerNames.size() < mPlayerCnt) return false;
-		
-		for(int i=0;i<mPlayerNames.size();i++){
-			if(mPlayerNames.get(i).isEmpty()) return false;
-		}
-		
-    	for(int i=0;i<DokoData.PLAYER_NAMES.size();i++){ 
-    		if(!mPlayerNames.contains(DokoData.PLAYER_NAMES.get(i)) )
-    			mPlayerNames.add(DokoData.PLAYER_NAMES.get(i));
-    	}
-		DokoData.PLAYER_NAMES = mPlayerNames;
-		DokoXMLClass.savePlayerNamesToXML(mContext, DokoData.PLAYER_NAMES_XML,mPlayerNames);
-		return true;
-	}
-	
 	private ArrayList<String> getPlayerNames(){
 		ArrayList<String> mPlayerNames = new ArrayList<String>();
 		View v;
@@ -1032,7 +1070,7 @@ public class GameActivity extends DokoActivity {
         		}
         	}
 
-        	mGame.editLastRound(mNewRoundPoints, false, mTmpWinnerList, mTmpSuspendList);
+        	mGame.editLastRound(mNewRoundPoints, mTmpWinnerList, mTmpSuspendList);
         	reloadSwipeViews(); 
         	//Log.d("GA after",mGame.toString());
         	DokoXMLClass.saveGameStateToXML(mContext, mGame);

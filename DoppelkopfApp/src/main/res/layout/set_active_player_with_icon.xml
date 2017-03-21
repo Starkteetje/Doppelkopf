@@ -30,20 +30,20 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:weightSum="1" >
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/fragment_game_round_str_prim"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="5dp"
                 android:gravity="center|left"
+                android:paddingLeft="5dp"
                 android:text="@string/str_active_player"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/black"
@@ -52,8 +52,8 @@
         </LinearLayout>
 
         <Spinner
-            style="@style/Spinner"
             android:id="@+id/sp_act_player_cnt"
+            style="@style/Spinner"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="0.4" />

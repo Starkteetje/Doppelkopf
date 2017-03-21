@@ -67,6 +67,13 @@
     <string name="str_game_points_choose_winner">Wähle: Gewinner (tap)</string>
     <string name="str_game_points_choose_winner_and_suspend">Gewinner (tap) + Ausgesetzte/r (long press)</string>
     <string name="str_game_points_choose_bock">Neue Bockrunden</string>
+    <string name="str_game_bock_rounds_cnt">Anzahl Bockrunden</string>
+    <string name="str_game_bock_rounds_game_cnt">Spiele pro Bockrunde</string>
+    <string name="str_game_points_choose_bock_info">Anzahl Bockrunden:\n\nGibt an wie wie oft Bockrunden hinzugefügt werden z.B. Herz durchgelaufen = 1. Kommt jetzt noch eine weiter Möglichkeit wie Solo verloren hinzu die auch Bockrunden ergibt erhöht sich der Wert auf 2.
+    \n\nSpiele pro Bockrunde:\n\nGibt an wie viele Spiele eine Bockrunde eingetragen bekommen z.B. 4 = 4 Spiele sind Bock für 4 Spieler.
+    \n\nBeispiele:\n\nAnzahl Bockrunden = 1, Spiele pro Bockrunde = 4 ergeben Gesamt 4 neue Bockrunden.
+    \n\nAnzahl Bockrunden = 2, Spiele pro Bockrunde = 5 ergeben Gesamt 5 neue Doppel-Bockrunden.</string>
+
     <string name="str_error_game_new_round_data">Ungültige Werte. Bitte Punkte, Anzahl Gewinner/(Ausgesetzt) prüfen</string>
     <string name="str_round_type_solo">Solo</string>
     <string name="str_round_type_2vs2">2vs2</string>
@@ -114,7 +121,7 @@
     <string name="str_info_bock_cnt_info">Bei einer Bockrunde werden die Punkte verdoppelt. Bockrundenlimit von 0&#8211;4 einstellbar (0=keine Verdopplung, I = Punkte x2, II = Punkte x4,III = Punkte x8 usw.).</string>
 
     <string name="str_info_game">Eintragen eines Spiels:\n\nUm ein neues Spiel einzutragen müssen die in die entsprechende Ansicht wechseln wenn nicht schon geschehen.
-        Dies können sie über "wischen nach links" (swipe to left) Geste erreichen.\n\nFür ein neues Spiel werden die Punkte und die Gewinner sowie Verlierer benötigt. (Evtl. noch Spieler die ausgesetzt haben).\n\nDie Punkte werden über die Zahlentasten eingestellt.\n\nDer Status eines Spieler ob er gewonnen oder verloren hat kann über das Drücken (Tap) auf den Spielernamen verändert werden.\n\nUm einen Spieler als ausgesetzt zu markieren länger auf den Spielernamen drücken (long press).</string>
+        Diese erreicht man über "wischen nach links" Geste (swipe to left).\n\nFür ein neues Spiel werden die Punkte und die Gewinner sowie Verlierer benötigt. (Evtl. noch Spieler die ausgesetzt haben).\n\nDie Punkte werden über die Zahlentasten eingestellt.\n\nDer Status eines Spieler ob er gewonnen oder verloren hat kann über das Drücken (Tap) auf den Spielernamen verändert werden.\n\nUm einen Spieler als ausgesetzt zu markieren länger auf den Spielernamen drücken (long press).</string>
 
 
     <string name="str_disclaimer">

@@ -173,43 +173,51 @@ public class GameClass  implements Serializable{
 		return false;
 	}
 
-	public void updateBockCountPreRounds() {
-		if(mBockRoundLimit == 0) return;
+	public void updateBockCountPreRounds(Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount) {
+		if(mBockRoundLimit == 0) {
+			return;
+
+		}
+		else if(mGameBockRoundsCount == 0 && mGameBockRoundsGameCount == 0) {
+			return;
+		}
 		else if(mBockRoundLimit <= getPlayerCount()){
-			int mBockHeap = mPlayerCount;
-			int i = 0;
-			int mID = 0;
-			RoundClass mRound;
-			while(mBockHeap > 0){
-				//Log.d(TAG,"i: "+i+" preSize:"+mPreRoundList.size()+ " heap"+mBockHeap);
-				if(i >= mPreRoundList.size()){
-					if(mPreRoundList.size() > 0){
-						//Log.d(TAG,"1");
-						mID = mPreRoundList.get(mPreRoundList.size()-1).getID()+1;
-					}
-					else if (mRoundList.size() > 0){
-						//Log.d(TAG,"2");
-						mID = mRoundList.get(mRoundList.size()-1).getID()+1;
-					}
-					else{
-						//Log.d(TAG,"3");
-						mID = 0;
-					}
-					//Log.d(TAG,"add");
-					
-					this.mPreRoundList.add(new RoundClass(mID,0,0));
-				}
-				mRound = mPreRoundList.get(i);
-				if(mRound.getBockCount() < mBockRoundLimit){
-					mRound.setBockCount(mRound.getBockCount()+1);
-					mBockHeap--;
-				}
-				i++;
-			}
+            for (int games = 0; games<mGameBockRoundsCount; games++) {
+                int mBockHeap = mGameBockRoundsGameCount;
+                int i = 0;
+                int mID = 0;
+                RoundClass mRound;
+                while(mBockHeap > 0){
+                    //Log.d(TAG,"i: "+i+" preSize:"+mPreRoundList.size()+ " heap"+mBockHeap);
+                    if(i >= mPreRoundList.size()){
+                        if(mPreRoundList.size() > 0){
+                            //Log.d(TAG,"1");
+                            mID = mPreRoundList.get(mPreRoundList.size()-1).getID()+1;
+                        }
+                        else if (mRoundList.size() > 0){
+                            //Log.d(TAG,"2");
+                            mID = mRoundList.get(mRoundList.size()-1).getID()+1;
+                        }
+                        else{
+                            //Log.d(TAG,"3");
+                            mID = 0;
+                        }
+                        //Log.d(TAG,"add");
+
+                        this.mPreRoundList.add(new RoundClass(mID,0,0));
+                    }
+                    mRound = mPreRoundList.get(i);
+                    if(mRound.getBockCount() < mBockRoundLimit){
+                        mRound.setBockCount(mRound.getBockCount()+1);
+                        mBockHeap--;
+                    }
+                    i++;
+                }
+            }
 		}		
 	}
 	
-	public void editLastRound(int newRoundPoints, boolean isNewBockRoundSet, int[] mWinnerList, int[] mSuspendList) {
+	public void editLastRound(int newRoundPoints, int[] mWinnerList, int[] mSuspendList) {
 		RoundClass mRound = mRoundList.get(mRoundList.size()-1);
 		
 		if (mRound != null) {
@@ -219,18 +227,19 @@ public class GameClass  implements Serializable{
 		}
 	}
 
-	public void addNewRound(int newRoundPoints, boolean isNewBockRoundSet, int[] mWinnerList, int[] mSuspendList) {
+	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, int[] mWinnerList, int[] mSuspendList) {
 		RoundClass mRound = getNewRound();
 
-		
+
 		mRound.setPoints(newRoundPoints);
 		mRound.setRoundType(getWinnerCnt(mWinnerList),mActivePlayerCount);
 		//Log.d("GAMECLASS",mRound.getResultText());		
 		updatePlayerPoints(mRound,mWinnerList,mSuspendList);
 		addRound(mRound);
 
-		if(isNewBockRoundSet)
-			updateBockCountPreRounds();
+		if(mGameBockRoundsCount > 0 && mGameBockRoundsGameCount > 0) {
+			updateBockCountPreRounds(mGameBockRoundsCount, mGameBockRoundsGameCount);
+		}
 	}
 	
 	private int getWinnerCnt(int[] mWinnerList){

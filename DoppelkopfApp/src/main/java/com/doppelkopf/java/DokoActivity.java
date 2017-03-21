@@ -179,6 +179,10 @@ public class DokoActivity extends AppCompatActivity {
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
     }
 
+    protected static void showAlertDialog(int titleID, int msgID, DokoActivity activity) {
+        activity.showAlertDialog(activity.getResources().getString(titleID), activity.getResources().getString(msgID));
+    }
+
     protected void showAlertDialog(int titleID, int msgID) {
         showAlertDialog(getResources().getString(titleID), getResources().getString(msgID));
     }
