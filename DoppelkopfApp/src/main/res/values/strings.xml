@@ -16,7 +16,6 @@
     <string name="str_new_game">New game</string>
     <string name="str_player_name">Playername</string>
     <string name="str_player_add">Add player</string>
-    <string name="str_round_number_short">Nr.</string>
     <string name="str_round_number">Game</string>
     <string name="str_player_required">Please setup minimum four players</string>
 
@@ -51,7 +50,6 @@
     <string name="str_saved_games_load">Load saved games...</string>
     <string name="str_game">Current game</string>
     <string name="str_game_cnt_variant">Count variant</string>
-    <string name="str_game_cnt_variant_win">Winner</string>
     <string name="str_game_add_round_here">Add new round (wipe)</string>
     <string name="str_game_new_round">Add new round</string>
     <string name="str_game_add_new_round">Add round</string>
@@ -60,8 +58,6 @@
     <string name="str_game_points_winner_select_text">win</string>
     <string name="str_game_points_lose_select_text">lose</string>
     <string name="str_game_points_suspend_select_text">suspended</string>
-    <string name="str_game_points_choose_winner">Choose: winner (tap)</string>
-    <string name="str_game_points_choose_winner_and_suspend">Winner (tap) + suspended player(s) (long press)</string>
     <string name="str_game_points_choose_bock">New bock rounds</string>
     <string name="str_game_bock_rounds_cnt">Count of bockrounds</string>
     <string name="str_game_bock_rounds_game_cnt">Games per bockround</string>

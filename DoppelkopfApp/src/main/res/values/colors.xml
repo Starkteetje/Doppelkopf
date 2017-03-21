@@ -20,14 +20,11 @@
     <color name="gray">#D8D8D8</color>
     <color name="gray_dark">#777777</color>
 
-    <color name="light_gray_alhpa05">#A8F1F1F1</color>
-
     <color name="primary">#03A9F4 </color>
     <color name="primary_dark">#0288D1</color>
 
     <!-- table colors -->
     <color name="table_header_background">#FFFFFF</color>
-    <color name="table_header_vl">#777777</color>
     <color name="table_header_hl">@color/activity_background_color</color>
     <color name="table_header_text">#000000</color>
 
@@ -36,20 +33,16 @@
 
 
     <color name="table_entry_vl">@color/activity_background_color</color>
-    <color name="table_entry_hl">@color/activity_background_color</color>
 
     <color name="table_entry_points_positive">#669900</color>
     <color name="table_entry_points_negative">#CC0000</color>
     <color name="table_entry_points_suspended">#0099CC</color>
 
     <color name="add_round_player_lose">#A8CC0000</color>
-    <color name="add_round_player_win">#A8669900</color>
-    <color name="add_round_player_suspended">#A80099CC</color>
     <color name="add_round_player_background">#F8F9F9F9</color>
 
     <color name="table_entry_round_points">#000000</color>
     <color name="table_entry_round_bock_total">#777777</color>
-    <color name="table_entry_round_bock_count">#FF8800</color>
 
     <color name="table_footer_background">#B8000000</color>
     <color name="table_footer_bock_count_label">#FFFFFF</color>

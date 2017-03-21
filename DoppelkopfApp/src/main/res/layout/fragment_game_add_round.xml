@@ -185,8 +185,7 @@
                         android:weightSum="1.0">
 
                         <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="0dp"
+							android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.7"
                             android:gravity="left|center_vertical"

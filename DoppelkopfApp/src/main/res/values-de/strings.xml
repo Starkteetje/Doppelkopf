@@ -18,7 +18,6 @@
     <string name="str_player_name">Spielername</string>
     <string name="str_player_add">Spieler hinzufügen</string>
     <string name="str_player_required">Bitte mindestens vier Spieler anlegen</string>
-    <string name="str_roubd_number_short">Nr.</string>
     <string name="str_round_number">Spiel</string>
     
     <string name="str_game_settings">Einstellungen</string>
@@ -53,7 +52,6 @@
     <string name="str_saved_games_load">Speicherstände werden geladen...</string>
     <string name="str_game">Doppelkopf</string>
     <string name="str_game_cnt_variant">Zählvariante</string>
-    <string name="str_game_cnt_variant_win">Gewinner</string>
     <string name="str_game_add_round_here">Neue Runde eintragen (wischen)</string>
     <string name="str_game_new_round">Spiel hinzufügen</string>
     <string name="str_game_add_new_round">Hinzufügen</string>
@@ -64,8 +62,6 @@
     <string name="str_game_points_winner_select_text">gewonnen</string>
     <string name="str_game_points_lose_select_text">verloren</string>
     <string name="str_game_points_suspend_select_text">ausgesetzt</string>
-    <string name="str_game_points_choose_winner">Wähle: Gewinner (tap)</string>
-    <string name="str_game_points_choose_winner_and_suspend">Gewinner (tap) + Ausgesetzte/r (long press)</string>
     <string name="str_game_points_choose_bock">Neue Bockrunden</string>
     <string name="str_game_bock_rounds_cnt">Anzahl Bockrunden</string>
     <string name="str_game_bock_rounds_game_cnt">Spiele pro Bockrunde</string>

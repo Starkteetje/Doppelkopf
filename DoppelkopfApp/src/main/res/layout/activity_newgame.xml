@@ -82,19 +82,19 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/item_space"
-                    layout="@layout/set_active_player_with_icon" />
+                    layout="@layout/set_active_player" />
 
                 <include
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/item_space"
-                    layout="@layout/set_bock_cnt_with_icon" />
+                    layout="@layout/set_bock_cnt" />
 
                 <include
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/item_space"
-                    layout="@layout/set_game_cnt_variant_icon" />
+                    layout="@layout/set_game_cnt_variant" />
 
             </LinearLayout>
 
