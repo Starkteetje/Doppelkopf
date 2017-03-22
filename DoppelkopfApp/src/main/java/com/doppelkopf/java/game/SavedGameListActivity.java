@@ -141,7 +141,25 @@ public class SavedGameListActivity extends DokoActivity {
             if (savedGameFiles != null) {
                 for (File f : savedGameFiles) {
                     if (f.getAbsolutePath().endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX) && !fileList.contains(f.getAbsolutePath())) {
-                        fileList.add(f.getAbsolutePath());
+
+                        String filename = f.getName();
+                        boolean isAlreadyInList = NO;
+
+                        // check if filename is already in list
+                        // maybe detected twice - different mounting points
+                        // filename can only exits once because it's name contains the date
+                        // e.g. filename = 22_03_2017_19_01_30_dokoSavedGame.xml
+                        for (String fileFromList : fileList) {
+                            String fileFromListName = new File(fileFromList).getName();
+                            if (fileFromListName.equalsIgnoreCase(filename)) {
+                                isAlreadyInList = YES;
+                                break;
+                            }
+                        }
+
+                        if (!isAlreadyInList) {
+                            fileList.add(f.getAbsolutePath());
+                        }
                     }
                 }
             }
