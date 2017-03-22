@@ -3,7 +3,7 @@
     <item>
         <shape>
             <solid android:color="@color/table_entry_points_positive" />
-            <corners android:bottomLeftRadius="3dp" android:bottomRightRadius="3dp"/>
+            <corners android:bottomLeftRadius="0dp" android:bottomRightRadius="0dp"/>
         </shape>
     </item>
 </layer-list>

@@ -36,7 +36,7 @@
                     android:id="@+id/game_add_round_playername_left"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|bottom"
+                    android:gravity="center"
                     android:text="l"
                     android:layout_margin="2dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/add_round_player_background"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="2dp"
         android:layout_weight="0.5">
 
         <LinearLayout
@@ -92,7 +92,7 @@
                     android:id="@+id/game_add_round_playername_right"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|bottom"
+                    android:gravity="center"
                     android:text="r"
                     android:layout_margin="2dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"

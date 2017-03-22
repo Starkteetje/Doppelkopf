@@ -7,6 +7,7 @@
 	android:descendantFocusability="beforeDescendants"
 	android:focusableInTouchMode="true"
     android:layout_marginTop="-4dp"
+	android:background="@color/activity_background_color"
 	android:id="@+id/game_add_round_main_layout">
 
     <LinearLayout
@@ -100,8 +101,6 @@
             android:paddingTop="@dimen/item_space"
 	        android:orientation="vertical" >
 
-
-
             <include layout="@layout/fragment_game_new_round_grid_point"/>
 
 	        <LinearLayout
@@ -109,7 +108,6 @@
 	            android:id="@+id/game_add_round_playersection"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-                android:background="@color/white"
 	            android:orientation="vertical"
                 android:paddingTop="@dimen/round_new_edit_padding_tb"
                 android:paddingBottom="@dimen/round_new_edit_padding_tb">
