@@ -8,7 +8,7 @@
     <string name="str_saved_game">Speicherstände</string>
     <string name="str_saved_game_delete_all">Speicherstände löschen</string>
     <string name="str_saved_game_delete_all_q">Sind Sie sicher das sie alle Speicherstände löschen möchten?</string>
-    <string name="str_saved_game_delete_q">Sind Sie sicher das sie das Speicherstand löschen möchten?</string>
+    <string name="str_saved_game_delete_q">Sind Sie sicher das sie den Speicherstand löschen möchten?</string>
     <string name="str_saved_game_via_mail_text_1">Doppelkopf Runde vom:</string>
     <string name="str_saved_game_via_mail_text_excel">*Die Daten können in Excel importiert werden.
         Dazu die Daten als Textdatei abspeichern und in Excel importieren um z.B. eine Auswertung anzufertigen.
@@ -23,18 +23,18 @@
     <string name="str_round_number">Spiel</string>
     
     <string name="str_game_settings">Einstellungen</string>
-    <string name="str_change_game_settings_save">Einstellungen speichern</string>
+    <string name="str_change_game_settings_save">Einstellungen ändern</string>
     <string name="str_change_game_settings_finish">Einstellungen geändert</string>
-    <string name="str_change_game_settings_save_q">Möchten sie die Einstellungen speichern?</string>
+    <string name="str_change_game_settings_save_q">Möchten Sie die Einstellungen speichern?</string>
     <string name="str_change_game_settings_delete_bockrounds">Bockrunden löschen</string>
     <string name="str_change_game_settings_delete_bockrounds_q">Vorhandene Bockrunden werden überschrieben (gelöscht)</string>    
     <string name="str_edit_round">Spiel bearbeiten</string>
     <string name="str_edit_round_nr">Spiel %1$d bearbeiten</string>
 
     <string name="str_edit_round_not_possible">Diese Spiel kann nicht bearbeitet werden</string>
-    <string name="str_edit_round_info">Bearbeiten durch langes Drücken des Eintrag</string>
+    <string name="str_edit_round_info">Bearbeiten durch langes Drücken des Spiels</string>
     <string name="str_edit_round_finish">Erfolgreich bearbeitet</string>
-    <string name="str_edit_round_error">Fehler: Spiel konnte nicht geändert!</string>
+    <string name="str_edit_round_error">Fehler: Spiel konnte nicht geändert werden.</string>
     <string name="str_active_player">Aktive Spieler</string>
     <string name="str_bock_limit">Bocklimit</string>
     <string name="str_bock">Bock</string>
@@ -49,7 +49,7 @@
     <string name="str_game_result_calc">Abrechnung</string>
     <string name="str_game_result_calc_btn">Berechnen</string>
     <string name="str_game_result_calc_factor">Faktor z.B. 0,10 (nur 0-9 , . gülitge Zeichen)</string>
-    <string name="str_game_result_calc_factor_error">Fehler: Bitte geben die einen gültigen Faktor ein (z.B. 0,05 - 0,10 - 1 - 1,5 - 2 - 10)</string>
+    <string name="str_game_result_calc_factor_error">Fehler: Bitte einen gültigen Faktor eingeben (z.B. 0,05 - 0,10 - 1 - 1,5 - 2 - 10)</string>
     <string name="str_game_load">Runde wird geladen...</string>
     <string name="str_saved_games_load">Speicherstände werden geladen...</string>
     <string name="str_game">Doppelkopf</string>
@@ -67,12 +67,12 @@
     <string name="str_game_points_choose_bock">Neue Bockrunden</string>
     <string name="str_game_bock_rounds_cnt">Anzahl Bockrunden</string>
     <string name="str_game_bock_rounds_game_cnt">Spiele pro Bockrunde</string>
-    <string name="str_game_points_choose_bock_info">Anzahl Bockrunden:\n\nGibt an wie wie oft Bockrunden hinzugefügt werden z.B. Herz durchgelaufen = 1. Kommt jetzt noch eine weiter Möglichkeit wie Solo verloren hinzu die auch Bockrunden ergibt erhöht sich der Wert auf 2.
+    <string name="str_game_points_choose_bock_info">Anzahl Bockrunden:\n\nGibt an wie oft Bockrunden hinzugefügt werden. Beispiel: Herz durchgelaufen = 1× Bock, kommt jetzt noch eine weiter Bockrunde durch Solo verloren hinzu, erhöht sich der Wert auf 2.
     \n\nSpiele pro Bockrunde:\n\nGibt an wie viele Spiele eine Bockrunde eingetragen bekommen z.B. 4 = 4 Spiele sind Bock für 4 Spieler.
-    \n\nBeispiele:\n\nAnzahl Bockrunden = 1, Spiele pro Bockrunde = 4 ergeben Gesamt 4 neue Bockrunden.
-    \n\nAnzahl Bockrunden = 2, Spiele pro Bockrunde = 5 ergeben Gesamt 5 neue Doppel-Bockrunden.</string>
+    \n\nBeispiele:\n\nAnzahl Bockrunden = 1, Spiele pro Bockrunde = 4 ergeben insgesamt 4 neue Bockrunden.
+    \n\nAnzahl Bockrunden = 2, Spiele pro Bockrunde = 5 ergeben insgesamt 5 neue Doppel-Bockrunden.</string>
 
-    <string name="str_error_game_new_round_data">Ungültige Werte. Bitte Punkte, Anzahl Gewinner/(Ausgesetzt) prüfen</string>
+    <string name="str_error_game_new_round_data">Ungültige Werte. Bitte Punkte, Anzahl Gewinner (Ausgesetzt) prüfen</string>
     <string name="str_round_type_solo">Solo</string>
     <string name="str_round_type_2vs2">2vs2</string>
     <string name="str_round_type_3vs2">3vs2</string>
@@ -105,21 +105,21 @@
     <!-- Storage Permisson -->
     <string name="str_external_storage">Um die Spielstände innerhalb des
         externen Speichers abzuspeichern und damit Spielstände als CSV-Datei
-        per E-Mail verschickt werden können wird der Zugriff auf den externen Speicher benötigt.</string>
+        per E-Mail verschickt werden können, wird der Zugriff auf den externen Speicher benötigt.</string>
     
     <!-- INFO/HELP -->
     <string name="str_info_cnt_cnt_variants">Zählvarianten</string>
     <string name="str_info_cnt_cnt_variant_std_name">Standard</string>
     <string name="str_info_cnt_cnt_variant_win_name">Verlierer</string>
     <string name="str_info_cnt_cnt_variant_lose_name">Gewinner</string>
-    <string name="str_info_cnt_cnt_variant_standard">Standard: \nDie Verlierer bekommen Punkte abgezogen, die Gewinner bekommen Punkte hinzu.</string>
-    <string name="str_info_cnt_cnt_variant_lose">Verlierer: \nNur die Verlierer bekommen Punkte abgezogen. Die Punkte der Gewinner &amp; evtl. ausgesetzte Spieler bleiben unverändert. (Umgekehrte Variante Gewinner).</string>
-    <string name="str_info_cnt_cnt_variant_win">Gewinner: \nNur die Gewinner bekommen Punkte dazu. Die Punkte der Verlierer &amp; evtl. ausgesetzte Spieler bleiben unverändert. (Umgekehrte Variante Verlierer).</string>
-    <string name="str_info_active_players_info">Aktive Spieler: Ein Spiel kann mit 5 Spieler gestartet werden und nur 4 aktive Spieler geben. D.h. jede Runde gibt es einen Spieler der ausetzt (Dieser kann jede Runde frei festgelegt werden).</string>
-    <string name="str_info_bock_cnt_info">Bei einer Bockrunde werden die Punkte verdoppelt. Bockrundenlimit von 0&#8211;4 einstellbar (0=keine Verdopplung, I = Punkte x2, II = Punkte x4,III = Punkte x8 usw.).</string>
+    <string name="str_info_cnt_cnt_variant_standard">Standard: \nDie Verlierer bekommen Punkte abgezogen, die Gewinner bekommen Punkte addiert.</string>
+    <string name="str_info_cnt_cnt_variant_lose">Verlierer: \nNur die Verlierer bekommen Punkte abgezogen. Die Punkte der Gewinner bleiben unverändert. (Umgekehrte Variante Gewinner).</string>
+    <string name="str_info_cnt_cnt_variant_win">Gewinner: \nNur die Gewinner bekommen Punkte addiert. Die Punkte der Verlierer bleiben unverändert. (Umgekehrte Variante Verlierer).</string>
+    <string name="str_info_active_players_info">Aktive Spieler: Ein Spiel kann mit insgesamt 5 Spieler gestartet von denen 4 aktive sind. D.h. jede Runde gibt es einen Spieler der ausetzt.</string>
+    <string name="str_info_bock_cnt_info">Bei einer Bockrunde werden die Punkte verdoppelt (Verdopplung mit Faktor 2, 4, 8, 16). Bockrundenlimit frei einstellbar.</string>
 
-    <string name="str_info_game">Eintragen eines Spiels:\n\nUm ein neues Spiel einzutragen müssen die in die entsprechende Ansicht wechseln wenn nicht schon geschehen.
-        Diese erreicht man über "wischen nach links" Geste (swipe to left).\n\nFür ein neues Spiel werden die Punkte und die Gewinner sowie Verlierer benötigt. (Evtl. noch Spieler die ausgesetzt haben).\n\nDie Punkte werden über die Zahlentasten eingestellt.\n\nDer Status eines Spieler ob er gewonnen oder verloren hat kann über das Drücken (Tap) auf den Spielernamen verändert werden.\n\nUm einen Spieler als ausgesetzt zu markieren länger auf den Spielernamen drücken (long press).</string>
+    <string name="str_info_game">Neues Spiel eintragen:\n\nUm ein neues Spiel einzutragen müssen Sie in die entsprechende Ansicht wechseln.
+        Diese erreicht man über die "wischen nach links" Geste (swipe to left).\n\nFür ein neues Spiel werden die Punkte und die Gewinner benötigt. (Optional Spieler die ausgesetzt haben).\n\nDie Punkte werden über die Zahlentasten eingestellt.\n\nDer Gewinnstatus eines Spieler kann über das Drücken (Tap) auf den Spielernamen verändert werden.\n\nUm einen Spieler als ausgesetzt zu markieren, länger auf den Spielernamen drücken (long press).</string>
 
 
     <string name="str_disclaimer">
