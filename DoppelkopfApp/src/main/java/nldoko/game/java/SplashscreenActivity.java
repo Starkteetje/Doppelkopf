@@ -1,13 +1,13 @@
-package com.doppelkopf.java;
+package nldoko.game.java;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.appcompat.BuildConfig;
+import nldoko.game.R;
 
-import com.doppelkopf.java.game.NewGameActivity;
-import com.doppelkopf.java.game.SavedGameListActivity;
+import nldoko.game.java.game.SavedGameListActivity;
 
 
 public class SplashscreenActivity extends Activity {

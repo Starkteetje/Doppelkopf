@@ -1,4 +1,4 @@
-package com.doppelkopf.java.game;
+package nldoko.game.java.game;
 
 
 import android.app.AlertDialog;
@@ -21,7 +21,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -46,16 +45,15 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import com.doppelkopf.java.DokoActivity;
-import com.doppelkopf.java.R;
-import com.doppelkopf.java.XML.DokoXMLClass;
-import com.doppelkopf.java.data.DokoData;
-import com.doppelkopf.java.data.DokoData.GAME_CNT_VARIANT;
-import com.doppelkopf.java.data.DokoData.GAME_VIEW_TYPE;
-import com.doppelkopf.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
-import com.doppelkopf.java.data.GameClass;
-import com.doppelkopf.java.util.Functions;
-import com.doppelkopf.java.util.TextDrawable;
+import nldoko.game.java.DokoActivity;
+import nldoko.game.R;
+import nldoko.game.java.XML.DokoXMLClass;
+import nldoko.game.java.data.DokoData;
+import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
+import nldoko.game.java.data.DokoData.GAME_VIEW_TYPE;
+import nldoko.game.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
+import nldoko.game.java.data.GameClass;
+import nldoko.game.java.util.Functions;
 
 public class GameActivity extends DokoActivity {
 

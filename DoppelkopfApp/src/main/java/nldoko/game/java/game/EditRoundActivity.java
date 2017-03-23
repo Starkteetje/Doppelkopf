@@ -1,4 +1,4 @@
-package com.doppelkopf.java.game;
+package nldoko.game.java.game;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import com.doppelkopf.java.DokoActivity;
-import com.doppelkopf.java.R;
-import com.doppelkopf.java.data.DokoData;
-import com.doppelkopf.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
-import com.doppelkopf.java.util.Functions;
+import nldoko.game.java.DokoActivity;
+import nldoko.game.R;
+import nldoko.game.java.data.DokoData;
+import nldoko.game.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
+import nldoko.game.java.util.Functions;
 
 public class EditRoundActivity extends DokoActivity {
 

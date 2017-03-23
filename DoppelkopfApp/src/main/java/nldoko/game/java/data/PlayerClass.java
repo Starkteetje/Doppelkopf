@@ -1,4 +1,4 @@
-package com.doppelkopf.java.data;
+package nldoko.game.java.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;

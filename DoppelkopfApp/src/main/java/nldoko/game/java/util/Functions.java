@@ -1,4 +1,4 @@
-package com.doppelkopf.java.util;
+package nldoko.game.java.util;
 
 import java.math.BigDecimal;
 

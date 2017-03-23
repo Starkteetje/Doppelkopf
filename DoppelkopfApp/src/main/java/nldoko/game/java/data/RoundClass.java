@@ -1,11 +1,11 @@
-package com.doppelkopf.java.data;
+package nldoko.game.java.data;
 
 import java.io.Serializable;
 
 import android.content.Context;
 
-import com.doppelkopf.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
-import com.doppelkopf.java.R;
+import nldoko.game.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
+import nldoko.game.R;
 
 
 

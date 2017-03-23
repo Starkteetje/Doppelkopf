@@ -1,4 +1,4 @@
-package com.doppelkopf.java.game;
+package nldoko.game.java.game;
 
 
 import android.app.AlertDialog;
@@ -15,12 +15,12 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.doppelkopf.java.DokoActivity;
-import com.doppelkopf.java.R;
-import com.doppelkopf.java.XML.DokoXMLClass;
-import com.doppelkopf.java.data.GameClass;
-import com.doppelkopf.java.data.DokoData;
-import com.doppelkopf.java.data.DokoData.GAME_CNT_VARIANT;
+import nldoko.game.java.DokoActivity;
+import nldoko.game.R;
+import nldoko.game.java.XML.DokoXMLClass;
+import nldoko.game.java.data.GameClass;
+import nldoko.game.java.data.DokoData;
+import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
 
 import java.util.ArrayList;
 

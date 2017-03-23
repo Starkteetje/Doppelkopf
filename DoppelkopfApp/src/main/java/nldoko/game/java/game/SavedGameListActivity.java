@@ -1,4 +1,4 @@
-package com.doppelkopf.java.game;
+package nldoko.game.java.game;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -25,11 +25,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import com.doppelkopf.java.DokoActivity;
-import com.doppelkopf.java.R;
-import com.doppelkopf.java.XML.DokoXMLClass;
-import com.doppelkopf.java.data.GameClass;
-import com.doppelkopf.java.data.PlayerClass;
+import nldoko.game.java.DokoActivity;
+import nldoko.game.R;
+import nldoko.game.java.XML.DokoXMLClass;
+import nldoko.game.java.data.GameClass;
+import nldoko.game.java.data.PlayerClass;
 
 public class SavedGameListActivity extends DokoActivity {
 

@@ -1,6 +1,6 @@
-package com.doppelkopf.java.data;
+package nldoko.game.java.data;
 
-import com.doppelkopf.java.R;
+import nldoko.game.R;
 
 import java.util.ArrayList;
 

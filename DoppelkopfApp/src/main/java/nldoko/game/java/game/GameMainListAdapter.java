@@ -1,4 +1,4 @@
-package com.doppelkopf.java.game;
+package nldoko.game.java.game;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,14 +14,14 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
-import com.doppelkopf.java.util.Functions;
-import com.doppelkopf.java.R;
-import com.doppelkopf.java.data.GameClass;
-import com.doppelkopf.java.data.RoundClass;
-import com.doppelkopf.java.data.DokoData;
-import com.doppelkopf.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
-import com.doppelkopf.java.data.DokoData.GAME_VIEW_TYPE;
-import com.doppelkopf.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
+import nldoko.game.java.util.Functions;
+import nldoko.game.R;
+import nldoko.game.java.data.GameClass;
+import nldoko.game.java.data.RoundClass;
+import nldoko.game.java.data.DokoData;
+import nldoko.game.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
+import nldoko.game.java.data.DokoData.GAME_VIEW_TYPE;
+import nldoko.game.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
 
 import java.util.ArrayList;
 

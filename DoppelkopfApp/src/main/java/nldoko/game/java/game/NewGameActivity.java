@@ -1,4 +1,4 @@
-package com.doppelkopf.java.game;
+package nldoko.game.java.game;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,11 +20,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import com.doppelkopf.java.DokoActivity;
-import com.doppelkopf.java.R;
-import com.doppelkopf.java.XML.DokoXMLClass;
-import com.doppelkopf.java.data.DokoData;
-import com.doppelkopf.java.data.DokoData.GAME_CNT_VARIANT;
+import nldoko.game.java.DokoActivity;
+import nldoko.game.R;
+import nldoko.game.java.XML.DokoXMLClass;
+import nldoko.game.java.data.DokoData;
+import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
 
 
 public class NewGameActivity extends DokoActivity {

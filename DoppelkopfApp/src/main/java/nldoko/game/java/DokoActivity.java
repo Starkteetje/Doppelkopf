@@ -1,4 +1,4 @@
-package com.doppelkopf.java;
+package nldoko.game.java;
 
 
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.appcompat.BuildConfig;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import nldoko.game.R;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -26,8 +26,8 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import com.doppelkopf.java.game.NewGameActivity;
-import com.doppelkopf.java.game.SavedGameListActivity;
+import nldoko.game.java.game.NewGameActivity;
+import nldoko.game.java.game.SavedGameListActivity;
 
 
 public class DokoActivity extends AppCompatActivity {
@@ -71,7 +71,7 @@ public class DokoActivity extends AppCompatActivity {
         e.printStackTrace(); // not all Android versions will print the stack trace automatically
 
         Intent intent = new Intent ();
-        intent.setAction ("com.doppelkopf.java.SEND_LOG"); // see step 5.
+        intent.setAction ("nldoko.game.java.SEND_LOG"); // see step 5.
         intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK); // required when starting from Application
         startActivity (intent);
 

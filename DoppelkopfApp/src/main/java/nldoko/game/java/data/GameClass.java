@@ -1,9 +1,9 @@
-package com.doppelkopf.java.data;
+package nldoko.game.java.data;
 
 import android.util.Log;
 
-import com.doppelkopf.java.data.DokoData.GAME_CNT_VARIANT;
-import com.doppelkopf.java.XML.DokoXMLClass;
+import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
+import nldoko.game.java.XML.DokoXMLClass;
 
 
 import java.io.Serializable;

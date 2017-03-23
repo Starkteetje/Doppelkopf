@@ -1,4 +1,4 @@
-package com.doppelkopf.java.XML;
+package nldoko.game.java.XML;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,14 +14,14 @@ import android.util.Xml;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import com.doppelkopf.java.data.DokoData;
-import com.doppelkopf.java.R;
-import com.doppelkopf.java.data.GameClass;
-import com.doppelkopf.java.data.PlayerClass;
-import com.doppelkopf.java.data.RoundClass;
-import com.doppelkopf.java.data.DokoData.GAME_CNT_VARIANT;
-import com.doppelkopf.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
-import com.doppelkopf.java.util.Functions;
+import nldoko.game.java.data.DokoData;
+import nldoko.game.R;
+import nldoko.game.java.data.GameClass;
+import nldoko.game.java.data.PlayerClass;
+import nldoko.game.java.data.RoundClass;
+import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
+import nldoko.game.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
+import nldoko.game.java.util.Functions;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -1200,7 +1200,7 @@ public class DokoXMLClass {
 
             // try to add csv as mail attachemnt
             boolean useFile = false;
-            String filename = "com.doppelkopf.com.doppelkopf.java.csv";
+            String filename = "com.doppelkopf.nldoko.game.java.csv";
 
             File csvTempFile = null;
             FileOutputStream fos = null;
