@@ -119,7 +119,7 @@
     <string name="str_info_bock_cnt_info">Bei einer Bockrunde werden die Punkte verdoppelt (Verdopplung mit Faktor 2, 4, 8, 16). Bockrundenlimit frei einstellbar.</string>
 
     <string name="str_info_game">Neues Spiel eintragen:\n\nUm ein neues Spiel einzutragen müssen Sie in die entsprechende Ansicht wechseln.
-        Diese erreicht man über die "wischen nach links" Geste (swipe to left).\n\nFür ein neues Spiel werden die Punkte und die Gewinner benötigt. (Optional Spieler die ausgesetzt haben).\n\nDie Punkte werden über die Zahlentasten eingestellt.\n\nDer Gewinnstatus eines Spieler kann über das Drücken (Tap) auf den Spielernamen verändert werden.\n\nUm einen Spieler als ausgesetzt zu markieren, länger auf den Spielernamen drücken (long press).</string>
+        Diese erreicht man über die "wischen nach links" Geste (swipe to left).\n\nFür ein neues Spiel werden die Punkte und die Gewinner benötigt. (Optional Spieler die ausgesetzt haben).\n\nDie Punkte werden über die Zahlentasten eingestellt.\n\nDer Gewinnstatus eines Spielers kann über einen Tap auf den Spielernamen verändert werden.\n\nUm einen Spieler als ausgesetzt zu markieren, länger auf den entsprechenden Spielernamen drücken (long press).</string>
 
 
     <string name="str_disclaimer">
