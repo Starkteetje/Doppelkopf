@@ -29,8 +29,7 @@
                 android:paddingLeft="5dp"
                 android:text="@string/str_active_player"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/black"
-                android:textStyle="normal" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
 

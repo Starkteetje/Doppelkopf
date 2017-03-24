@@ -107,7 +107,6 @@
             android:gravity="center"
             android:textColor="@color/gray_dark"
             android:text="@string/str_player_required"
-            android:textStyle="italic"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
         <Button

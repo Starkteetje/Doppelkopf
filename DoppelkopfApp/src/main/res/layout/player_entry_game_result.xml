@@ -67,8 +67,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginLeft="4dp"
             android:text="×"
-            android:layout_alignParentRight="true"
-            android:textStyle="normal" />
+            android:layout_alignParentRight="true" />
 
         <TextView
             android:id="@+id/player_entry_game_result_factor"
@@ -80,8 +79,7 @@
             android:text=""
             android:layout_weight="0.15"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/gray_dark"
-            android:textStyle="normal" />
+            android:textColor="@color/gray_dark" />
 
         <TextView
             android:id="@+id/player_entry_game_result_final_result"

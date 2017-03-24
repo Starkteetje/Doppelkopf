@@ -59,8 +59,7 @@
 						android:hint=""
 						android:paddingLeft="@dimen/item_space"
 						android:textAppearance="?android:attr/textAppearanceLarge"
-						android:textColor="@color/white"
-						android:textStyle="normal" />
+						android:textColor="@color/white" />
 
 
 					<TextView

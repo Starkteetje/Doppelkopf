@@ -23,8 +23,7 @@
         android:gravity="center"
         android:text="0"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/table_entry_round_points"
-        android:textStyle="bold" />
+        android:textColor="@color/table_entry_round_points" />
 
     <TextView
         android:id="@+id/fragment_game_round_view_table_round_points_solo"

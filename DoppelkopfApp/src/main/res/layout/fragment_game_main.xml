@@ -72,7 +72,6 @@
                     android:layout_marginLeft="4dp"
                     android:textColor="@color/table_footer_bock_count_number"
                     android:gravity="center"
-                    android:textStyle="normal"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
 				<TextView

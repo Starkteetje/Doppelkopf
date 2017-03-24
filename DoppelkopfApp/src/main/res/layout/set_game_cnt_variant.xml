@@ -24,8 +24,7 @@
                android:gravity="center|left"
                android:paddingLeft="5dp"
                android:text="@string/str_game_cnt_variant"
-               android:textAppearance="?android:attr/textAppearanceMedium"
-               android:textStyle="normal" />
+               android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             style="@style/Spinner"
