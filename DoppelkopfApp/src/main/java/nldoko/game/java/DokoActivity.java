@@ -218,6 +218,7 @@ public class DokoActivity extends AppCompatActivity {
         builder.setMessage(msg);
         builder.setPositiveButton(R.string.str_accept, null);
         AlertDialog dialog = builder.show();
+        dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(this.getResources().getColor(R.color.accent));
 
         // Must call show() prior to fetching text view
         TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
@@ -235,6 +236,7 @@ public class DokoActivity extends AppCompatActivity {
         builder.setMessage(R.string.str_disclaimer);
         builder.setPositiveButton(R.string.str_accept, null);
         AlertDialog dialog = builder.show();
+        dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(this.getResources().getColor(R.color.accent));
 
         // Must call show() prior to fetching text view
         TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
