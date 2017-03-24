@@ -68,7 +68,7 @@
     <string name="str_game_bock_rounds_cnt">Anzahl Bockrunden</string>
     <string name="str_game_bock_rounds_game_cnt">Spiele pro Bockrunde</string>
     <string name="str_game_points_choose_bock_info">Anzahl Bockrunden:\n\nGibt an wie oft Bockrunden hinzugefügt werden. Beispiel: Herz durchgelaufen = 1× Bock, kommt jetzt noch eine weiter Bockrunde durch Solo verloren hinzu, erhöht sich der Wert auf 2.
-    \n\nSpiele pro Bockrunde:\n\nGibt an wie viele Spiele eine Bockrunde eingetragen bekommen z.B. 4 = 4 Spiele sind Bock für 4 Spieler.
+    \n\nSpiele pro Bockrunde:\n\nGibt an wie viele Spiele eine Bockrunde eingetragen bekommen z.B. 4 = 4 Bockrunden für 4 Spieler.
     \n\nBeispiele:\n\nAnzahl Bockrunden = 1, Spiele pro Bockrunde = 4 ergeben insgesamt 4 neue Bockrunden.
     \n\nAnzahl Bockrunden = 2, Spiele pro Bockrunde = 5 ergeben insgesamt 5 neue Doppel-Bockrunden.</string>
 
