@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ import nldoko.game.java.data.DokoData.GAME_VIEW_TYPE;
 import nldoko.game.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
 import nldoko.game.java.data.GameClass;
 import nldoko.game.java.util.Functions;
+import nldoko.game.java.util.TypefaceUtil;
 
 public class GameActivity extends DokoActivity {
 
@@ -166,9 +168,10 @@ public class GameActivity extends DokoActivity {
             String mStr = "";
             switch (mFocusedPage) {
 			case mIndexGameMain:
-				getSupportActionBar().setTitle(getResources().getString(R.string.str_game)); return;
+				changeToolbarTitle(getResources().getString(R.string.str_game));
+				return;
 			case mIndexGameNewRound:
-                getSupportActionBar().setTitle(getResources().getString(R.string.str_game_new_round));
+				changeToolbarTitle(getResources().getString(R.string.str_game_new_round));
 	  			if(mGame != null && mGame.getPreRoundList().size() > 0 && mGame.getPreRoundList().get(0).getBockCount() > 0){
 	  				mStr = getResources().getString(R.string.str_bockround)+" ";
 	  				mStr += Functions.getBockCountAsString(mGame.getPreRoundList().get(0).getBockCount());
@@ -180,7 +183,7 @@ public class GameActivity extends DokoActivity {
 	  			
 	  			return;
 			default:
-				getSupportActionBar().setTitle(getResources().getString(R.string.str_game));
+				changeToolbarTitle(getResources().getString(R.string.str_game));
 				break;
 			}
         }
@@ -897,10 +900,12 @@ public class GameActivity extends DokoActivity {
 			}
 		});
 
+
 		back.setNegativeButton(R.string.str_no, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {}
 		});
 		back.show();
+
 	}
 	
 
@@ -984,16 +989,9 @@ public class GameActivity extends DokoActivity {
     		
     		case R.id.menu_edit_round:
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-                builder.setTitle(R.string.str_hint);
-                builder.setMessage(getResources().getString(R.string.str_edit_round_info));
-                builder.setPositiveButton(R.string.str_accept, null);
-                android.support.v7.app.AlertDialog dialog = builder.show();
 
-                // Must call show() prior to fetching text view
-                TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
-                messageView.setGravity(Gravity.LEFT);
-
-    		break;
+				showAlertDialog(R.string.str_hint, R.string.str_edit_round_info);
+    			break;
 
             case R.id.menu_game_result:
                 i = new Intent(this, GameResultActivity.class);

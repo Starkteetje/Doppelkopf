@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/str_player_name"
+            android:fontFamily="sans-serif-light"
             android:textColorHint="@color/light_gray"
             android:textColor="@color/black"
             android:backgroundTint="@color/light_gray"
