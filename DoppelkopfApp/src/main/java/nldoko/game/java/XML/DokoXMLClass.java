@@ -1275,7 +1275,7 @@ public class DokoXMLClass {
                     useFile = false;
                     Log.w("CSV to file", "Can't create file", e);
 
-                } 
+                }
             }
 
             if (useFile == false || csvTempFile == null) {
