@@ -33,6 +33,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,12 +124,11 @@ public class DokoXMLClass {
     }
 
     public static void requestPermission(Activity activity) {
-
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
            if (DokoXMLClass.firstTimePermissionDialog(activity) == false ) {
-               // show dialog only once
-                return;
+              // show dialog only once
+              return;
            }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -1133,9 +1133,9 @@ public class DokoXMLClass {
         return sb.toString();
     }
 
-    public static void sendGameViaMail(Context context, GameClass mGame) {
+    public static ArrayList<Uri> sendGameViaMail(Context context, GameClass mGame) {
         /* Create the Intent */
-        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
 
         String mSeperator = ";";
         String text =  context.getResources().getString(R.string.str_saved_game_via_mail_text_1) + " "
@@ -1198,13 +1198,22 @@ public class DokoXMLClass {
             emailIntent.setType("plain/text");
             emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, context.getResources().getString(R.string.app_name) + " - " + "App" );
 
+
             // try to add csv as mail attachemnt
             boolean useFile = false;
-            String filename = "com.doppelkopf.nldoko.game.java.csv";
+            String filenameCSV = "doko.csv";
+            File file = new File(mGame.currentFilename());
+            String filenameXML = file != null ? file.getName() : null;
 
             File csvTempFile = null;
-            FileOutputStream fos = null;
-            OutputStreamWriter osw = null;
+            File xmlFileMail = null;
+            File xmlFileGame = null;
+
+            FileOutputStream fosCSV = null;
+            OutputStreamWriter oswCSV = null;
+
+            ArrayList<Uri> URIAttachements = new ArrayList<Uri>();
+
 
             // try to save on external storage
             boolean access = checkPermissionWriteExternalStorage(context);
@@ -1214,54 +1223,108 @@ public class DokoXMLClass {
                 boolean dirReady = createAppDirsInStorage(externalStorage);
 
                 if (dirReady) {
-                    csvTempFile = new File(externalStorage.getAbsolutePath() + File.separatorChar + APP_DIR_GAMES + File.separatorChar + filename);
+                    csvTempFile = new File(externalStorage.getAbsolutePath() + File.separatorChar + APP_DIR_GAMES + File.separatorChar + filenameCSV);
+
+                    if (filenameXML != null && DokoData.DEV_MODE) {
+                        xmlFileMail = new File(externalStorage.getAbsolutePath() + File.separatorChar
+                                + APP_DIR_GAMES + File.separatorChar + "xmlForMail" + File.separatorChar + filenameXML);
+
+                        xmlFileGame = new File(mGame.currentFilename());
+                    }
 
                     try {
 
-                        fos = new FileOutputStream(csvTempFile);
-                        osw = new OutputStreamWriter(fos);
+                        fosCSV = new FileOutputStream(csvTempFile);
+                        oswCSV = new OutputStreamWriter(fosCSV);
 
                     } catch (IOException e) {
                         // Unable to create file, likely because external storage is
                         // not currently mounted.
                         Log.w("ExternalStorage", "Error external storage " + csvTempFile.getAbsolutePath(), e);
-                        fos = null;
-                        osw = null;
+                        fosCSV = null;
+                        oswCSV = null;
                     }
                 }
             }
 
-            if (fos != null && osw != null && csvTempFile != null) {
+            if (xmlFileMail != null && xmlFileGame != null && DokoData.DEV_MODE) {
+                // copy xml to mail xml
                 try {
-                    osw.write(csv);
-                    osw.flush();
-                    fos.flush();
-                    osw.close();
-                    fos.close();
+                    DokoXMLClass.copyFile(xmlFileGame, xmlFileMail);
+                    xmlFileMail.deleteOnExit();
+                    xmlFileMail.setReadable(true, false);
+
+                    Uri u = Uri.fromFile(xmlFileMail);
+                    URIAttachements.add(u);
+
+                } catch (IOException e) {
+                    Log.e("Error", e.toString());
+                }
+            }
+
+            if (fosCSV != null && oswCSV != null && csvTempFile != null) {
+                try {
+                    oswCSV.write(csv);
+                    oswCSV.flush();
+                    fosCSV.flush();
+                    oswCSV.close();
+                    fosCSV.close();
                     useFile = true;
 
                 } catch (IOException e) {
                     useFile = false;
                     Log.w("CSV to file", "Can't create file", e);
-                    fos = null;
-                    osw = null;
-                }
+
+                } 
             }
 
             if (useFile == false || csvTempFile == null) {
                 // add as string
                 emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, context.getResources().getString(R.string.str_saved_game_via_mail_text_excel) + "\n\n" + csv);
             } else {
-                Uri path = Uri.fromFile(csvTempFile);
-                emailIntent .putExtra(Intent.EXTRA_STREAM, path);
+                csvTempFile.deleteOnExit();
+
+                csvTempFile.setReadable(true, false);
+                Uri u = Uri.fromFile(csvTempFile);
+                URIAttachements.add(u);
             }
 
+            if (URIAttachements != null && URIAttachements.size() > 0) {
+                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, URIAttachements);
+            }
             /* Send it off to the Activity-Chooser */
             context.startActivity(Intent.createChooser(emailIntent, context.getResources().getString(R.string.str_saved_game_via_mail_intent)));
+            return URIAttachements;
         } finally {
 
         }
 
+
+    }
+
+    public static void copyFile(File sourceFile, File destFile) throws IOException {
+        if (!destFile.getParentFile().exists())
+            destFile.getParentFile().mkdirs();
+
+        if (!destFile.exists()) {
+            destFile.createNewFile();
+        }
+
+        FileChannel source = null;
+        FileChannel destination = null;
+
+        try {
+            source = new FileInputStream(sourceFile).getChannel();
+            destination = new FileOutputStream(destFile).getChannel();
+            destination.transferFrom(source, 0, source.size());
+        } finally {
+            if (source != null) {
+                source.close();
+            }
+            if (destination != null) {
+                destination.close();
+            }
+        }
     }
 
 }

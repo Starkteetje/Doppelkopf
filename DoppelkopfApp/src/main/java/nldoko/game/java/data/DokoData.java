@@ -5,6 +5,8 @@ import nldoko.game.R;
 import java.util.ArrayList;
 
 public class DokoData {
+
+	public static boolean DEV_MODE = false;
 	
 	public static final int MAX_PLAYER = 8;
 	public static final int MAX_ACTIVE_PLAYER = 6;

@@ -97,6 +97,9 @@
     <string name="str_hint">Info</string>
     <string name="str_no_bock">none</string>
 
+    <string name="str_dev_mode_title">Dev-Mode</string>
+    <string name="str_dev_mode_text">Enter the password to activate the Dev-Mode.</string>
+
     <string name="str_external_storage">To save games on external storage and send games as CSV-File via Mail access to external storage is needed.</string>
 
     <!-- INFO/HELP -->

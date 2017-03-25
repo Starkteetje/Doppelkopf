@@ -2,6 +2,7 @@ package nldoko.game.java;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Typeface;
@@ -16,8 +17,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import nldoko.game.R;
 
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -32,6 +37,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.HashMap;
 import java.util.Map;
 
+import nldoko.game.java.data.DokoData;
 import nldoko.game.java.game.NewGameActivity;
 import nldoko.game.java.game.SavedGameListActivity;
 import nldoko.game.java.util.CustomTypefaceSpan;
@@ -96,13 +102,6 @@ public class DokoActivity extends AppCompatActivity {
             setSupportActionBar(mToolbar);
             changeToolbarTitle(toolbarTitle);
 
-
-
-
-
-
-            //getSupportActionBar().setTitle(toolbarTitle);
-
             drawerStart = new SecondaryDrawerItem().withIdentifier(0).withName(R.string.str_start);
             drawerSavedGames = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.str_saved_game);
             drawerAbout = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.start_action_about);
@@ -138,6 +137,7 @@ public class DokoActivity extends AppCompatActivity {
                     )
                     .withStickyFooterDivider(YES)
                     .withStickyFooter(R.layout.drawer_footer)
+                    .withFooterClickable(YES)
                     .withStickyFooterShadow(NO)
                     .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                         @Override
@@ -163,6 +163,53 @@ public class DokoActivity extends AppCompatActivity {
                     .build();
 
             drawer.setSelectionAtPosition(71);
+            View mV = drawer.getStickyFooter();
+            if (mV != null) {
+                mV.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+                        alertDialog.setTitle(mContext.getResources().getString(R.string.str_dev_mode_title));
+                        alertDialog.setMessage(mContext.getResources().getString(R.string.str_dev_mode_text));
+
+                        final EditText input = new EditText(mContext);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                        input.setLayoutParams(lp);
+                        alertDialog.setView(input);
+
+
+                        Typeface face=TypefaceUtil.getTypefaceLight(mContext);
+                        if (face != null) {
+                            input.setTypeface(face);
+                        }
+
+
+                        alertDialog.setPositiveButton(mContext.getResources().getString(R.string.str_accept),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String password = input.getText().toString();
+                                        if (password.trim().equalsIgnoreCase("devdoko")) {
+                                                Toast.makeText(getApplicationContext(), "Password Matched", Toast.LENGTH_SHORT).show();
+                                                DokoData.DEV_MODE = YES;
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Wrong Password!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                        alertDialog.setNegativeButton(mContext.getResources().getString(R.string.str_abort),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        alertDialog.show();
+                        return true;
+                    }
+                });
+            }
+
 
             setHamburgerIconActionBar();
 

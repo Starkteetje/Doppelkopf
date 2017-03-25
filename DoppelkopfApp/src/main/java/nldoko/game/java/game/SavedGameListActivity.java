@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -47,6 +48,8 @@ public class SavedGameListActivity extends DokoActivity {
     private ProgressDialog progressDialog;
 
     private static final int PERMISSION_REQUEST_CODE = 1;
+
+    private ArrayList<Uri> mailAttachments = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,9 +294,10 @@ public class SavedGameListActivity extends DokoActivity {
         @Override
         public void onClick(View v) {
             GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(v.getContext(), this.savedGameFile, true);
-            DokoXMLClass.sendGameViaMail(v.getContext(), mGame);
+            mailAttachments = DokoXMLClass.sendGameViaMail(v.getContext(), mGame);
         }
-    };
+    }
+
     
 	private void showDeleteAllSavedGamesDialog(){
 		Builder back = new AlertDialog.Builder(this);

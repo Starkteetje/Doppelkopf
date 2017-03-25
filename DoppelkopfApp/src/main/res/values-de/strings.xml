@@ -102,6 +102,9 @@
     <string name="str_hint">Hinweis</string>
     <string name="str_no_bock">keine</string>
 
+    <string name="str_dev_mode_title">Dev-Mode</string>
+    <string name="str_dev_mode_text">Bitte geben Sie das Passowort für den Dev-Mode ein um diese zu akviteren.</string>
+
     <!-- Storage Permisson -->
     <string name="str_external_storage">Um die Spielstände innerhalb des
         externen Speichers abzuspeichern und damit Spielstände als CSV-Datei
