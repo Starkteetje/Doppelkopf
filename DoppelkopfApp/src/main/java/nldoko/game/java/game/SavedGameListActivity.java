@@ -208,7 +208,7 @@ public class SavedGameListActivity extends DokoActivity {
     			}
 
                 mTv = (TextView)v.findViewById(R.id.saved_game_entry_path_filepath);
-                mTv.setText(filename);
+                mTv.setText(savedGameFile);
     			
             	GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,savedGameFile, false);
             	if (mGame != null) {
