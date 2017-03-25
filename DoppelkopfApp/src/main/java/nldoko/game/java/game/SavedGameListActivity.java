@@ -195,18 +195,20 @@ public class SavedGameListActivity extends DokoActivity {
     			l.setOnClickListener(mFileClickListerner);
     			l.setTag(SAVED_GAME_TAG + tagCnt);
 
-                String basename = savedGameFile.substring( savedGameFile.lastIndexOf('/')+1, savedGameFile.length() );
-    			String[] arr = basename.split("_");
+                File file = new File(savedGameFile);
+                String filename = file != null ? file.getName() : savedGameFile;
+
+    			String[] arr = filename.split("_");
     			 
     			mTv = (TextView)v.findViewById(R.id.saved_game_entry_filename);
     			if (arr.length > 5) {
     				mTv.setText(arr[0] + "." + arr[1] + "." + arr[2] + " - " + arr[3] + ":" + arr[4] + ":" + arr[5]);
     			} else {
-    				mTv.setText(savedGameFile);
+    				mTv.setText(filename);
     			}
 
                 mTv = (TextView)v.findViewById(R.id.saved_game_entry_path_filepath);
-                mTv.setText(savedGameFile);
+                mTv.setText(filename);
     			
             	GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,savedGameFile, false);
             	if (mGame != null) {
