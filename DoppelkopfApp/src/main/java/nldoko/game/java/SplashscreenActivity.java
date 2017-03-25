@@ -2,6 +2,7 @@ package nldoko.game.java;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.appcompat.BuildConfig;
@@ -13,7 +14,7 @@ import nldoko.game.java.game.SavedGameListActivity;
 
 public class SplashscreenActivity extends Activity {
 
-    private static final int SPLASH_TIME = 1500; // ms
+    private static final int SPLASH_TIME = 1000; // ms
     private static final int SPLASH_TIME_DEBUG = 100; // ms
 
     /** Called when the activity is first created. */
@@ -26,7 +27,7 @@ public class SplashscreenActivity extends Activity {
          * and close this Splash-Screen after some seconds.*/
         int time = SPLASH_TIME;
         if (isDebug()) {
-            time = SPLASH_TIME;
+            time = SPLASH_TIME_DEBUG;
         }
 
         new Handler().postDelayed(new Runnable(){
@@ -41,12 +42,8 @@ public class SplashscreenActivity extends Activity {
 
     }
 
-    private Boolean isDebug () {
-        if (BuildConfig.DEBUG) {
-            return true;
-        }
-
-        return false;
+    private boolean isDebug() {
+        return ( 0 != ( getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) );
     }
 
 
