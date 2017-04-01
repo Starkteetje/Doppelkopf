@@ -67,9 +67,10 @@ public class DokoXMLClass {
     private static final String GAME_ROUNDS = "Rounds";
     private static final String GAME_ROUND = "Round";
     private static final String GAME_ROUND_ID = "RoundID";
-    private static final String GAME_ROUND_POINTS = "RoundPoints";
+    private static final String GAME_ROUND_POINTS_WITHOUT_BOCK = "RoundPoints";
     private static final String GAME_ROUND_BOCK_CNT = "RoundBockCount";
     private static final String GAME_ROUND_TYPE = "RoundType";
+
 
     private static final String GAME_PLAYERS = "Players";
     private static final String GAME_PLAYER = "Player";
@@ -249,13 +250,9 @@ public class DokoXMLClass {
                     serializer.endTag("", GAME_ROUND_TYPE);
 
                     serializer.text("\n\t\t\t");
-                    serializer.startTag("", GAME_ROUND_POINTS);
-                    int mBockMulti = 1;
-                    if (r.getBockCount() > 0) {
-                        mBockMulti = r.getBockCount() * 2;
-                    }
-                    serializer.text(Integer.toString(r.getPoints() / mBockMulti));
-                    serializer.endTag("", GAME_ROUND_POINTS);
+                    serializer.startTag("", GAME_ROUND_POINTS_WITHOUT_BOCK);
+                    serializer.text(Integer.toString(r.getPointsWithoutBock()));
+                    serializer.endTag("", GAME_ROUND_POINTS_WITHOUT_BOCK);
 
                     serializer.text("\n\t\t\t");
                     serializer.startTag("", GAME_ROUND_BOCK_CNT);
@@ -834,7 +831,7 @@ public class DokoXMLClass {
                     }
 
 
-                    if(mRoundValue.getNodeName().equalsIgnoreCase(GAME_ROUND_POINTS)) {
+                    if(mRoundValue.getNodeName().equalsIgnoreCase(GAME_ROUND_POINTS_WITHOUT_BOCK)) {
                         mRoundPoints = Integer.valueOf(mRoundValue.getTextContent());
                         valueCnt++;
                     }
