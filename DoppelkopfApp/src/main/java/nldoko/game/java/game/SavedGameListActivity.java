@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 
 import nldoko.game.java.DokoActivity;
 import nldoko.game.R;
@@ -38,7 +39,7 @@ public class SavedGameListActivity extends DokoActivity {
 
 	private LinearLayout mEntriesLayout;
 	
-	private static String[] fileList;
+	private ArrayList<File> fileList;
 
     private boolean needToReloadUI;
 
@@ -109,41 +110,50 @@ public class SavedGameListActivity extends DokoActivity {
 
     }
 
-    private String[] getFileList (){
+    private ArrayList<File> getFileList (){
         // add external files
-        ArrayList<String> fileList = new ArrayList<String>();
+        ArrayList<File> newFiles = new ArrayList<File>();
 
         // search all external dirs
         for (String sdcard : DokoXMLClass.getPossibleExternalStorageDirs()) {
             File dir = new File(sdcard +  File.separatorChar + DokoXMLClass.APP_DIR_GAMES);
-            addSavedGamesFromDir(dir, fileList);
+            addSavedGamesFromDir(dir, newFiles);
         }
 
         // add system mounted sdcard but need to check absolute path against present to avoid double entries
         if(DokoXMLClass.isExternalStorageReady()) {
             File dir = new File(Environment.getExternalStorageDirectory(), DokoXMLClass.APP_DIR_GAMES);
-            addSavedGamesFromDir(dir, fileList);
+            addSavedGamesFromDir(dir, newFiles);
         }
 
         // add internal files
         File dir = new File(DokoXMLClass.getAppDir(this));
-        addSavedGamesFromDir(dir, fileList);
+        addSavedGamesFromDir(dir, newFiles);
 
         dir = new File(DokoXMLClass.getAppDir(this) + File.separatorChar + "files");
-        addSavedGamesFromDir(dir, fileList);
+        addSavedGamesFromDir(dir, newFiles);
 
         dir = mContext.getFilesDir();
-        addSavedGamesFromDir(dir, fileList);
+        addSavedGamesFromDir(dir, newFiles);
 
-        return fileList.toArray(new String[fileList.size()]);
+        // sort by last modifieded date
+        Collections.sort(newFiles, new Comparator<File>() {
+            public int compare(File f1, File f2)
+            {
+                int r = Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
+                return  r;
+            }
+        });
+
+        return newFiles;
     }
 
-    private static void addSavedGamesFromDir(File dir, ArrayList<String> fileList) {
+    private static void addSavedGamesFromDir(File dir, ArrayList<File> fList) {
         if (dir.exists() && dir.isDirectory()) {
             File[] savedGameFiles = dir.listFiles();
             if (savedGameFiles != null) {
                 for (File f : savedGameFiles) {
-                    if (f.getAbsolutePath().endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX) && !fileList.contains(f.getAbsolutePath())) {
+                    if (f.getAbsolutePath().endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX) && !fList.contains(f.getAbsolutePath())) {
 
                         String filename = f.getName();
                         boolean isAlreadyInList = NO;
@@ -152,16 +162,17 @@ public class SavedGameListActivity extends DokoActivity {
                         // maybe detected twice - different mounting points
                         // filename can only exits once because it's name contains the date
                         // e.g. filename = 22_03_2017_19_01_30_dokoSavedGame.xml
-                        for (String fileFromList : fileList) {
-                            String fileFromListName = new File(fileFromList).getName();
+                        for (File fileFromList : fList) {
+                            String fileFromListName = fileFromList.getName();
                             if (fileFromListName.equalsIgnoreCase(filename)) {
                                 isAlreadyInList = YES;
                                 break;
                             }
                         }
 
+
                         if (!isAlreadyInList) {
-                            fileList.add(f.getAbsolutePath());
+                            fList.add(f);
                         }
                     }
                 }
@@ -174,18 +185,18 @@ public class SavedGameListActivity extends DokoActivity {
     	mEntriesLayout = (LinearLayout)findViewById(R.id.saved_games_entries);
     	mEntriesLayout.removeAllViewsInLayout();
 
-    	FileClickListerner mFileClickListerner = new FileClickListerner();
-    	FileDeleteClickListener mFileDeleteClickListerner = new FileDeleteClickListener();
-    	
-    	Arrays.sort(fileList,Collections.reverseOrder());
+    	FileClickListerner mFileClickListerner = new FileClickListerner(fileList);
+    	FileDeleteClickListener mFileDeleteClickListerner = new FileDeleteClickListener(fileList);
+
     	if (fileList != null){
     		View v;
     		TextView mTv;
     		ImageView mIv;
-    	    for (String savedGameFile : fileList){
-    	    	Log.d("e",savedGameFile);
+    	    for (File savedGameFile : fileList){
+                String absolutPath = savedGameFile.getAbsolutePath();
 
-    	    	if (!savedGameFile.endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX)) {
+
+    	    	if (!absolutPath.endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX)) {
     	    		tagCnt++;
     	    		continue;
     	    	}
@@ -195,8 +206,7 @@ public class SavedGameListActivity extends DokoActivity {
     			l.setOnClickListener(mFileClickListerner);
     			l.setTag(SAVED_GAME_TAG + tagCnt);
 
-                File file = new File(savedGameFile);
-                String filename = file != null ? file.getName() : savedGameFile;
+                String filename = savedGameFile != null ? savedGameFile.getName() : absolutPath;
 
     			String[] arr = filename.split("_");
     			 
@@ -208,9 +218,9 @@ public class SavedGameListActivity extends DokoActivity {
     			}
 
                 mTv = (TextView)v.findViewById(R.id.saved_game_entry_path_filepath);
-                mTv.setText(savedGameFile);
+                mTv.setText(absolutPath);
     			
-            	GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,savedGameFile, false);
+            	GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,absolutPath, false);
             	if (mGame != null) {
             		// if success delete old file
 
@@ -246,7 +256,7 @@ public class SavedGameListActivity extends DokoActivity {
                     mIv.setColorFilter(mContext.getResources().getColor(R.color.red_dark), PorterDuff.Mode.SRC_ATOP);
 
                     mIv = (ImageView)l.findViewById(R.id.saved_game_entry_icon_mail);
-                    mIv.setOnClickListener(new FileMailClickListener(savedGameFile));
+                    mIv.setOnClickListener(new FileMailClickListener(absolutPath));
                     mIv.setColorFilter(mContext.getResources().getColor(R.color.primary_dark), PorterDuff.Mode.SRC_ATOP);
                 }
 
@@ -259,25 +269,41 @@ public class SavedGameListActivity extends DokoActivity {
 	} 
     
     private class FileDeleteClickListener implements OnClickListener {
+
+        ArrayList<File> fList;
+        public FileDeleteClickListener(ArrayList<File> list) {
+            this.fList = list;
+        }
+
 		@Override
 		public void onClick(View v) {
 			int tagCnt = (Integer)v.getTag();
 			tagCnt -= SAVED_GAME_TAG_DELETE;
-			if (fileList.length > tagCnt) {
-				showDeleteSavedGamesDialog(fileList[tagCnt]);
+			if (fList.size() > tagCnt) {
+				showDeleteSavedGamesDialog(fList.get(tagCnt).getAbsolutePath());
 			}
 		}
 	};
             	
     private class FileClickListerner implements OnClickListener{
+
+        ArrayList<File> fList;
+        public FileClickListerner(ArrayList<File> list) {
+            this.fList = list;
+        }
+
 		@Override
 		public void onClick(View v) {
 			int tagCnt = (Integer)v.getTag();
 			tagCnt -= SAVED_GAME_TAG;
 			Log.d(TAG,"get tag cnt:"+tagCnt);
-			if (fileList.length > tagCnt) {
-				String filename = fileList[tagCnt];
-				if (filename.length() == 0) return;
+			if (fList.size() > tagCnt) {
+
+				String filename = fList.get(tagCnt).getAbsolutePath();
+				if (filename.length() == 0) {
+                    return;
+                }
+
 	    		Intent i = new Intent(mContext, GameActivity.class);
 	    		i.putExtra("RestoreGameFromXML", true);
 	    		i.putExtra("filename", filename);
@@ -307,8 +333,7 @@ public class SavedGameListActivity extends DokoActivity {
 		back.setMessage(R.string.str_saved_game_delete_all_q);
 		back.setPositiveButton(R.string.str_yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				for(String filepath : fileList) {
-					File f = new File(filepath);
+				for(File f : fileList) {
                     if (f.exists() && !f.isDirectory() && f.getAbsolutePath().endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX)) {
                         f.delete();
                     }
