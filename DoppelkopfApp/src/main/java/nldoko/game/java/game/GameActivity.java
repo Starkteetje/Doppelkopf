@@ -74,9 +74,6 @@ public class GameActivity extends DokoActivity {
 
 	private static TextView mTvAddRoundBockPoints;
 
-	private static int mPlayerCnt;
-    private static int mActivePlayerCnt;
-
 
 	private static Spinner mGameBockRoundsCnt;
 	private static Spinner mGameBockRoundsGameCnt;
@@ -128,9 +125,6 @@ public class GameActivity extends DokoActivity {
         	Toast.makeText(this, getResources().getString(R.string.str_error_game_start), Toast.LENGTH_LONG).show();
         	finish();
         }
-
-        mPlayerCnt = mGame.getPlayerCount();
-        mActivePlayerCnt = mGame.getActivePlayerCount();
 
         loadSwipeViews();
 
@@ -450,7 +444,7 @@ public class GameActivity extends DokoActivity {
         mGameBockRoundsGameCntAdapter = new ArrayAdapter<Integer>(context, R.layout.spinner_item,R.id.spinner_text,mMaxPlayerInteger);
         mGameBockRoundsGameCntAdapter.setDropDownViewResource(R.layout.spinner_item);
         mGameBockRoundsGameCnt.setAdapter(mGameBockRoundsGameCntAdapter);
-        mGameBockRoundsGameCnt.setSelection(mActivePlayerCnt - 1);
+        mGameBockRoundsGameCnt.setSelection(mGame.getPlayerCount() - 1);
 
 		resetNewRoundFields(context);
 		
@@ -763,7 +757,7 @@ public class GameActivity extends DokoActivity {
         mCBNewBockRound.setChecked(false);
 
         mGameBockRoundsCnt.setSelection(0);
-        mGameBockRoundsGameCnt.setSelection(mActivePlayerCnt - 1);
+        mGameBockRoundsGameCnt.setSelection(mGame.getPlayerCount() - 1);
         mGameBockDetailContainer.setVisibility(View.GONE);
 
 
@@ -1047,7 +1041,7 @@ public class GameActivity extends DokoActivity {
     		mNewRoundPoints = extras.getInt(DokoData.ROUND_POINTS_KEY,0);
     		//Log.d("GA before",mGame.toString() + " new points:"+mNewRoundPoints);
     		int mTmpState;
-        	for(int k=0; k<mPlayerCnt; k++){
+        	for(int k=0; k<mGame.getPlayerCount(); k++){
         		mTmpState = extras.getInt(DokoData.PLAYERS_KEY[k]+"_STATE",-1);
         		if (mTmpState == -1 || PLAYER_ROUND_RESULT_STATE.valueOf(mTmpState) == null) {
         			Toast.makeText(mContext, getResources().getString(R.string.str_edit_round_error), Toast.LENGTH_LONG).show();
