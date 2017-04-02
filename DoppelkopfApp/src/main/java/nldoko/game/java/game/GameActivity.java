@@ -45,6 +45,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import nldoko.game.java.DokoActivity;
 import nldoko.game.R;
@@ -91,9 +92,8 @@ public class GameActivity extends DokoActivity {
 	private static final int mIndexGameMain 		= 0;
 	private static final int mIndexGameNewRound 	= 1;
 	protected static GameClass mGame;
-    private static int mWinnerList[] = new int[DokoData.MAX_PLAYER];
-    private static int mSuspendList[] = new int[DokoData.MAX_PLAYER];
-    
+    private static int mNewRoundPlayerState[] = new int[DokoData.MAX_PLAYER];
+
 
     private static CheckBox mCBNewBockRound;
 	private static ImageView mBockRoundInfoIcon;
@@ -126,6 +126,8 @@ public class GameActivity extends DokoActivity {
         	finish();
         }
 
+        loadDefaultPlayerStates(mNewRoundPlayerState);
+
         loadSwipeViews();
 
 		View v = findViewById(R.id.my_toolbar_shadow);
@@ -141,6 +143,13 @@ public class GameActivity extends DokoActivity {
 
         overridePendingTransition(R.anim.right_out, R.anim.left_in);
     }
+
+    private static void loadDefaultPlayerStates(int[] states) {
+		//default
+		for (int i = 0; i < states.length; i++) {
+            states[i] = PLAYER_ROUND_RESULT_STATE.LOSE_STATE.ordinal();
+		}
+	}
 
     private void loadSwipeViews(){
     	  mDemoCollectionPagerAdapter =  new SwipePagerAdapter(getSupportFragmentManager());
@@ -582,12 +591,7 @@ public class GameActivity extends DokoActivity {
 				Toast.makeText(v.getContext(), R.string.str_error_game_new_round_data, Toast.LENGTH_SHORT).show();
 				return;
 			}
-			
-			for(int i=0;i<mWinnerList.length;i++){
-				Log.d(TAG,"i:"+i+" win: "+mWinnerList[i]+"~ suspend: "+mSuspendList[i]);
-			}
-			
-			Log.d(TAG,getNewRoundPoints()+"-"+mGame.toString());
+
 
             Integer mGameBockRoundsCount =  (Integer)mGameBockRoundsCnt.getSelectedItem();
             Integer mGameBockRoundsGameCount =  (Integer)mGameBockRoundsGameCnt.getSelectedItem();
@@ -597,7 +601,7 @@ public class GameActivity extends DokoActivity {
                 mGameBockRoundsGameCount = 0;
             }
 
-			mGame.addNewRound(getNewRoundPoints(),mGameBockRoundsCount, mGameBockRoundsGameCount,mWinnerList,mSuspendList);
+			mGame.addNewRound(getNewRoundPoints(),mGameBockRoundsCount, mGameBockRoundsGameCount,mNewRoundPlayerState);
 			Log.d(TAG,mGame.toString());
 			notifyDataSetChanged();
 			 
@@ -652,9 +656,6 @@ public class GameActivity extends DokoActivity {
 		@SuppressWarnings("deprecation")
 		@Override
 		public void onClick(View v) {
-			if(mGameAddRoundPlayerState.size() > mSuspendList.length) {
-                Log.e(TAG, "error Array" + mGameAddRoundPlayerState.size() + "#" + mSuspendList.length);
-            }
 			for(int i=0;i<mGameAddRoundPlayerState.size();i++){
                 TextView mTvState = mGameAddRoundPlayerState.get(i);
                 // maybe right or left
@@ -663,14 +664,16 @@ public class GameActivity extends DokoActivity {
                     mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_right_state);
                 }
 
-				if(mTvState != null && mTvStateOfView == mTvState && mSuspendList[i]==0){
-					if(mWinnerList[i] == 0 && getWinnerCnt() < mGame.getActivePlayerCount()-1){
+                PLAYER_ROUND_RESULT_STATE stateForPosition  =  PLAYER_ROUND_RESULT_STATE.valueOf(mNewRoundPlayerState[i]);
+
+				if(mTvState != null && mTvStateOfView == mTvState && stateForPosition != PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE){
+					if(stateForPosition == PLAYER_ROUND_RESULT_STATE.LOSE_STATE && getWinnerCnt() < mGame.getActivePlayerCount()-1){
 
                         changePlayerViewState(mTvState, winnerDraw, R.string.str_game_points_winner_select_text, YES);
-						mWinnerList[i] = 1;
+                        mNewRoundPlayerState[i] = PLAYER_ROUND_RESULT_STATE.WIN_STATE.ordinal();
 					}
 					else{
-						mWinnerList[i] = 0;
+                        mNewRoundPlayerState[i] = PLAYER_ROUND_RESULT_STATE.LOSE_STATE.ordinal();
                         changePlayerViewState(mTvState, loserDraw, R.string.str_game_points_lose_select_text, YES);
 					}
 				}
@@ -691,15 +694,13 @@ public class GameActivity extends DokoActivity {
                     mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_right_state);
                 }
 
-                if(mTvState != null && mTvStateOfView == mTvState && mWinnerList[i]==0){
-					if(mSuspendList[i] == 0 && getSuspendCnt() < mGame.getPlayerCount()-mGame.getActivePlayerCount()){
+                PLAYER_ROUND_RESULT_STATE stateForPosition  =  PLAYER_ROUND_RESULT_STATE.valueOf(mNewRoundPlayerState[i]);
+
+                if(mTvState != null && mTvStateOfView == mTvState){
+					if(stateForPosition != PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE && getSuspendCnt() < mGame.getPlayerCount()-mGame.getActivePlayerCount()){
                         changePlayerViewState(mTvState, suspendDraw, R.string.str_game_points_suspend_select_text, YES);
-						mSuspendList[i] = 1;
-					}
-					else{
-						mSuspendList[i] = 0;
-                        changePlayerViewState(mTvState, loserDraw, R.string.str_game_points_lose_select_text, YES);
-					}
+                        mNewRoundPlayerState[i] = PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE.ordinal();
+                    }
 				}
 			}
 			return true;	
@@ -744,10 +745,7 @@ public class GameActivity extends DokoActivity {
 	private static  void resetNewRoundFields(Context context) {
 		TextView mTv = null;
 		mEtNewRoundPoints.setText("");
-		for(int i=0;i<mGame.getMAXPlayerCount();i++){
-			mSuspendList[i] = 0;
-			mWinnerList[i] = 0;
-		}
+        loadDefaultPlayerStates(mNewRoundPlayerState);
 		
 		for(int i=0;i<mGameAddRoundPlayerState.size();i++){
 			mTv = mGameAddRoundPlayerState.get(i);
@@ -811,18 +809,24 @@ public class GameActivity extends DokoActivity {
 	
 	private int getSuspendCnt(){
 		int m = 0;
-		for(int i=0;i<mSuspendList.length;i++){
-			if(mSuspendList[i] == 1) m++;
+		for(int i=0;i<mNewRoundPlayerState.length;i++){
+            PLAYER_ROUND_RESULT_STATE stateForPosition  =  PLAYER_ROUND_RESULT_STATE.valueOf(mNewRoundPlayerState[i]);
+            if(stateForPosition == PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE) {
+                m++;
+            }
 		}
 		return m;
 	}
 	
 	private int getWinnerCnt(){
-		int m = 0;
-		for(int i=0;i<mWinnerList.length;i++){
-			if(mWinnerList[i] == 1) m++;
-		}
-		return m;
+        int m = 0;
+        for(int i=0;i<mNewRoundPlayerState.length;i++){
+            PLAYER_ROUND_RESULT_STATE stateForPosition  =  PLAYER_ROUND_RESULT_STATE.valueOf(mNewRoundPlayerState[i]);
+            if(stateForPosition == PLAYER_ROUND_RESULT_STATE.WIN_STATE) {
+                m++;
+            }
+        }
+        return m;
 	}
 
 	private ArrayList<String> getPlayerNames(){
@@ -1032,35 +1036,45 @@ public class GameActivity extends DokoActivity {
     private void handleEditRoundFinish(int requestCode, int resultCode, Intent data) {
     	Bundle extras = null;
     	int mNewRoundPoints;
-        int mTmpWinnerList[] = new int[DokoData.MAX_PLAYER];
-        int mTmpSuspendList[] = new int[DokoData.MAX_PLAYER];
-		PLAYER_ROUND_RESULT_STATE mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.WIN_STATE;
+        int mEditRoundRoundPlayerStates[] = new int[DokoData.MAX_PLAYER];
+        loadDefaultPlayerStates(mEditRoundRoundPlayerStates);
+
 		
-    	if(data != null) extras = data.getExtras();
+    	if(data != null) {
+            extras = data.getExtras();
+        }
+
     	if(extras != null && extras.getBoolean(DokoData.CHANGE_ROUND_KEY,false)){
+
     		mNewRoundPoints = extras.getInt(DokoData.ROUND_POINTS_KEY,0);
-    		//Log.d("GA before",mGame.toString() + " new points:"+mNewRoundPoints);
-    		int mTmpState;
+
         	for(int k=0; k<mGame.getPlayerCount(); k++){
-        		mTmpState = extras.getInt(DokoData.PLAYERS_KEY[k]+"_STATE",-1);
+        		int mTmpState = extras.getInt(DokoData.PLAYERS_KEY[k]+"_STATE",-1);
+
         		if (mTmpState == -1 || PLAYER_ROUND_RESULT_STATE.valueOf(mTmpState) == null) {
         			Toast.makeText(mContext, getResources().getString(R.string.str_edit_round_error), Toast.LENGTH_LONG).show();
         			return;
         		} else {
-        			mTmpWinnerList[k] = 0; // lose default
-        			mTmpSuspendList[k] = 0; // not suspending  default
-        			mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.valueOf(mTmpState);
-        			//Log.d("GA EDIT:","player:"+mGame.getPlayer(k).getName()+" with state: "+mPlayerRoundState+", plcnt:"+mPlayerCnt);
+                    PLAYER_ROUND_RESULT_STATE mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.valueOf(mTmpState);
+
         			switch (mPlayerRoundState) {
-						case WIN_STATE: mTmpWinnerList[k] = 1;	break;
-						case SUSPEND_STATE: mTmpSuspendList[k] = 1;	break;
+						case WIN_STATE:
+                            mEditRoundRoundPlayerStates[k] = PLAYER_ROUND_RESULT_STATE.WIN_STATE.ordinal();
+                            break;
+
+						case SUSPEND_STATE:
+                            mEditRoundRoundPlayerStates[k] = PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE.ordinal();
+                            break;
+                        case LOSE_STATE:
+                            mEditRoundRoundPlayerStates[k] = PLAYER_ROUND_RESULT_STATE.LOSE_STATE.ordinal();
+                            break;
 						default:
 							break;
 					}
         		}
         	}
 
-        	mGame.editLastRound(mNewRoundPoints, mTmpWinnerList, mTmpSuspendList);
+        	mGame.editLastRound(mNewRoundPoints, mEditRoundRoundPlayerStates);
         	reloadSwipeViews(); 
         	//Log.d("GA after",mGame.toString());
         	DokoXMLClass.saveGameStateToXML(mContext, mGame);
