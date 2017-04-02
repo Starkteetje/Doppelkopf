@@ -262,8 +262,9 @@ public class GameClass  implements Serializable{
         for(int i=0;i<getPlayerCount();i++){
             DokoData.PLAYER_ROUND_RESULT_STATE stateForPosition  =  DokoData.PLAYER_ROUND_RESULT_STATE.valueOf(states[i]);
 
-			if(stateForPosition == DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE)
-				getPlayer(i).updatePoints(mRound.getID(),(float) 0);
+			if(stateForPosition == DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE) {
+                getPlayer(i).updatePoints(mRound.getID(), (float) 0);
+            }
 			else if(stateForPosition == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE){
 				mSoloWinPos = i;
 			}
