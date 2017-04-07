@@ -889,21 +889,22 @@ public class GameActivity extends DokoActivity {
     }
 
 	private void showExitDialog(){
-		Builder back = new AlertDialog.Builder(this);
-		back.setTitle(R.string.str_exit_game);
-		back.setMessage(R.string.str_exit_game_q);
-		back.setPositiveButton(R.string.str_yes, new DialogInterface.OnClickListener() {
+		DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				finish();
 			}
-		});
+		};
 
+		DialogInterface.OnClickListener abortListerner = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
 
-		back.setNegativeButton(R.string.str_no, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {}
-		});
-		back.show();
+			}
+		};
 
+		showAlertDialog(R.string.str_exit_game,
+				R.string.str_exit_game_q,
+				R.string.str_yes, okListener,
+				R.string.str_no, abortListerner);
 	}
 	
 

@@ -377,38 +377,42 @@ public class ChangeGameSettingActivity extends DokoActivity {
     }
     
 	private void showExitDialog(){
-		Builder back = new AlertDialog.Builder(this);
-		back.setTitle(R.string.str_change_game_settings_save);
-		back.setMessage(R.string.str_change_game_settings_save_q);
-		back.setPositiveButton(R.string.str_yes, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				sendGameSettingsAndExit();
-			}
-		});
+        DialogInterface.OnClickListener okListerner = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                sendGameSettingsAndExit();
+            }
+        };
 
-		back.setNegativeButton(R.string.str_no, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {}
-		});
-		back.show();
+        DialogInterface.OnClickListener abortListerner = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        };
+
+        showAlertDialog(R.string.str_change_game_settings_save, R.string.str_change_game_settings_save_q,
+                R.string.str_yes, okListerner,
+                R.string.str_no, abortListerner);
 	}
 	
 	private void showBockDeleteDialog(){
-		Builder back = new AlertDialog.Builder(this);
-		back.setTitle(R.string.str_change_game_settings_delete_bockrounds);
-		back.setMessage(R.string.str_change_game_settings_delete_bockrounds_q);
-		back.setPositiveButton(R.string.str_accept, new DialogInterface.OnClickListener() {
+		DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				mDeleteBockRounds = true;
 				sendGameSettingsAndExit();
 			}
-		});
+		};
 
-		back.setNegativeButton(R.string.str_abort, new DialogInterface.OnClickListener() {
+        DialogInterface.OnClickListener abortListerner = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				mSpBockLimit.setSelection(mGameHolder.getBockRoundLimit());
 			}
-		});
-		back.show();
+		};
+
+		showAlertDialog(R.string.str_change_game_settings_delete_bockrounds,
+				R.string.str_change_game_settings_delete_bockrounds_q,
+				R.string.str_accept, okListener,
+				R.string.str_abort, abortListerner);
+
 	}
   
     

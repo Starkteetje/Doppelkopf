@@ -328,45 +328,51 @@ public class SavedGameListActivity extends DokoActivity {
 
     
 	private void showDeleteAllSavedGamesDialog(){
-		Builder back = new AlertDialog.Builder(this);
-		back.setTitle(R.string.str_delete_files);
-		back.setMessage(R.string.str_saved_game_delete_all_q);
-		back.setPositiveButton(R.string.str_yes, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				for(File f : fileList) {
+        DialogInterface.OnClickListener okListerner = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                for(File f : fileList) {
                     if (f.exists() && !f.isDirectory() && f.getAbsolutePath().endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX)) {
                         f.delete();
                     }
-				}
-				reload();
-			}
-		});
+                }
+                reload();
+            }
+        };
 
-		back.setNegativeButton(R.string.str_no, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {}
-		});
-		back.show();
+        DialogInterface.OnClickListener abortListerner = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        };
+
+        showAlertDialog(R.string.str_delete_files, R.string.str_saved_game_delete_all_q,
+                R.string.str_yes, okListerner,
+                R.string.str_no, abortListerner);
 	}
 	
 	private void showDeleteSavedGamesDialog(String file){
 		final String filepath = file;
-		Builder back = new AlertDialog.Builder(this);
-		back.setTitle(R.string.str_delete_file);
-		back.setMessage(R.string.str_saved_game_delete_q);
-		back.setPositiveButton(R.string.str_yes, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
+
+
+        DialogInterface.OnClickListener okListerner = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
                 File f = new File(filepath);
                 if (f.exists() && !f.isDirectory() && f.getAbsolutePath().endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX)) {
                     f.delete();
                 }
-				reload();
-			}
-		});
+                reload();
+            }
+        };
 
-		back.setNegativeButton(R.string.str_no, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {}
-		});
-		back.show();
+        DialogInterface.OnClickListener abortListerner = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        };
+
+        showAlertDialog(R.string.str_delete_file, R.string.str_saved_game_delete_q,
+                R.string.str_yes, okListerner,
+                R.string.str_no, abortListerner);
 	}
 	
     @Override

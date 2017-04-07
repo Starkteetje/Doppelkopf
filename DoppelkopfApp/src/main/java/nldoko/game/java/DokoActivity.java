@@ -260,17 +260,50 @@ public class DokoActivity extends AppCompatActivity {
     }
 
     protected void showAlertDialog(String title, String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        showAlertDialog(title, msg, R.string.str_accept, null, 0, null);
+    }
+
+    protected void showAlertDialog(int titleID, int msgID,
+                                   int okbuttonTextID, DialogInterface.OnClickListener okButtonClickListener,
+                                   int negativeButtonTextID,
+                                   DialogInterface.OnClickListener negativeButtonClickListener) {
+
+        showAlertDialog(this.getResources().getString(titleID),
+                this.getResources().getString(msgID),
+                okbuttonTextID, okButtonClickListener,
+                negativeButtonTextID, negativeButtonClickListener);
+
+
+    }
+
+    protected void showAlertDialog(String title, String msg,
+                                          int okbuttonTextID, DialogInterface.OnClickListener okButtonClickListener,
+                                          int negativeButtonTextID,
+                                          DialogInterface.OnClickListener negativeButtonClickListener) {
+        showAlertDialog(title, msg, okbuttonTextID, okButtonClickListener, negativeButtonTextID, negativeButtonClickListener, this);
+    }
+
+    public static void showAlertDialog(String title, String msg,
+                                   int okbuttonTextID, DialogInterface.OnClickListener okButtonClickListener,
+                                   int negativeButtonTextID,
+                                   DialogInterface.OnClickListener negativeButtonClickListener, Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme);
         builder.setTitle(title);
         builder.setMessage(msg);
-        builder.setPositiveButton(R.string.str_accept, null);
+        builder.setPositiveButton(okbuttonTextID, okButtonClickListener);
+
+        if (negativeButtonClickListener != null) {
+            builder.setNegativeButton(negativeButtonTextID, negativeButtonClickListener);
+        }
+
         AlertDialog dialog = builder.show();
-        dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(this.getResources().getColor(R.color.accent));
+        dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.accent));
+        dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.accent));
 
         // Must call show() prior to fetching text view
         TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
         messageView.setGravity(Gravity.LEFT);
-        Typeface face=TypefaceUtil.getTypefaceLight(this);
+        Typeface face=TypefaceUtil.getTypefaceLight(context);
         if (face != null) {
             messageView.setTypeface(face);
         }
@@ -278,20 +311,7 @@ public class DokoActivity extends AppCompatActivity {
 
 
     private void showAbout() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.start_action_about);
-        builder.setMessage(R.string.str_disclaimer);
-        builder.setPositiveButton(R.string.str_accept, null);
-        AlertDialog dialog = builder.show();
-        dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(this.getResources().getColor(R.color.accent));
-
-        // Must call show() prior to fetching text view
-        TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
-        messageView.setGravity(Gravity.LEFT);
-        Typeface face=TypefaceUtil.getTypefaceLight(this);
-        if (face != null) {
-            messageView.setTypeface(face);
-        }
+        showAlertDialog(R.string.start_action_about, R.string.str_disclaimer);
     }
 
     private void showSavedGames () {

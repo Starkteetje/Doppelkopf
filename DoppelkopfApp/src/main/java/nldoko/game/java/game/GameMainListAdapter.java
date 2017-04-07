@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
+
+import nldoko.game.java.DokoActivity;
 import nldoko.game.java.util.Functions;
 import nldoko.game.R;
 import nldoko.game.java.data.GameClass;
@@ -35,7 +37,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
     private RoundNumberLongClickListerner mRoundNrLongListerner;
     private GAME_VIEW_TYPE mRoundListViewMode = GAME_VIEW_TYPE.ROUND_VIEW_DETAIL;
    
-    public GameMainListAdapter(Context context,ArrayList<RoundClass> roundArrayList, GameClass game) {
+    public GameMainListAdapter(Context context, ArrayList<RoundClass> roundArrayList, GameClass game) {
         super(context,0, roundArrayList);
         this.mContext = context;
         this.mRounds = roundArrayList;
@@ -329,7 +331,6 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 	
 	private void showEditRoundDialog(final int roundNumber, final View v){
 		String mStr = "";
-		Builder back = new AlertDialog.Builder(mContext);
 
 		if(mGame.getRoundList().get(roundNumber-1).getPoints() == 0 || mGame.getRoundList().size() > roundNumber){
 			Toast.makeText(mContext, R.string.str_edit_round_not_possible, Toast.LENGTH_SHORT).show();
@@ -340,10 +341,9 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
         v.startAnimation(inOutInfinit);
         
 		mStr = mContext.getResources().getString(R.string.str_game_round)+" "+roundNumber+" "+mContext.getResources().getString(R.string.str_edit)+"?";
-		
-		back.setTitle(R.string.str_edit_round);
-		back.setMessage(mStr);
-		back.setPositiveButton(R.string.str_yes, new DialogInterface.OnClickListener() {
+
+
+		DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				Log.d("ef",mGame.toString());
 				Log.d("roundnr edit yes","round nr:"+roundNumber);
@@ -359,7 +359,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 					} else if(mGame.getPlayer(k).getPointHistoryPerRound(roundNumber - 1) == 0) {
 						mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE;
 					}
-					
+
 					i.putExtra(DokoData.PLAYERS_KEY[k]+"_STATE", mPlayerRoundState);
 				}
 				i.putExtra(DokoData.BOCKROUND_KEY, mGame.getRoundList().get(roundNumber-1).getBockCount());
@@ -371,14 +371,18 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 				((Activity) mContext).startActivityForResult(i,DokoData.EDIT_ROUND_ACTIVITY_CODE);
 				v.clearAnimation();
 			}
-		});
+		};
 
-		back.setNegativeButton(R.string.str_no, new DialogInterface.OnClickListener() {
+
+		DialogInterface.OnClickListener abortListerner = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				v.clearAnimation();
 			}
-		});
-		back.show();
+		};
+
+		DokoActivity.showAlertDialog(mContext.getResources().getString(R.string.str_edit_round), mStr,
+				R.string.str_yes, okListener,
+				R.string.str_no, abortListerner, mContext);
 	}
     
 	

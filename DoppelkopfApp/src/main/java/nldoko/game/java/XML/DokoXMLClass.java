@@ -2,6 +2,7 @@ package nldoko.game.java.XML;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.util.Xml;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import nldoko.game.java.DokoActivity;
 import nldoko.game.java.data.DokoData;
 import nldoko.game.R;
 import nldoko.game.java.data.GameClass;
@@ -132,15 +134,11 @@ public class DokoXMLClass {
               return;
            }
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setTitle(R.string.str_hint);
-            builder.setMessage(R.string.str_external_storage);
-            builder.setPositiveButton(R.string.str_accept, null);
-            AlertDialog dialog = builder.show();
 
-            // Must call show() prior to fetching text view
-            TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
-            messageView.setGravity(Gravity.LEFT);
+
+            DokoActivity.showAlertDialog(activity.getResources().getString(R.string.str_hint),
+                    activity.getResources().getString(R.string.str_external_storage),
+                    R.string.str_yes, null, 0, null, activity);
 
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
