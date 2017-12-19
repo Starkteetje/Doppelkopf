@@ -12,7 +12,7 @@
     <string name="str_saved_game_via_mail_text_excel">*You can import this data into excel.
         Save data as text file and import into excel by using semicolon as separator.</string>
     Important set \".\" (dot) as decimal seperator.
-    <string name="str_saved_game_via_mail_intent">Send via mail...</string>
+    <string name="str_saved_game_via_mail_intent">Send via mail&#8230;</string>
     <string name="str_new_game">New game</string>
     <string name="str_player_name">Playername</string>
     <string name="str_clear_player_name_list">Delete name history</string>
@@ -46,10 +46,10 @@
 
     <string name="str_game_result_calc">Payoff</string>
     <string name="str_game_result_calc_btn">Calculation</string>
-    <string name="str_game_result_calc_factor">Factor e.g. 0,10 (only 0-9 , . valid chars)</string>
-    <string name="str_game_result_calc_factor_error">Error: Enter a valid factor (e.g. 0,05 - 0,10 - 1 - 1,5 - 2 - 10)</string>
-    <string name="str_game_load">Load game...</string>
-    <string name="str_saved_games_load">Load saved games...</string>
+    <string name="str_game_result_calc_factor">Factor e.g. 0,10 (only 0&#8211;9 , . valid chars)</string>
+    <string name="str_game_result_calc_factor_error">Error: Enter a valid factor (e.g. 0,05 &#8211; 0,10 &#8211; 1 &#8211; 1,5 &#8211; 2 &#8211; 10)</string>
+    <string name="str_game_load">Load game&#8230;</string>
+    <string name="str_saved_games_load">Load saved games&#8230;</string>
     <string name="str_game">Current game</string>
     <string name="str_game_cnt_variant">Count variant</string>
     <string name="str_game_add_round_here">Add new round (wipe)</string>
@@ -135,7 +135,7 @@
 			Diese Software wurde mit größter Sorgfalt entwickelt, jedoch können Fehler niemals ausgeschlossen werden.
 			Es kann daher keine Gewähr für die Sicherheit ihrer Daten übernommen werden. Benutzung auf eigene Gefahr.
 			Diese App darf ausschließlich nur von Privatpersonen und nur für private Zwecke benutzt und eingesetzt werden
-            \n\nDruch die Verwendung der Software stimmen sie dem Haftungsausschluss zu.
+            \n\nDurch die Verwendung der Software stimmen sie dem Haftungsausschluss zu.
             \n\nAlle Rechte vorbehalten
 
             \n\nLibs:

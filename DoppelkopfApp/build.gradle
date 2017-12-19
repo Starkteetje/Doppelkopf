@@ -4,11 +4,11 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.2"
     defaultConfig {
-        applicationId "nldoko.game"
+        applicationId "nldoko.gamewithwebserver"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 15
-        versionName "3.1"
+        versionName "3.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
