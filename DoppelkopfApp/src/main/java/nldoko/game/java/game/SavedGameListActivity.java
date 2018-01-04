@@ -1,13 +1,12 @@
 package nldoko.game.java.game;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,17 +20,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-import nldoko.game.java.DokoActivity;
 import nldoko.game.R;
+import nldoko.game.java.DokoActivity;
 import nldoko.game.java.XML.DokoXMLClass;
 import nldoko.game.java.data.GameClass;
 import nldoko.game.java.data.PlayerClass;
+import nldoko.game.java.data.RoundClass;
 
 public class SavedGameListActivity extends DokoActivity {
 
@@ -258,6 +267,10 @@ public class SavedGameListActivity extends DokoActivity {
                     mIv = (ImageView)l.findViewById(R.id.saved_game_entry_icon_mail);
                     mIv.setOnClickListener(new FileMailClickListener(absolutPath));
                     mIv.setColorFilter(mContext.getResources().getColor(R.color.primary_dark), PorterDuff.Mode.SRC_ATOP);
+
+                    mIv = (ImageView)l.findViewById(R.id.saved_game_entry_icon_upload);
+                    mIv.setOnClickListener(new GameUploadClickListener(absolutPath));
+                    mIv.setColorFilter(mContext.getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
                 }
 
             	
@@ -284,6 +297,71 @@ public class SavedGameListActivity extends DokoActivity {
 			}
 		}
 	};
+
+    private class GameUploadClickListener implements OnClickListener {
+        String savedGameFile;
+
+        public GameUploadClickListener(String fileName) {
+            savedGameFile = fileName;
+        }
+
+        @Override
+        public void onClick(View v) {
+            GameClass game =  getGame(v);
+            if (game == null) {
+                //TODO show error
+                return;
+            }
+            //TODO upload
+            HttpEntity uploadEntity = getUploadEntity(game);
+            PostTask pt = new PostTask();
+            pt.execute(uploadEntity);
+        }
+
+        public GameClass getGame(View v) {
+            return DokoXMLClass.restoreGameStateFromXML(v.getContext(), this.savedGameFile, true);
+        }
+
+        public HttpEntity getUploadEntity(GameClass game) {
+            List<RoundClass> rounds = game.getRoundList();
+            return null; //TODO
+        }
+    }
+
+    private class PostTask extends AsyncTask<HttpEntity, Void, HttpResponse> {
+        @Override
+        protected void onPreExecute() {
+            //TODO disable button, as long as request executes
+        }
+
+        @Override
+        protected HttpResponse doInBackground(HttpEntity... gameData) {
+            // Create a new HttpClient and Post Header
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost("");//TODO
+            for(HttpEntity entity : gameData) {
+                post.setEntity(entity);
+            }
+
+            try {
+                HttpResponse response = client.execute(post);
+                return response;
+
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(HttpResponse response) {
+            if (response == null) {
+                //TODO
+            } else {
+                //TODO check status code, update UI
+            }
+            //TODO enable upload button? maybe only if unsuccessful
+        }
+    }
             	
     private class FileClickListerner implements OnClickListener{
 
