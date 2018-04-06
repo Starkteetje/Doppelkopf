@@ -59,6 +59,7 @@
     <string name="str_game_points">Points</string>
     <string name="str_game_points_winner_select_text">win</string>
     <string name="str_game_points_lose_select_text">lose</string>
+    <string name="str_game_dealer">Dealer:</string>
     <string name="str_game_points_suspend_select_text">suspended</string>
     <string name="str_game_points_choose_bock">New bock rounds</string>
     <string name="str_game_bock_rounds_cnt">Count of bockrounds</string>
@@ -85,7 +86,7 @@
     <string name="str_error_game_start">Error: can\'t start game</string>
     <string name="str_error_load_game_for_change_game_settings">Error: game settings couldn\'t be loaded</string>
 
-    <string name="str_dp_seperator">:</string>
+    <string name="str_dp_seperator">|</string>
     <string name="str_edit">edit</string>
     <string name="str_yes">Yes</string>
     <string name="str_no">No</string>

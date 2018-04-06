@@ -63,6 +63,7 @@
     <string name="str_game_points">Punkte</string>
     <string name="str_game_points_winner_select_text">gewonnen</string>
     <string name="str_game_points_lose_select_text">verloren</string>
+    <string name="str_game_dealer">Geber:</string>
     <string name="str_game_points_suspend_select_text">ausgesetzt</string>
     <string name="str_game_points_choose_bock">Neue Bockrunden</string>
     <string name="str_game_bock_rounds_cnt">Anzahl Bockrunden</string>
@@ -90,7 +91,7 @@
     <string name="str_error_game_start">Fehler: Runde konnte nicht gestartet werden</string>
     <string name="str_error_load_game_for_change_game_settings">Fehler: Spieleinstellungen konnten nicht geladen werden</string> 
 
-    <string name="str_dp_seperator">:</string>
+    <string name="str_dp_seperator">|</string>
     <string name="str_edit">bearbeiten</string>
     <string name="str_yes">Ja</string>
     <string name="str_no">Nein</string>

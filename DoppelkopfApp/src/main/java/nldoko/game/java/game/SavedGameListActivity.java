@@ -20,14 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -306,60 +298,32 @@ public class SavedGameListActivity extends DokoActivity {
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View v) {/*
+            //TODO disable button, as long as request executes
             GameClass game =  getGame(v);
             if (game == null) {
                 //TODO show error
                 return;
             }
             //TODO upload
-            HttpEntity uploadEntity = getUploadEntity(game);
-            PostTask pt = new PostTask();
-            pt.execute(uploadEntity);
+            OkHttpClient client = new OkHttpClient();
+            RequestBody body = getRequestBody(game);
+            Request request = new Request.Builder()
+                    .url("url")
+                    .post(body)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                //TODO check status code, update UI with error/success
+            } catch (IOException e) {
+                //TODO
+            }
+            //TODO enable upload button? maybe only if unsuccessful*/
         }
 
         public GameClass getGame(View v) {
             return DokoXMLClass.restoreGameStateFromXML(v.getContext(), this.savedGameFile, true);
-        }
-
-        public HttpEntity getUploadEntity(GameClass game) {
-            List<RoundClass> rounds = game.getRoundList();
-            return null; //TODO
-        }
-    }
-
-    private class PostTask extends AsyncTask<HttpEntity, Void, HttpResponse> {
-        @Override
-        protected void onPreExecute() {
-            //TODO disable button, as long as request executes
-        }
-
-        @Override
-        protected HttpResponse doInBackground(HttpEntity... gameData) {
-            // Create a new HttpClient and Post Header
-            HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost("");//TODO
-            for(HttpEntity entity : gameData) {
-                post.setEntity(entity);
-            }
-
-            try {
-                HttpResponse response = client.execute(post);
-                return response;
-
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(HttpResponse response) {
-            if (response == null) {
-                //TODO
-            } else {
-                //TODO check status code, update UI
-            }
-            //TODO enable upload button? maybe only if unsuccessful
         }
     }
             	

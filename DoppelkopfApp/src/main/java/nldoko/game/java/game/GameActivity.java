@@ -1,14 +1,10 @@
 package nldoko.game.java.game;
 
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -45,7 +41,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.EnumSet;
 
 import nldoko.game.java.DokoActivity;
 import nldoko.game.R;
@@ -55,23 +50,23 @@ import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
 import nldoko.game.java.data.DokoData.GAME_VIEW_TYPE;
 import nldoko.game.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
 import nldoko.game.java.data.GameClass;
+import nldoko.game.java.data.RoundClass;
 import nldoko.game.java.util.Functions;
-import nldoko.game.java.util.TypefaceUtil;
 
 public class GameActivity extends DokoActivity {
 
 	private String TAG = "Game";
 
     private static DokoActivity dokoActivity;
-		
+
 	private static ListView mLvRounds;
 	private static GameMainListAdapter mLvRoundAdapter;
 
 	private static LinearLayout mLayout;
 	private static LinearLayout mGameRoundsInfoSwipe;
-	private static LinearLayout mBottomInfos;
 	private static TextView mBottomInfoBockRoundCount;
 	private static TextView mBottomInfoBockRoundPreview;
+	private static TextView mBottomInfoDealer;
 
 	private static TextView mTvAddRoundBockPoints;
 
@@ -346,14 +341,20 @@ public class GameActivity extends DokoActivity {
 			mGameRoundsInfoSwipe.removeAllViews();
 			createTableHeader(inflater, context);
 		}
-		
-		mBottomInfos = (LinearLayout)rootView.findViewById(R.id.fragment_game_bottom_infos);
+
 		mBottomInfoBockRoundCount = (TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_bock_count);
 		mBottomInfoBockRoundPreview = (TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_bock_count_preview);
+        mBottomInfoDealer = (TextView) rootView.findViewById(R.id.fragment_game_bottom_infos_content_dealer);
 
 		if(mGame != null){
-			if(mGame.getBockRoundLimit() == 0 )
-				mBottomInfos.setVisibility(View.GONE);
+			setDealer(context);
+			if(mGame.getBockRoundLimit() == 0 ) {
+                mBottomInfoBockRoundCount.setVisibility(View.GONE);
+				((TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_bock_count_label)).setVisibility(View.GONE);
+                mBottomInfoBockRoundPreview.setVisibility(View.GONE);
+				((TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_separator_1)).setVisibility(View.GONE);
+				((TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_separator_2)).setVisibility(View.GONE);
+            }
 			else {
                 setBottomInfo(context);
             }
@@ -361,6 +362,25 @@ public class GameActivity extends DokoActivity {
 		
 	}
 
+	private static void setDealer(Context context) {
+        String dealerName = "none";
+        if(mGame != null) {
+            int playerCount = mGame.getPlayerCount();
+            int roundCount = mGame.getRoundCount();
+            int soloCount = 0;
+            ArrayList<RoundClass> rounds = mGame.getRoundList();
+            for(RoundClass round : rounds) {
+                if(round.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.LOSE_SOLO ||
+                        round.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.WIN_SOLO) {
+                    soloCount++;
+                }
+            }
+            int indexOfPlayerToDeal = (roundCount - soloCount + playerCount - 1) % playerCount;//-1 so that first player is second to deal
+            dealerName = mGame.getPlayer(indexOfPlayerToDeal).getName();
+        }
+
+		mBottomInfoDealer.setText(dealerName);
+	}
 	
 	private static void setBottomInfo(Context context) {
 		int mBockRoundCnt = 0, mTmp = 0;
@@ -618,6 +638,7 @@ public class GameActivity extends DokoActivity {
 			DokoXMLClass.saveGameStateToXML(mContext, mGame);
 			
 			setBottomInfo(mContext);
+			setDealer(mContext);
 		}
 	}
 	

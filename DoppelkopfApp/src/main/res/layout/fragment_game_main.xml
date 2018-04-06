@@ -29,19 +29,18 @@
             
     </LinearLayout>
 
-     <ListView
-         android:id="@+id/fragment_game_round_list"
-         android:layout_height="fill_parent"
-         android:layout_width="match_parent"
-         android:smoothScrollbar="true"
-		 android:fastScrollEnabled="true"
-		 android:keepScreenOn="true"
-         android:dividerHeight="@dimen/item_space"
-         android:divider="@color/activity_background_color"
-         android:layout_below="@+id/fragment_game_rounds_infos"
-         android:layout_alignParentLeft="true"
-         android:layout_alignParentStart="true"
-         android:layout_above="@+id/fragment_game_bottom_infos" />
+    <ListView
+        android:id="@+id/fragment_game_round_list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:divider="@color/activity_background_color"
+        android:dividerHeight="@dimen/item_space"
+        android:fastScrollEnabled="true"
+        android:keepScreenOn="true"
+        android:smoothScrollbar="true" />
+
 
     <LinearLayout
         android:id="@+id/fragment_game_bottom_infos"
@@ -56,11 +55,39 @@
 		        android:layout_height="fill_parent"
 		        android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/str_game_dealer"
+                    android:paddingLeft="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/table_footer_bock_count_label"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                <TextView
+                    android:id="@+id/fragment_game_bottom_infos_content_dealer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="4dp"
+                    android:gravity="center"
+                    android:textColor="@color/table_footer_bock_count_label"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                <TextView
+                    android:id="@+id/fragment_game_bottom_infos_content_separator_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:textColor="@color/table_footer_bock_counts"
+                    android:text="@string/str_dp_seperator"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
 		        <TextView
+                    android:id="@+id/fragment_game_bottom_infos_content_bock_count_label"
                     android:layout_width="wrap_content"
 		            android:layout_height="match_parent"
 		            android:gravity="center"
-					android:paddingLeft="10dp"
                     android:textColor="@color/table_footer_bock_count_label"
 		            android:text="@string/str_bockrounds"
 		            android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -75,32 +102,28 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
 				<TextView
+                    android:id="@+id/fragment_game_bottom_infos_content_separator_2"
 					android:layout_width="wrap_content"
 					android:layout_height="match_parent"
 					android:gravity="center"
-					android:paddingLeft="2dp"
+					android:padding="4dp"
 					android:textColor="@color/table_footer_bock_counts"
 					android:text="@string/str_dp_seperator"
 					android:textAppearance="?android:attr/textAppearanceSmall" />
 
-
-		        
 		       <TextView
 		            android:id="@+id/fragment_game_bottom_infos_content_bock_count_preview"
 		            android:layout_width="wrap_content"
 		            android:layout_height="match_parent"
-		            android:layout_marginLeft="8dp"
 		            android:gravity="center"
 		            android:lines="1"
                     android:textColor="@color/white"
-		            android:textAppearance="?android:attr/textAppearanceSmall"
+		            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                   android:layout_marginRight="10dp"/>
-		            
 		    </LinearLayout>
-            
+
     </LinearLayout>
-     
+
 
 
 </RelativeLayout>
