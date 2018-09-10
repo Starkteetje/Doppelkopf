@@ -20,12 +20,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.InputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
+import java.util.HashMap;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import nldoko.game.R;
 import nldoko.game.java.DokoActivity;
@@ -298,28 +312,23 @@ public class SavedGameListActivity extends DokoActivity {
         }
 
         @Override
-        public void onClick(View v) {/*
-            //TODO disable button, as long as request executes
-            GameClass game =  getGame(v);
-            if (game == null) {
-                //TODO show error
-                return;
-            }
-            //TODO upload
-            OkHttpClient client = new OkHttpClient();
-            RequestBody body = getRequestBody(game);
-            Request request = new Request.Builder()
-                    .url("url")
-                    .post(body)
-                    .build();
+        public void onClick(View v) {
 
-            try {
-                Response response = client.newCall(request).execute();
-                //TODO check status code, update UI with error/success
-            } catch (IOException e) {
-                //TODO
-            }
-            //TODO enable upload button? maybe only if unsuccessful*/
+            Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    Log.v("test", response.toString());
+                }
+            };
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                }
+            };
+
+            Uploader.upload(v.getContext(), getGame(v), listener, errorListener);
         }
 
         public GameClass getGame(View v) {
