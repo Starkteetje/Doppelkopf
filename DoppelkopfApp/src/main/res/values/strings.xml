@@ -97,6 +97,10 @@
     <string name="str_apply">Apply</string>
     <string name="str_hint">Info</string>
     <string name="str_no_bock">none</string>
+    <string name="str_upload_in_progress">Upload in progress...</string>
+    <string name="str_upload_successful">Upload successful</string>
+    <string name="str_upload_error">Upload failed</string>
+    <string name="str_upload_error_code">. Status code:</string>
 
     <string name="str_dev_mode_title">Dev-Mode</string>
     <string name="str_dev_mode_text">Enter the password to activate the Dev-Mode.</string>

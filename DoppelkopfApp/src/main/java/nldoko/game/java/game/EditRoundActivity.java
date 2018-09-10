@@ -11,13 +11,12 @@ import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import nldoko.game.java.DokoActivity;
 import nldoko.game.R;
+import nldoko.game.java.DokoActivity;
 import nldoko.game.java.data.DokoData;
 import nldoko.game.java.data.DokoData.PLAYER_ROUND_RESULT_STATE;
 import nldoko.game.java.util.Functions;
@@ -29,7 +28,6 @@ public class EditRoundActivity extends DokoActivity {
 	private static String TAG = "EditRound";
 
 	private static TextView mTvAddRoundBockPoints;
-	private static RadioGroup mNewRoundBockRadioGroup; 
 	private static Button mBtnEditRound;
 	private static TextView mEtNewRoundPoints;
 	
@@ -51,7 +49,6 @@ public class EditRoundActivity extends DokoActivity {
 	private static int mPlayerCnt;
 	private static int mRoundPoints = 0;
 	private static int mBockRound = 0;
-    private static boolean mBockAutoCalcEnable = true;
     private static int mRoundNr = 1;
 	private static PLAYER_ROUND_RESULT_STATE mPlayerState = PLAYER_ROUND_RESULT_STATE.LOSE_STATE;
 

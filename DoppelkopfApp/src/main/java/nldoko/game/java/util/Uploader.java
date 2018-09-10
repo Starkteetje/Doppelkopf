@@ -1,11 +1,11 @@
-package nldoko.game.java.game;
+package nldoko.game.java.util;
 
 import android.content.Context;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -26,7 +26,7 @@ public class Uploader {
 
     private static final String UPLOAD_URL = "http://some.url";
 
-    public static void upload(Context context, GameClass game, Response.Listener listener, Response.ErrorListener errorListener) {
+    public static void upload(Context context, GameClass game, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         String token = "someToken";
@@ -36,13 +36,13 @@ public class Uploader {
             json = getJSONStringFromGame(game);
         } catch (Exception e) {
             Log.v("error", e.getMessage());
-            //TODO change sth in errorlistener
+            //TODO change sth in errorListener
         }
         HashMap<String, String> params = new HashMap<>();
         params.put("token", token);
         params.put("json", json);
 
-        JsonObjectRequest request_json = new JsonObjectRequest(UPLOAD_URL, new JSONObject(params), listener, errorListener);
+        DokoUploadRequest request_json = new DokoUploadRequest(UPLOAD_URL, new JSONObject(params), listener, errorListener);
 
         queue.add(request_json);
     }
@@ -59,9 +59,11 @@ public class Uploader {
         json.put("date", game.getCreateDate("YYYY-MM-dd"));
 
         // Generate a new unique ID, which will be consistent across multiple uploads
-        //TODO should be unpredictable from other device in order to prevent attacks
+        // Cannot be predicted from a different device, due to device-specific ID
+        String androidId = Settings.Secure.ANDROID_ID;
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(json.toString().getBytes(StandardCharsets.UTF_8));
+        md.update(androidId.getBytes(StandardCharsets.UTF_8));
         String uniqueGameIdentifier = toHex(md.digest());
 
         json.put("id", uniqueGameIdentifier);
@@ -78,7 +80,7 @@ public class Uploader {
     }
 
     private static JSONArray getPlayerJSONArrayFromList(List<PlayerClass> players, int roundCount) throws JSONException {
-        players = players.stream().filter(player -> player.getName() != null && player.getName() != "").collect(Collectors.toList());
+        players = players.stream().filter(player -> player.getName() != null && !player.getName().equals("")).collect(Collectors.toList());
         JSONArray array = new JSONArray();
         for (int i = 0; i < players.size(); i++) {
             JSONObject playerJSON = new JSONObject();

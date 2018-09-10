@@ -42,8 +42,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import nldoko.game.java.DokoActivity;
 import nldoko.game.R;
+import nldoko.game.java.DokoActivity;
 import nldoko.game.java.XML.DokoXMLClass;
 import nldoko.game.java.data.DokoData;
 import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;

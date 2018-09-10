@@ -330,7 +330,6 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 	}
 	
 	private void showEditRoundDialog(final int roundNumber, final View v){
-		String mStr = "";
 
 		if(mGame.getRoundList().get(roundNumber-1).getPoints() == 0 || mGame.getRoundList().size() > roundNumber){
 			Toast.makeText(mContext, R.string.str_edit_round_not_possible, Toast.LENGTH_SHORT).show();
@@ -340,7 +339,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
         Animation inOutInfinit = AnimationUtils.loadAnimation(mContext, R.anim.infinit_fade_in_out);
         v.startAnimation(inOutInfinit);
         
-		mStr = mContext.getResources().getString(R.string.str_game_round)+" "+roundNumber+" "+mContext.getResources().getString(R.string.str_edit)+"?";
+		String mStr = mContext.getResources().getString(R.string.str_game_round)+" "+roundNumber+" "+mContext.getResources().getString(R.string.str_edit)+"?";
 
 
 		DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
