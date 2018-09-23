@@ -25,6 +25,7 @@ import nldoko.game.java.data.PlayerClass;
 public class Uploader {
 
     private static final String UPLOAD_URL = "http://some.url";
+    private static final String REQUEST_PATH = "/addrounds";
 
     public static void upload(Context context, GameClass game, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -42,7 +43,7 @@ public class Uploader {
         params.put("token", token);
         params.put("json", json);
 
-        DokoUploadRequest request_json = new DokoUploadRequest(UPLOAD_URL, new JSONObject(params), listener, errorListener);
+        DokoUploadRequest request_json = new DokoUploadRequest(UPLOAD_URL + REQUEST_PATH, new JSONObject(params), listener, errorListener);
 
         queue.add(request_json);
     }

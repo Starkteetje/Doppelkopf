@@ -12,7 +12,7 @@ import java.io.UnsupportedEncodingException;
 
 public class DokoUploadRequest extends JsonRequest<String> {
 
-    public DokoUploadRequest(String url, JSONObject request, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    DokoUploadRequest(String url, JSONObject request, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Method.POST, url, request.toString(), listener, errorListener);
     }
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
