@@ -101,6 +101,8 @@
     <string name="str_upload_successful">Upload successful</string>
     <string name="str_upload_error">Upload failed</string>
     <string name="str_upload_error_code">. Status code:</string>
+    <string name="str_upload_error_not_authenticated">. Login token is not valid.</string>
+    <string name="str_upload_error_already_uploaded">. The game in question was already uploaded.</string>
 
     <string name="str_dev_mode_title">Dev-Mode</string>
     <string name="str_dev_mode_text">Enter the password to activate the Dev-Mode.</string>

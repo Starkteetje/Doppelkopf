@@ -330,7 +330,15 @@ public class SavedGameListActivity extends DokoActivity {
                     String errorMessage = getResources().getString(R.string.str_upload_error);
                     NetworkResponse response = error.networkResponse;
                     if (response != null) {
-                        errorMessage += getResources().getString(R.string.str_upload_error_code) + " " + error.networkResponse.statusCode;
+                        int statusCode = response.statusCode;
+                        if (statusCode == 401) {
+                            errorMessage += getResources().getString(R.string.str_upload_error_not_authenticated);
+                        } else if (statusCode == 409) {
+                            errorMessage += getResources().getString(R.string.str_upload_error_already_uploaded);
+                            v.setVisibility(View.GONE);
+                        } else {
+                            errorMessage += getResources().getString(R.string.str_upload_error_code) + " " + statusCode;
+                        }
                     }
 
                     Toast toast = Toast.makeText(v.getContext(), errorMessage, Toast.LENGTH_SHORT);

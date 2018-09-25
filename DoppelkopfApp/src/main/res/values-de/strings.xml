@@ -106,6 +106,8 @@
     <string name="str_upload_successful">Upload erfolgreich</string>
     <string name="str_upload_error">Upload fehlgeschlagen</string>
     <string name="str_upload_error_code">. Statuscode:</string>
+    <string name="str_upload_error_not_authenticated">, weil das Logintoken ungültig ist.</string>
+    <string name="str_upload_error_already_uploaded">, weil das Spiel bereits hochgeladen wurde.</string>
 
     <string name="str_dev_mode_title">Dev-Mode</string>
     <string name="str_dev_mode_text">Bitte geben Sie das Passowort für den Dev-Mode ein um diese zu akviteren.</string>
