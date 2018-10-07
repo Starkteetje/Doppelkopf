@@ -23,138 +23,138 @@ import nldoko.game.java.util.Functions;
 
 public class EditRoundActivity extends DokoActivity {
 
-	private static Intent intent;
-	
-	private static String TAG = "EditRound";
+    private static Intent intent;
 
-	private static TextView mTvAddRoundBockPoints;
-	private static Button mBtnEditRound;
-	private static TextView mEtNewRoundPoints;
-	
-	private static ArrayList<TextView> mGameAddRoundPlayerState = new ArrayList<TextView>();
+    private static final String TAG = "EditRound";
 
-    
+    private static TextView mTvAddRoundBockPoints;
+    private static Button mBtnEditRound;
+    private static TextView mEtNewRoundPoints;
+
+    private static final ArrayList<TextView> mGameAddRoundPlayerState = new ArrayList<TextView>();
+
+
     private static PlayernameClickListener mPlayernameClickListener;
     private static PlayernameLongClickListener mPlayernameLongClickListener;
     private static btnEditRoundClickListener mBtnEditRoundClickListener;
 
-	private static ArrayList<String> mPlayerNames;
-	private static ArrayList<PLAYER_ROUND_RESULT_STATE> mPlayerStates;
-	
+    private static ArrayList<String> mPlayerNames;
+    private static ArrayList<PLAYER_ROUND_RESULT_STATE> mPlayerStates;
+
     private static int mWinnerList[];
     private static int mSuspendList[];
-	
-	
-	private static int mActivePlayers;
-	private static int mPlayerCnt;
-	private static int mRoundPoints = 0;
-	private static int mBockRound = 0;
-    private static int mRoundNr = 1;
-	private static PLAYER_ROUND_RESULT_STATE mPlayerState = PLAYER_ROUND_RESULT_STATE.LOSE_STATE;
 
-	private static Drawable winnerDraw;
-	private static Drawable loserDraw;
-	private static Drawable suspendDraw;
-	
-	@Override
+
+    private static int mActivePlayers;
+    private static int mPlayerCnt;
+    private static int mRoundPoints = 0;
+    private static int mBockRound = 0;
+    private static int mRoundNr = 1;
+    private static PLAYER_ROUND_RESULT_STATE mPlayerState = PLAYER_ROUND_RESULT_STATE.LOSE_STATE;
+
+    private static Drawable winnerDraw;
+    private static Drawable loserDraw;
+    private static Drawable suspendDraw;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editround);
 
-        
-    	intent = getIntent();
-    	Bundle extras = intent.getExtras();
-    	
-    	String mName = "";
-    	
-    	mPlayerNames =  	new ArrayList<String>();
-    	mPlayerStates = 	new ArrayList<PLAYER_ROUND_RESULT_STATE>();
-    	mWinnerList = 		new int[DokoData.MAX_PLAYER];
-    	mSuspendList = 		new int[DokoData.MAX_PLAYER];
+
+        intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+        String mName;
+
+        mPlayerNames =  	new ArrayList<String>();
+        mPlayerStates = 	new ArrayList<PLAYER_ROUND_RESULT_STATE>();
+        mWinnerList = 		new int[DokoData.MAX_PLAYER];
+        mSuspendList = 		new int[DokoData.MAX_PLAYER];
 
 
-		winnerDraw = mContext.getResources().getDrawable(R.drawable.layer_game_add_player_win);
-		loserDraw = mContext.getResources().getDrawable(R.drawable.layer_game_add_player_lose);
-		suspendDraw = mContext.getResources().getDrawable(R.drawable.layer_game_add_player_suspended);
+        winnerDraw = mContext.getResources().getDrawable(R.drawable.layer_game_add_player_win);
+        loserDraw = mContext.getResources().getDrawable(R.drawable.layer_game_add_player_lose);
+        suspendDraw = mContext.getResources().getDrawable(R.drawable.layer_game_add_player_suspended);
 
 
-    	if(extras != null){
-        	mPlayerCnt = extras.getInt(DokoData.PLAYER_CNT_KEY,0);
-        	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
-        	mBockRound = extras.getInt(DokoData.BOCKROUND_KEY,0);
-        	mRoundPoints = extras.getInt(DokoData.ROUND_POINTS_KEY,0);
+        if(extras != null){
+            mPlayerCnt = extras.getInt(DokoData.PLAYER_CNT_KEY,0);
+            mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
+            mBockRound = extras.getInt(DokoData.BOCKROUND_KEY,0);
+            mRoundPoints = extras.getInt(DokoData.ROUND_POINTS_KEY,0);
             mRoundNr = extras.getInt(DokoData.ROUND_ID,0);
             mRoundNr++;
 
             if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER
-        			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER || 
-        			(mPlayerCnt == 0 || mActivePlayers == 0))
-        		return;
-        	
-        	for(int k=0;k<mPlayerCnt;k++){
-        		mName = extras.getString(DokoData.PLAYERS_KEY[k],"");
-        		mPlayerState = (PLAYER_ROUND_RESULT_STATE)intent.getSerializableExtra(DokoData.PLAYERS_KEY[k]+"_STATE");
-        		if(mName == null || mName.length() == 0) {
+                    || mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER ||
+                    (mPlayerCnt == 0 || mActivePlayers == 0))
+                return;
+
+            for(int k=0;k<mPlayerCnt;k++){
+                mName = extras.getString(DokoData.PLAYERS_KEY[k],"");
+                mPlayerState = (PLAYER_ROUND_RESULT_STATE)intent.getSerializableExtra(DokoData.PLAYERS_KEY[k]+"_STATE");
+                if(mName == null || mName.length() == 0) {
                     return;
                 }
-        		mPlayerNames.add(mName);
-        		mPlayerStates.add(mPlayerState);
+                mPlayerNames.add(mName);
+                mPlayerStates.add(mPlayerState);
 
-        	}
+            }
         }
 
         String title = getResources().getString(R.string.str_edit_round_nr, mRoundNr);
         setupDrawerAndToolbar(title);
         setBackArrowInToolbar();
-    	
-    	LinearLayout mLayout = (LinearLayout)findViewById(R.id.game_edit_round_main_layout);
+
+        LinearLayout mLayout = (LinearLayout)findViewById(R.id.game_edit_round_main_layout);
         if(mLayout != null){
             mPlayernameLongClickListener = new PlayernameLongClickListener();
             mPlayernameClickListener = new PlayernameClickListener();
             mBtnEditRoundClickListener = new btnEditRoundClickListener();
-        	setUIEditNewRound(mLayout, mInflater);
+            setUIEditNewRound(mLayout, mInflater);
         }
 
-        
+
         overridePendingTransition(R.anim.right_out, R.anim.left_in);
     }
 
 
-	private static void setUIEditNewRound(View rootView, LayoutInflater inflater) {
-		ImageView mIv;
-		TextView mTv;
-		String mStr;
+    private static void setUIEditNewRound(View rootView, LayoutInflater inflater) {
+        ImageView mIv;
+        TextView mTv;
+        String mStr;
 
         mEtNewRoundPoints = (TextView)rootView.findViewById(R.id.game_add_round_points_entry);
         mEtNewRoundPoints.setText(""+mRoundPoints);
 
-		loadUINewRoundPlayerSection(rootView, inflater);
+        loadUINewRoundPlayerSection(rootView, inflater);
 
-		mBtnEditRound = (Button)rootView.findViewById(R.id.btn_game_edit_round);
-		mBtnEditRound.setOnClickListener(mBtnEditRoundClickListener);
+        mBtnEditRound = (Button)rootView.findViewById(R.id.btn_game_edit_round);
+        mBtnEditRound.setOnClickListener(mBtnEditRoundClickListener);
 
-		mTvAddRoundBockPoints = (TextView)rootView.findViewById(R.id.game_add_round_bock_points);
-		if(mBockRound > 0){
-			mStr = rootView.getResources().getString(R.string.str_bockround)+" ";
-			mStr += Functions.getBockCountAsString(mBockRound);
-			mTvAddRoundBockPoints.setText(mStr);
-			mTvAddRoundBockPoints.setVisibility(View.VISIBLE);
-		}
+        mTvAddRoundBockPoints = (TextView)rootView.findViewById(R.id.game_add_round_bock_points);
+        if(mBockRound > 0){
+            mStr = rootView.getResources().getString(R.string.str_bockround)+" ";
+            mStr += Functions.getBockCountAsString(mBockRound);
+            mTvAddRoundBockPoints.setText(mStr);
+            mTvAddRoundBockPoints.setVisibility(View.VISIBLE);
+        }
 
 
-		LinearLayout mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_container);
-		if (mLayout != null) {
-			if(mBockRound == 0) {
+        LinearLayout mLayout = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_container);
+        if (mLayout != null) {
+            if(mBockRound == 0) {
                 mLayout.setVisibility(View.INVISIBLE);
             }
-			else {
+            else {
                 mLayout.setVisibility(View.VISIBLE);
             }
-		}
-		
-		
-		rootView.findViewById(R.id.game_edit_round_main_layout).requestFocus();
-	}
+        }
+
+
+        rootView.findViewById(R.id.game_edit_round_main_layout).requestFocus();
+    }
 
     private static void loadUINewRoundPlayerSection(View rootView, LayoutInflater inflater) {
         LinearLayout mLl;
@@ -235,44 +235,44 @@ public class EditRoundActivity extends DokoActivity {
             }
         }
     }
-    
-	private boolean isNewRoundDataOK() {
-		if(getNewRoundPoints() == -1) return false;
-		if(!isWinnerCntOK() || !isSuspendCntOK() ) return false;
-		return true;
-	}
-	
-	private boolean isSuspendCntOK(){
-		if(mPlayerCnt-mActivePlayers == 0) return true;
-		if(getSuspendCnt() == (mPlayerCnt-mActivePlayers)) return true;
-		return false;
-	}
-	
-	private boolean isWinnerCntOK(){
-		int mWinnerCnt = getWinnerCnt();
-		if(mWinnerCnt >= mActivePlayers || mWinnerCnt == 0) return false;
-		return true;
-	}
-		
-	private int getSuspendCnt(){
-		int m = 0;
-		for(int i=0;i<mSuspendList.length;i++){
-			if(mSuspendList[i] == 1) m++;
-		}
-		return m;
-	}
-	
-	private int getWinnerCnt(){
-		int m = 0;
-		for(int i=0;i<mWinnerList.length;i++){
-			if(mWinnerList[i] == 1) {
+
+    private boolean isNewRoundDataOK() {
+        if(getNewRoundPoints() == -1) return false;
+        if(!isWinnerCntOK() || !isSuspendCntOK() ) return false;
+        return true;
+    }
+
+    private boolean isSuspendCntOK(){
+        if(mPlayerCnt-mActivePlayers == 0) return true;
+        if(getSuspendCnt() == (mPlayerCnt-mActivePlayers)) return true;
+        return false;
+    }
+
+    private boolean isWinnerCntOK(){
+        int mWinnerCnt = getWinnerCnt();
+        if(mWinnerCnt >= mActivePlayers || mWinnerCnt == 0) return false;
+        return true;
+    }
+
+    private int getSuspendCnt(){
+        int m = 0;
+        for(int i=0;i<mSuspendList.length;i++){
+            if(mSuspendList[i] == 1) m++;
+        }
+        return m;
+    }
+
+    private int getWinnerCnt(){
+        int m = 0;
+        for(int i=0;i<mWinnerList.length;i++){
+            if(mWinnerList[i] == 1) {
                 m++;
             }
-		}
-		return m;
-	}
-	
-	public class PlayernameClickListener implements OnClickListener{
+        }
+        return m;
+    }
+
+    class PlayernameClickListener implements OnClickListener{
         @SuppressWarnings("deprecation")
         @Override
         public void onClick(View v) {
@@ -300,83 +300,83 @@ public class EditRoundActivity extends DokoActivity {
             }
         }
     }
-	
-	public class PlayernameLongClickListener implements OnLongClickListener{
-		@SuppressWarnings("deprecation")
-		@Override
-		public boolean onLongClick(View v) {
-			for(int i=0;i<mGameAddRoundPlayerState.size();i++){
-				TextView mTvState = mGameAddRoundPlayerState.get(i);
 
-				// maybe right or left
-				TextView mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_left_state);
-				if (mTvStateOfView == null) {
-					mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_right_state);
-				}
+    public class PlayernameLongClickListener implements OnLongClickListener{
+        @SuppressWarnings("deprecation")
+        @Override
+        public boolean onLongClick(View v) {
+            for(int i=0;i<mGameAddRoundPlayerState.size();i++){
+                TextView mTvState = mGameAddRoundPlayerState.get(i);
 
-				if(mTvState != null && mTvStateOfView == mTvState && mWinnerList[i]==0){
-					if(mSuspendList[i] == 0 && getSuspendCnt() < mPlayerCnt-mActivePlayers){
-						GameActivity.changePlayerViewState(mTvState, suspendDraw, R.string.str_game_points_suspend_select_text, YES, v.getContext());
-						mSuspendList[i] = 1;
-					}
-					else{
-						mSuspendList[i] = 0;
-						GameActivity.changePlayerViewState(mTvState, loserDraw, R.string.str_game_points_lose_select_text, YES, v.getContext());
-					}
-				}
-			}
-			return true;
-		}
+                // maybe right or left
+                TextView mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_left_state);
+                if (mTvStateOfView == null) {
+                    mTvStateOfView = (TextView)v.findViewById(R.id.game_add_round_player_right_state);
+                }
+
+                if(mTvState != null && mTvStateOfView == mTvState && mWinnerList[i]==0){
+                    if(mSuspendList[i] == 0 && getSuspendCnt() < mPlayerCnt-mActivePlayers){
+                        GameActivity.changePlayerViewState(mTvState, suspendDraw, R.string.str_game_points_suspend_select_text, YES, v.getContext());
+                        mSuspendList[i] = 1;
+                    }
+                    else{
+                        mSuspendList[i] = 0;
+                        GameActivity.changePlayerViewState(mTvState, loserDraw, R.string.str_game_points_lose_select_text, YES, v.getContext());
+                    }
+                }
+            }
+            return true;
+        }
     }
-	
-	public class btnEditRoundClickListener implements OnClickListener{
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.btn_game_edit_round:
-				if(!isNewRoundDataOK()){
-					showAlertDialog(R.string.str_error, R.string.str_error_game_new_round_data);
-					return;
-				}
-				
-		    	Intent i = intent;
-		    	i.putExtra(DokoData.CHANGE_ROUND_KEY, true);
-		    	i.putExtra(DokoData.ROUND_POINTS_KEY, getNewRoundPoints());
-		    	
-				PLAYER_ROUND_RESULT_STATE mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.WIN_STATE;
-				for(int k=0; k < mPlayerCnt; k++){
-					if (mSuspendList[k] == 1) {
-						mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE;
-					} else if (mWinnerList[k] == 1) {
-						mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.WIN_STATE;
-					} else  {
-						mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.LOSE_STATE;
-					}
-					i.putExtra(DokoData.PLAYERS_KEY[k]+"_STATE", mPlayerRoundState.ordinal());
-				}
-	
-				setResult(RESULT_OK, i);
-		    	finish();	
-				break;
-				
-			default:
-				finish();
-				break;
-			}
-		}
-	}
+
+    public class btnEditRoundClickListener implements OnClickListener{
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_game_edit_round:
+                    if(!isNewRoundDataOK()){
+                        showAlertDialog(R.string.str_error, R.string.str_error_game_new_round_data);
+                        return;
+                    }
+
+                    Intent i = intent;
+                    i.putExtra(DokoData.CHANGE_ROUND_KEY, true);
+                    i.putExtra(DokoData.ROUND_POINTS_KEY, getNewRoundPoints());
+
+                    PLAYER_ROUND_RESULT_STATE mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.WIN_STATE;
+                    for(int k=0; k < mPlayerCnt; k++){
+                        if (mSuspendList[k] == 1) {
+                            mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE;
+                        } else if (mWinnerList[k] == 1) {
+                            mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.WIN_STATE;
+                        } else  {
+                            mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.LOSE_STATE;
+                        }
+                        i.putExtra(DokoData.PLAYERS_KEY[k]+"_STATE", mPlayerRoundState.ordinal());
+                    }
+
+                    setResult(RESULT_OK, i);
+                    finish();
+                    break;
+
+                default:
+                    finish();
+                    break;
+            }
+        }
+    }
 
 
 
 
-	private int getNewRoundPoints(){
-		try{
-			return Integer.valueOf(mEtNewRoundPoints.getText().toString());
-		}
-		catch(Exception e){
+    private int getNewRoundPoints(){
+        try{
+            return Integer.valueOf(mEtNewRoundPoints.getText().toString());
+        }
+        catch(Exception e){
             Log.e(TAG,"ERROR:"+e.toString());
-			return -1;
-		}
-	}
+            return -1;
+        }
+    }
 
 }

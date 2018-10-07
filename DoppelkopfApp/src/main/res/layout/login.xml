@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    tools:context=".java.interconnect.LoginActivity" >
+
+    <include layout="@layout/my_toolbar"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/login_form" >
+
+        <EditText
+            android:padding="10dp"
+            android:layout_marginTop="@dimen/item_space"
+            android:layout_marginLeft="@dimen/item_space"
+            android:layout_marginRight="@dimen/item_space"
+            android:id="@+id/user_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/str_username"
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/light_gray"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/light_gray"
+            android:popupBackground="@color/activity_background_color"
+            android:inputType="text"
+            android:imeOptions="actionNext"
+            android:maxLines="1">
+        </EditText>
+
+        <EditText
+            android:padding="10dp"
+            android:layout_marginTop="@dimen/item_space"
+            android:layout_marginLeft="@dimen/item_space"
+            android:layout_marginRight="@dimen/item_space"
+            android:id="@+id/user_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/str_password"
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/light_gray"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/light_gray"
+            android:popupBackground="@color/activity_background_color"
+            android:inputType="textPassword"
+            android:imeOptions="actionNext"
+            android:maxLines="1">
+        </EditText>
+
+        <Button
+            android:layout_marginTop="@dimen/item_space"
+            android:layout_marginBottom="@dimen/item_space"
+            android:id="@+id/btn_login"
+            android:padding="15dp"
+            android:textSize="22sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textColor="@color/light_gray"
+            android:text="@string/str_login_action"
+            android:background="@drawable/bnt_style_1"
+            android:elevation="4dp"/>
+    </LinearLayout>
+</LinearLayout>

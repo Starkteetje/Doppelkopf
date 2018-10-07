@@ -6,7 +6,7 @@
     android:descendantFocusability="beforeDescendants"
 	android:focusableInTouchMode="true"
 	android:id="@+id/game_edit_round_main_layout"
-    tools:context=".game.EditRoundActivity" >
+    tools:context="java.game.EditRoundActivity" >
 
 	<include layout="@layout/my_toolbar"/>
 
@@ -82,7 +82,6 @@
 		<View
 			android:layout_width="fill_parent"
 			android:layout_height="4dip"
-			android:layout_alignParentBottom="true"
 			android:layout_marginTop="0dp"
 			android:background="@drawable/drop_shadow" />
 

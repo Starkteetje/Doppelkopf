@@ -10,10 +10,10 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
-public class DokoUploadRequest extends JsonRequest<String> {
+class DokoRequest extends JsonRequest<String> {
 
-    DokoUploadRequest(String url, JSONObject request, Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.POST, url, request.toString(), listener, errorListener);
+    DokoRequest(int method, String url, JSONObject request, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(method, url, request.toString(), listener, errorListener);
     }
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {

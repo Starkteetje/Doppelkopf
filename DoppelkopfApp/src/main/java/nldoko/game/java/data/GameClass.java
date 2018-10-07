@@ -95,7 +95,7 @@ public class GameClass  implements Serializable{
 	}
 
 
-	public void addRound(RoundClass round){
+	private void addRound(RoundClass round){
 		this.mRoundList.add(round);
 	}
 
@@ -167,15 +167,11 @@ public class GameClass  implements Serializable{
 	
 	
 	public boolean isReady(){
-		if(mPlayers.size()== getMAXPlayerCount() && mPreRoundList.size() >= getMAXPlayerCount() ){
-			return true;
-		}
-		return false;
+		return mPlayers.size() == getMAXPlayerCount() && mPreRoundList.size() >= getMAXPlayerCount();
 	}
 
 	public void updateBockCountPreRounds(Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount) {
 		if(mBockRoundLimit == 0) {
-			return;
 
 		}
 		else if(mGameBockRoundsCount == 0 && mGameBockRoundsGameCount == 0) {
@@ -185,7 +181,7 @@ public class GameClass  implements Serializable{
             for (int games = 0; games<mGameBockRoundsCount; games++) {
                 int mBockHeap = mGameBockRoundsGameCount;
                 int i = 0;
-                int mID = 0;
+                int mID;
                 RoundClass mRound;
                 while(mBockHeap > 0){
                     //Log.d(TAG,"i: "+i+" preSize:"+mPreRoundList.size()+ " heap"+mBockHeap);

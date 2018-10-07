@@ -127,7 +127,7 @@
             android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_weight="0.13"
-            layout="@layout/fargment_game_round_view_table_result" />
+            layout="@layout/fragment_game_round_view_table_result" />
 
     </LinearLayout>
 

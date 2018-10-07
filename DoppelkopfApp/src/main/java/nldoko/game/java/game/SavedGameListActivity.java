@@ -24,8 +24,6 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,20 +34,21 @@ import nldoko.game.java.DokoActivity;
 import nldoko.game.java.XML.DokoXMLClass;
 import nldoko.game.java.data.GameClass;
 import nldoko.game.java.data.PlayerClass;
+import nldoko.game.java.interconnect.LoginActivity;
 import nldoko.game.java.util.Uploader;
 
 public class SavedGameListActivity extends DokoActivity {
 
-	private String TAG = "SavedGameList";
+    private final String TAG = "SavedGameList";
 
-	private LinearLayout mEntriesLayout;
-	
-	private ArrayList<File> fileList;
+    private LinearLayout mEntriesLayout;
+
+    private ArrayList<File> fileList;
 
     private boolean needToReloadUI;
 
-	private static int SAVED_GAME_TAG  = 2611;
-	private static int SAVED_GAME_TAG_DELETE  = 4211;
+    private static final int SAVED_GAME_TAG  = 2611;
+    private static final int SAVED_GAME_TAG_DELETE  = 4211;
 
     private ProgressDialog progressDialog;
 
@@ -101,7 +100,7 @@ public class SavedGameListActivity extends DokoActivity {
         progressDialog.show();
 
         fileList = getFileList();
-    	setUI();
+        setUI();
 
         new CountDownTimer(1000, 1000) {
             @Override
@@ -186,48 +185,48 @@ public class SavedGameListActivity extends DokoActivity {
     }
 
     private void setUI() {
-    	int tagCnt = 0;
-    	mEntriesLayout = (LinearLayout)findViewById(R.id.saved_games_entries);
-    	mEntriesLayout.removeAllViewsInLayout();
+        int tagCnt = 0;
+        mEntriesLayout = (LinearLayout)findViewById(R.id.saved_games_entries);
+        mEntriesLayout.removeAllViewsInLayout();
 
-    	FileClickListener mFileClickListener = new FileClickListener(fileList);
-    	FileDeleteClickListener mFileDeleteClickListener = new FileDeleteClickListener(fileList);
+        FileClickListener mFileClickListener = new FileClickListener(fileList);
+        FileDeleteClickListener mFileDeleteClickListener = new FileDeleteClickListener(fileList);
 
-    	if (fileList != null){
-    		View v;
-    		TextView mTv;
-    		ImageView mIv;
-    	    for (File savedGameFile : fileList){
+        if (fileList != null){
+            View v;
+            TextView mTv;
+            ImageView mIv;
+            for (File savedGameFile : fileList){
                 String absolutePath = savedGameFile.getAbsolutePath();
 
 
-    	    	if (!absolutePath.endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX)) {
-    	    		tagCnt++;
-    	    		continue;
-    	    	}
-    			v = mInflater.inflate(R.layout.saved_game_entry, null);
-    			    			
-    			LinearLayout l = (LinearLayout)v.findViewById(R.id.saved_game_entry_layout_start_game);
-    			l.setOnClickListener(mFileClickListener);
-    			l.setTag(SAVED_GAME_TAG + tagCnt);
+                if (!absolutePath.endsWith(DokoXMLClass.SAVED_GAME_FILE_SUFFIX)) {
+                    tagCnt++;
+                    continue;
+                }
+                v = mInflater.inflate(R.layout.saved_game_entry, null);
+
+                LinearLayout l = (LinearLayout)v.findViewById(R.id.saved_game_entry_layout_start_game);
+                l.setOnClickListener(mFileClickListener);
+                l.setTag(SAVED_GAME_TAG + tagCnt);
 
                 String filename = savedGameFile != null ? savedGameFile.getName() : absolutePath;
 
-    			String[] arr = filename.split("_");
-    			 
-    			mTv = (TextView)v.findViewById(R.id.saved_game_entry_filename);
-    			if (arr.length > 5) {
-    				mTv.setText(arr[0] + "." + arr[1] + "." + arr[2] + " - " + arr[3] + ":" + arr[4] + ":" + arr[5]);
-    			} else {
-    				mTv.setText(filename);
-    			}
+                String[] arr = filename.split("_");
+
+                mTv = (TextView)v.findViewById(R.id.saved_game_entry_filename);
+                if (arr.length > 5) {
+                    mTv.setText(arr[0] + "." + arr[1] + "." + arr[2] + " - " + arr[3] + ":" + arr[4] + ":" + arr[5]);
+                } else {
+                    mTv.setText(filename);
+                }
 
                 mTv = (TextView)v.findViewById(R.id.saved_game_entry_path_filepath);
                 mTv.setText(absolutePath);
-    			
-            	GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,absolutePath, false);
-            	if (mGame != null) {
-            		// if success delete old file
+
+                GameClass mGame =  DokoXMLClass.restoreGameStateFromXML(this,absolutePath, false);
+                if (mGame != null) {
+                    // if success delete old file
 
                     String createDate =  mGame.getCreateDate("dd.MM.yyyy - HH:mm");
                     Log.d(TAG,"cd:"+createDate);
@@ -242,16 +241,16 @@ public class SavedGameListActivity extends DokoActivity {
                     }
 
 
-            		String gameStats = "";
-            		for(PlayerClass p : mGame.getPlayers()) {
-            			if (p.getName().length() > 0) {
-            				gameStats += p.getName()+" ("+p.getPoints()+"), ";
-            			}
-            		}
+                    String gameStats = "";
+                    for(PlayerClass p : mGame.getPlayers()) {
+                        if (p.getName().length() > 0) {
+                            gameStats += p.getName()+" ("+p.getPoints()+"), ";
+                        }
+                    }
 
                     mTv = (TextView)v.findViewById(R.id.saved_game_entry_text);
-        			mTv.setText(gameStats);
-            	}
+                    mTv.setText(gameStats);
+                }
 
                 l = (LinearLayout)v.findViewById(R.id.saved_game_entry_icons);
                 if (l != null) {
@@ -269,33 +268,33 @@ public class SavedGameListActivity extends DokoActivity {
                     mIv.setColorFilter(mContext.getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
                 }
 
-            	
-            	Log.d(TAG,"set tagcnt:"+tagCnt);
-    			mEntriesLayout.addView(v);  
-    			tagCnt++;
-    	    }
-    	}    	
-	} 
-    
+
+                Log.d(TAG,"set tagcnt:"+tagCnt);
+                mEntriesLayout.addView(v);
+                tagCnt++;
+            }
+        }
+    }
+
     private class FileDeleteClickListener implements OnClickListener {
 
-        ArrayList<File> fList;
+        final ArrayList<File> fList;
         private FileDeleteClickListener(ArrayList<File> list) {
             this.fList = list;
         }
 
-		@Override
-		public void onClick(View v) {
-			int tagCnt = (Integer)v.getTag();
-			tagCnt -= SAVED_GAME_TAG_DELETE;
-			if (fList.size() > tagCnt) {
-				showDeleteSavedGamesDialog(fList.get(tagCnt).getAbsolutePath());
-			}
-		}
-	}
+        @Override
+        public void onClick(View v) {
+            int tagCnt = (Integer)v.getTag();
+            tagCnt -= SAVED_GAME_TAG_DELETE;
+            if (fList.size() > tagCnt) {
+                showDeleteSavedGamesDialog(fList.get(tagCnt).getAbsolutePath());
+            }
+        }
+    }
 
     private class GameUploadClickListener implements OnClickListener {
-        String savedGameFile;
+        final String savedGameFile;
 
         private GameUploadClickListener(String fileName) {
             savedGameFile = fileName;
@@ -351,44 +350,44 @@ public class SavedGameListActivity extends DokoActivity {
             };
 
             dialog.show();
-            Uploader.upload(v.getContext(), getGame(v), listener, errorListener);
+            Uploader.uploadGame(LoginActivity.UPLOAD_URL + LoginActivity.REQUEST_PATH_UPLOAD_GAME, v.getContext(), getGame(v), listener, errorListener);
         }
 
         private GameClass getGame(View v) {
             return DokoXMLClass.restoreGameStateFromXML(v.getContext(), this.savedGameFile, true);
         }
     }
-            	
+
     private class FileClickListener implements OnClickListener{
 
-        ArrayList<File> fList;
+        final ArrayList<File> fList;
         private FileClickListener(ArrayList<File> list) {
             this.fList = list;
         }
 
-		@Override
-		public void onClick(View v) {
-			int tagCnt = (Integer)v.getTag();
-			tagCnt -= SAVED_GAME_TAG;
-			Log.d(TAG,"get tag cnt:"+tagCnt);
-			if (fList.size() > tagCnt) {
+        @Override
+        public void onClick(View v) {
+            int tagCnt = (Integer)v.getTag();
+            tagCnt -= SAVED_GAME_TAG;
+            Log.d(TAG,"get tag cnt:"+tagCnt);
+            if (fList.size() > tagCnt) {
 
-				String filename = fList.get(tagCnt).getAbsolutePath();
-				if (filename.length() == 0) {
+                String filename = fList.get(tagCnt).getAbsolutePath();
+                if (filename.length() == 0) {
                     return;
                 }
 
-	    		Intent i = new Intent(mContext, GameActivity.class);
-	    		i.putExtra("RestoreGameFromXML", true);
-	    		i.putExtra("filename", filename);
-	    		startActivity(i);
-	    		finish();
-			}		
-		}
+                Intent i = new Intent(mContext, GameActivity.class);
+                i.putExtra("RestoreGameFromXML", true);
+                i.putExtra("filename", filename);
+                startActivity(i);
+                finish();
+            }
+        }
     }
 
     private class FileMailClickListener implements OnClickListener {
-        String savedGameFile;
+        final String savedGameFile;
         private FileMailClickListener(String file) {
             this.savedGameFile = file;
         }
@@ -400,8 +399,8 @@ public class SavedGameListActivity extends DokoActivity {
         }
     }
 
-    
-	private void showDeleteAllSavedGamesDialog(){
+
+    private void showDeleteAllSavedGamesDialog(){
         DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 for(File f : fileList) {
@@ -422,10 +421,10 @@ public class SavedGameListActivity extends DokoActivity {
         showAlertDialog(R.string.str_delete_files, R.string.str_saved_game_delete_all_q,
                 R.string.str_yes, okListener,
                 R.string.str_no, abortListener);
-	}
-	
-	private void showDeleteSavedGamesDialog(String file){
-		final String filepath = file;
+    }
+
+    private void showDeleteSavedGamesDialog(String file){
+        final String filepath = file;
 
 
         DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
@@ -447,24 +446,24 @@ public class SavedGameListActivity extends DokoActivity {
         showAlertDialog(R.string.str_delete_file, R.string.str_saved_game_delete_q,
                 R.string.str_yes, okListener,
                 R.string.str_no, abortListener);
-	}
-	
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case android.R.id.home:
-            finish();
-            return true;
-            
-    	case R.id.action_delete_all_saved_games_menu:
-    		showDeleteAllSavedGamesDialog();
-    		return true;
-    		
-        default:
-            return super.onOptionsItemSelected(item);
+            case android.R.id.home:
+                finish();
+                return true;
+
+            case R.id.action_delete_all_saved_games_menu:
+                showDeleteAllSavedGamesDialog();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -484,6 +483,6 @@ public class SavedGameListActivity extends DokoActivity {
                 break;
         }
     }
-    
-    
+
+
 }

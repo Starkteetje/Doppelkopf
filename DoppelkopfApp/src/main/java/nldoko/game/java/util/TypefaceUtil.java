@@ -16,25 +16,25 @@ import java.util.Map;
  */
 public class TypefaceUtil {
 
-    public static final int REGULAR = 1;
-    public static final int BOLD = 2;
-    public static final int ITALIC = 3;
-    public static final int BOLD_ITALIC = 4;
-    public static final int LIGHT = 5;
-    public static final int CONDENSED = 6;
-    public static final int THIN = 7;
-    public static final int MEDIUM = 8;
+    private static final int REGULAR = 1;
+    private static final int BOLD = 2;
+    private static final int ITALIC = 3;
+    private static final int BOLD_ITALIC = 4;
+    private static final int LIGHT = 5;
+    private static final int CONDENSED = 6;
+    private static final int THIN = 7;
+    private static final int MEDIUM = 8;
 
-    public static final String SANS_SERIF = "sans-serif";
-    public static final String SANS_SERIF_LIGHT = "sans-serif-light";
-    public static final String SANS_SERIF_CONDENSED = "sans-serif-condensed";
-    public static final String SANS_SERIF_THIN = "sans-serif-thin";
-    public static final String SANS_SERIF_MEDIUM = "sans-serif-medium";
+    private static final String SANS_SERIF = "sans-serif";
+    private static final String SANS_SERIF_LIGHT = "sans-serif-light";
+    private static final String SANS_SERIF_CONDENSED = "sans-serif-condensed";
+    private static final String SANS_SERIF_THIN = "sans-serif-thin";
+    private static final String SANS_SERIF_MEDIUM = "sans-serif-medium";
 
-    public static final String FIELD_DEFAULT = "DEFAULT";
-    public static final String FIELD_SANS_SERIF = "SANS_SERIF";
-    public static final String FIELD_SERIF = "SERIF";
-    public static final String FIELD_DEFAULT_BOLD = "DEFAULT_BOLD";
+    private static final String FIELD_DEFAULT = "DEFAULT";
+    private static final String FIELD_SANS_SERIF = "SANS_SERIF";
+    private static final String FIELD_SERIF = "SERIF";
+    private static final String FIELD_DEFAULT_BOLD = "DEFAULT_BOLD";
 
     public static void overrideFonts(Context context){
         Typeface regular = getTypeface(REGULAR, context);
@@ -84,7 +84,7 @@ public class TypefaceUtil {
         }
     }
 
-    public static void overrideFont(String fontName, Typeface typeface) {
+    private static void overrideFont(String fontName, Typeface typeface) {
         try {
             final Field field = Typeface.class.getDeclaredField(fontName);
             field.setAccessible(true);
@@ -95,7 +95,7 @@ public class TypefaceUtil {
         }
     }
 
-    public static Typeface getTypeface(int fontType, Context context) {
+    private static Typeface getTypeface(int fontType, Context context) {
         Locale locale = context.getResources().getConfiguration().locale;
         String language = locale.getLanguage();
         boolean isBurmese = language != null && language.equals("my");

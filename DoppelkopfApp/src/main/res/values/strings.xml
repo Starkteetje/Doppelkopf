@@ -5,6 +5,8 @@
     <string name="app_version">Version 3.1</string>
     <string name="start_action_about">About this App</string>
     <string name="str_saved_game">Saved games</string>
+    <string name="str_login">Login</string>
+    <string name="str_login_action">Login</string>
     <string name="str_saved_game_delete_all">Delete all saved game</string>
     <string name="str_saved_game_delete_all_q">Are you sure you want to delete ALL saved games?</string>
     <string name="str_saved_game_delete_q">Are you sure you want to delete the saved game?</string>
@@ -20,6 +22,8 @@
     <string name="str_player_add">Add player</string>
     <string name="str_round_number">Game</string>
     <string name="str_player_required">Please setup minimum four players</string>
+    <string name="str_username">Username</string>
+    <string name="str_password">Password</string>
 
     <string name="str_game_settings">Game settings</string>
     <string name="str_change_game_settings_save">Save game settings</string>
@@ -97,12 +101,17 @@
     <string name="str_apply">Apply</string>
     <string name="str_hint">Info</string>
     <string name="str_no_bock">none</string>
-    <string name="str_upload_in_progress">Upload in progress...</string>
+    <string name="str_upload_in_progress">Upload in progress&#8230;</string>
     <string name="str_upload_successful">Upload successful</string>
     <string name="str_upload_error">Upload failed</string>
     <string name="str_upload_error_code">. Status code:</string>
     <string name="str_upload_error_not_authenticated">. Login token is not valid.</string>
     <string name="str_upload_error_already_uploaded">. The game in question was already uploaded.</string>
+    <string name="str_login_successful">Login successful</string>
+    <string name="str_login_error">Login failed</string>
+    <string name="str_login_wrong_credentials">. Combination of username and password is wrong.</string>
+    <string name="str_login_error_code">. Status code:</string>
+    <string name="str_login_in_progress">Login in progress&#8230;</string>
 
     <string name="str_dev_mode_title">Dev-Mode</string>
     <string name="str_dev_mode_text">Enter the password to activate the Dev-Mode.</string>

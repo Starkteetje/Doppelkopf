@@ -20,6 +20,7 @@
             android:textColor="@color/primary"
             android:background="@drawable/points_grid_text_view_draw"
             android:clickable="true"
+            android:focusable="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="1" />
         <View
@@ -35,6 +36,7 @@
             android:textColor="@color/primary"
             android:background="@drawable/points_grid_text_view_draw"
             android:clickable="true"
+            android:focusable="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="2" />
 
@@ -53,6 +55,7 @@
             android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
+            android:focusable="true"
             android:text="3" />
 
     </LinearLayout>
@@ -77,6 +80,7 @@
             android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
+            android:focusable="true"
             android:text="4" />
         <View
             android:layout_width="0dip"
@@ -92,6 +96,7 @@
             android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
+            android:focusable="true"
             android:text="5" />
 
         <View
@@ -109,6 +114,7 @@
             android:textColor="@color/primary"
             android:background="@drawable/points_grid_text_view_draw"
             android:clickable="true"
+            android:focusable="true"
             android:text="6" />
 
     </LinearLayout>
@@ -133,6 +139,7 @@
             android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
+            android:focusable="true"
             android:text="7" />
         <View
             android:layout_width="0dip"
@@ -148,6 +155,7 @@
             android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
+            android:focusable="true"
             android:text="8" />
 
         <View
@@ -165,6 +173,7 @@
             android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
+            android:focusable="true"
             android:text="9" />
 
     </LinearLayout>
@@ -202,6 +211,7 @@
             android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
+            android:focusable="true"
             android:text="0" />
 
         <View
@@ -219,6 +229,7 @@
             android:background="@drawable/points_grid_text_view_draw"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
+            android:focusable="true"
             android:text="×" />
 
     </LinearLayout>

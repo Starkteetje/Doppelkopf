@@ -2,43 +2,45 @@ package nldoko.game.java.XML;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Xml;
-import android.view.Gravity;
-import android.widget.TextView;
-
-import nldoko.game.java.DokoActivity;
-import nldoko.game.java.data.DokoData;
-import nldoko.game.R;
-import nldoko.game.java.data.GameClass;
-import nldoko.game.java.data.PlayerClass;
-import nldoko.game.java.data.RoundClass;
-import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
-import nldoko.game.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
-import nldoko.game.java.util.Functions;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import nldoko.game.R;
+import nldoko.game.java.DokoActivity;
+import nldoko.game.java.data.DokoData;
+import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
+import nldoko.game.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
+import nldoko.game.java.data.GameClass;
+import nldoko.game.java.data.PlayerClass;
+import nldoko.game.java.data.RoundClass;
+import nldoko.game.java.util.Functions;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.os.Environment.getExternalStorageDirectory;
@@ -46,11 +48,11 @@ import static android.os.Environment.getExternalStorageDirectory;
 
 public class DokoXMLClass {
 
-    public static final String APP_DIR = "DokoApp";
+    private static final String APP_DIR = "DokoApp";
     public static final String APP_DIR_GAMES = "DokoApp/games";
     public static final String SAVED_GAME_FILE_SUFFIX =  "_dokoSavedGame.xml";
 
-	private static final String TAG = "DokoXMLClass";
+    private static final String TAG = "DokoXMLClass";
 
     private static final String GAME_XML_STRUCT_VERSION = "2";
     private static final String GAME_XML_STRUCT_VERSION_ATTR = "version";
@@ -95,11 +97,7 @@ public class DokoXMLClass {
 
     public static boolean checkPermissionWriteExternalStorage(Context context) {
         int result = ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     public static boolean isFirstrun(Activity activity) {
@@ -114,7 +112,7 @@ public class DokoXMLClass {
         return firstrun;
     }
 
-    public static boolean firstTimePermissionDialog(Activity activity) {
+    private static boolean firstTimePermissionDialog(Activity activity) {
         boolean permissionDialog = activity.getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("permissionDialog", true);
         if (permissionDialog) {
             activity.getSharedPreferences("PREFERENCE", MODE_PRIVATE)
@@ -129,10 +127,10 @@ public class DokoXMLClass {
     public static void requestPermission(Activity activity) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-           if (DokoXMLClass.firstTimePermissionDialog(activity) == false ) {
-              // show dialog only once
-              return;
-           }
+            if (!DokoXMLClass.firstTimePermissionDialog(activity)) {
+                // show dialog only once
+                return;
+            }
 
 
 
@@ -145,8 +143,8 @@ public class DokoXMLClass {
         }
     }
 
-	public static boolean saveGameStateToXML(Context c, GameClass game) {
-		if(game == null) {
+    public static boolean saveGameStateToXML(Context c, GameClass game) {
+        if(game == null) {
             // no game ?!
             return false;
         }
@@ -213,14 +211,14 @@ public class DokoXMLClass {
 
         // XML file content
         if (fos != null && osw != null){
-			XmlSerializer serializer = Xml.newSerializer();
-		    StringWriter writer = new StringWriter();
+            XmlSerializer serializer = Xml.newSerializer();
+            StringWriter writer = new StringWriter();
 
-    	    try {
-    	        serializer.setOutput(writer);
-    	        serializer.startDocument("UTF-8", false);
-    	        serializer.text("\n");
-    	        serializer.startTag("", GAME);
+            try {
+                serializer.setOutput(writer);
+                serializer.startDocument("UTF-8", false);
+                serializer.text("\n");
+                serializer.startTag("", GAME);
                 serializer.attribute("", GAME_XML_STRUCT_VERSION_ATTR, GAME_XML_STRUCT_VERSION);
 
                 // only @ version > 2.5
@@ -263,29 +261,29 @@ public class DokoXMLClass {
                 serializer.text("\n\t");
                 serializer.endTag("", GAME_ROUNDS);
 
-                // add player infos
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", GAME_PLAYERS);
-    	        for(int i=0;i<game.getMAXPlayerCount();i++){
-    	        	PlayerClass p = game.getPlayer(i);
+                // add player info
+                serializer.text("\n\t");
+                serializer.startTag("", GAME_PLAYERS);
+                for(int i=0;i<game.getMAXPlayerCount();i++){
+                    PlayerClass p = game.getPlayer(i);
 
-        	        serializer.text("\n\t\t");
-        	        serializer.startTag("", GAME_PLAYER);
+                    serializer.text("\n\t\t");
+                    serializer.startTag("", GAME_PLAYER);
 
                     serializer.text("\n\t\t\t");
                     serializer.startTag("", GAME_PLAYER_ID);
                     serializer.text(Integer.toString(p.getID()));
                     serializer.endTag("", GAME_PLAYER_ID);
 
-        	        serializer.text("\n\t\t\t");
-    	            serializer.startTag("", GAME_PLAYER_NAME);
-    	            serializer.text(p.getName());
-    	            serializer.endTag("", GAME_PLAYER_NAME);
-    	            
-    	            serializer.text("\n\t\t\t");
-    	            serializer.startTag("", GAME_PLAYER_POINTS);
-    	            serializer.text(Float.toString(p.getPoints()));
-    	            serializer.endTag("", GAME_PLAYER_POINTS);
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_PLAYER_NAME);
+                    serializer.text(p.getName());
+                    serializer.endTag("", GAME_PLAYER_NAME);
+
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_PLAYER_POINTS);
+                    serializer.text(Float.toString(p.getPoints()));
+                    serializer.endTag("", GAME_PLAYER_POINTS);
 
                     // point history
                     serializer.text("\n\t\t\t");
@@ -310,60 +308,59 @@ public class DokoXMLClass {
                     }
                     serializer.text("\n\t\t\t");
                     serializer.endTag("", GAME_PLAYER_POINT_HISTORY);
-    	            
-    	            serializer.text("\n\t\t");
-    	            serializer.endTag("", GAME_PLAYER);
-    	        }
-    	        serializer.text("\n\t");
-	            serializer.endTag("", GAME_PLAYERS);
-    	        
-	            
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", GAME_PRE_ROUNDS);
-	            for (int t=0;t<game.getPreRoundList().size();t++){
-	            	serializer.text("\n\t\t");
-		            serializer.startTag("", GAME_PRE_ROUND);
-		            
-		            serializer.text("\n\t\t\t");
-		            serializer.startTag("", GAME_PRE_ROUND_BOCK_COUNT);
-		            serializer.text(Integer.toString(game.getPreRoundList().get(t).getBockCount()));
-		            serializer.endTag("", GAME_PRE_ROUND_BOCK_COUNT);
-		            
-		            serializer.text("\n\t\t");
-		            serializer.endTag("", GAME_PRE_ROUND);
-		        }
-    	        serializer.text("\n\t");
-	            serializer.endTag("", GAME_PRE_ROUNDS);
-	            
-    	        serializer.text("\n");
-    	        serializer.endTag("", GAME);
-    	        serializer.endDocument();
+
+                    serializer.text("\n\t\t");
+                    serializer.endTag("", GAME_PLAYER);
+                }
+                serializer.text("\n\t");
+                serializer.endTag("", GAME_PLAYERS);
+
+
+                serializer.text("\n\t");
+                serializer.startTag("", GAME_PRE_ROUNDS);
+                for (int t=0;t<game.getPreRoundList().size();t++){
+                    serializer.text("\n\t\t");
+                    serializer.startTag("", GAME_PRE_ROUND);
+
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_PRE_ROUND_BOCK_COUNT);
+                    serializer.text(Integer.toString(game.getPreRoundList().get(t).getBockCount()));
+                    serializer.endTag("", GAME_PRE_ROUND_BOCK_COUNT);
+
+                    serializer.text("\n\t\t");
+                    serializer.endTag("", GAME_PRE_ROUND);
+                }
+                serializer.text("\n\t");
+                serializer.endTag("", GAME_PRE_ROUNDS);
+
+                serializer.text("\n");
+                serializer.endTag("", GAME);
+                serializer.endDocument();
                 serializer.flush();
-    	        
-    	        //Write to file
-    	        try{
-    	        	Log.v(TAG,writer.toString());
-				    osw.write(writer.toString());
-				    osw.flush();
-	    		    fos.flush();
-	    		    osw.close();
-	    		    fos.close();
-	    		    if (oldGameFile != null) {
+
+                //Write to file
+                try{
+                    osw.write(writer.toString());
+                    osw.flush();
+                    fos.flush();
+                    osw.close();
+                    fos.close();
+                    if (oldGameFile != null) {
                         File f = new File(oldGameFile);
-	    		    	if (f.exists() && !f.isDirectory()) {
+                        if (f.exists() && !f.isDirectory()) {
                             f.delete();
                         }
-	    		    }
-	    		    return true;
-    	         }	
-    	         catch(Exception e){
-    	        	 Log.d(TAG,e.toString());
-    	         }
-    	    } catch (Exception e) {
-    	    	Log.d(TAG,e.toString());
-    	    } 
-    	}
-    	return false;
+                    }
+                    return true;
+                }
+                catch(Exception e){
+                    Log.d(TAG,e.toString());
+                }
+            } catch (Exception e) {
+                Log.d(TAG,e.toString());
+            }
+        }
+        return false;
     }
 
     private static void addGameSettingsToXML(XmlSerializer serializer, GameClass game) {
@@ -410,7 +407,6 @@ public class DokoXMLClass {
 
             serializer.text("\n\t\t");
             serializer.startTag("", GAME_SETTINGS_MARK_SUSPENDED_PLAYERS);
-            Log.d(TAG,"boolstr:"+Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString()+" bool:"+game.isMarkSuspendedPlayersEnable());
             serializer.text(Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString());
             serializer.endTag("", GAME_SETTINGS_MARK_SUSPENDED_PLAYERS);
 
@@ -421,33 +417,28 @@ public class DokoXMLClass {
             Log.d(TAG,e.toString());
         }
     }
-	
-	public static GameClass restoreGameStateFromXML(Context c,String filePath, boolean loadFull) {
-		GameClass mGame = new GameClass(filePath);
+
+    public static GameClass restoreGameStateFromXML(Context c,String filePath, boolean loadFull) {
+        GameClass mGame = new GameClass(filePath);
         if (mGame == null) {
             return null;
         }
 
-		try{
-			FileInputStream in = new FileInputStream(filePath);
-
-            //for debug
-            FileInputStream in2 = new FileInputStream(filePath);
-            String fileContent = convertStreamToString(in2);
-            //Log.d(TAG,"File:"+filePath+" content:"+fileContent);
+        try{
+            FileInputStream in = new FileInputStream(filePath);
 
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(in);
-			doc.getDocumentElement().normalize();
-			
-			NodeList nodeList = doc.getElementsByTagName(GAME);
+            doc.getDocumentElement().normalize();
+
+            NodeList nodeList = doc.getElementsByTagName(GAME);
             Node mNode = nodeList.item(0);
-			
-			if(mNode == null){
-				Log.d(TAG,"XML Parse Error 1");
-				return null;
-			}
+
+            if(mNode == null){
+                Log.d(TAG,"XML Parse Error 1");
+                return null;
+            }
 
             //Log.v(TAG, nodeAsText(mNode));
 
@@ -466,11 +457,11 @@ public class DokoXMLClass {
                 DokoXMLClass.setGameSettingsFromNode(mNode, mGame);
             }
 
-            ArrayList<RoundClass> mGameRoundsFromRestore = new ArrayList<RoundClass>();
-            ArrayList<RoundClass> mGamePreRoundsFromRestore = new ArrayList<RoundClass>();
+            ArrayList<RoundClass> mGameRoundsFromRestore = new ArrayList<>();
+            ArrayList<RoundClass> mGamePreRoundsFromRestore = new ArrayList<>();
 
             NodeList mMainNodes = mNode.getChildNodes();
-			for (int i = 0; i < mMainNodes.getLength(); i++) {
+            for (int i = 0; i < mMainNodes.getLength(); i++) {
                 Node n =  mMainNodes.item(i);
 
                 if(n.getNodeType() != Node.ELEMENT_NODE) continue;
@@ -480,11 +471,11 @@ public class DokoXMLClass {
                     DokoXMLClass.setGameSettingsFromNode(n, mGame);
                 }
                 else if(n.getNodeName().equalsIgnoreCase(GAME_PLAYERS)){
-					DokoXMLClass.setGamePlayersFromNode(n, mGame, loadFull);
-				}
+                    DokoXMLClass.setGamePlayersFromNode(n, mGame, loadFull);
+                }
                 else if(n.getNodeName().equalsIgnoreCase(GAME_PRE_ROUNDS) && loadFull){
                     mGamePreRoundsFromRestore = DokoXMLClass.setGamePreRoundsFromNode(n);
-				}
+                }
                 else if(n.getNodeName().equalsIgnoreCase(GAME_ROUNDS) && loadFull){
                     mGameRoundsFromRestore = DokoXMLClass.getGameRoundsFromNode(n);
                 }
@@ -521,28 +512,28 @@ public class DokoXMLClass {
 
             mGame.setPreRoundList(mGamePreRoundsFromRestore);
 
-		}
-		catch(Exception e){
-			Log.d(TAG,e.toString());
-			return null;
-		}
+        }
+        catch(Exception e){
+            Log.d(TAG,e.toString());
+            return null;
+        }
 
         if (mGame.getActivePlayerCount() == 0 || mGame.getPlayerCount() == 0) {
             // invalid game
             return null;
         }
 
-		return mGame;
-	}
+        return mGame;
+    }
 
     private static  void setGameSettingsFromNode(Node n, GameClass mGame) {
         if (n == null || mGame == null ) {
             return;
         }
 
-        int mPlayerCnt = 0, mActivePlayers = 0, mBockRoundLimit = 0;
-        String mCreateDate = "";
-        GAME_CNT_VARIANT mGameCntVariant = GAME_CNT_VARIANT.CNT_VARIANT_NORMAL;
+        int mPlayerCnt, mActivePlayers = 0, mBockRoundLimit = 0;
+        String mCreateDate;
+        GAME_CNT_VARIANT mGameCntVariant;
 
         NodeList mSettingsNodes = n.getChildNodes();
 
@@ -591,15 +582,15 @@ public class DokoXMLClass {
         }
 
         int mPID = 0;
-        Float mPoints = 0.0f;
-        String mName = "";
-        ArrayList<PlayerClass> mPlayers = new ArrayList<PlayerClass>();
+        Float mPoints;
+        String mName;
+        ArrayList<PlayerClass> mPlayers = new ArrayList<>();
         NodeList mPlayerNodes = n.getChildNodes();
 
         ArrayList<Float> mPlayerPointsHistoryPoints;
         ArrayList<Float> mPlayerPointsHistoryPointsATRound;
 
-        ArrayList<Float> mBackupPlayerPoints = new ArrayList<Float>();
+        ArrayList<Float> mBackupPlayerPoints = new ArrayList<>();
 
         for(int t=0; t<mPlayerNodes.getLength();t++) {
             Node mPlayer = mPlayerNodes.item(t);
@@ -610,8 +601,8 @@ public class DokoXMLClass {
 
                 mName = "";
                 mPoints = 0.0f;
-                mPlayerPointsHistoryPoints = new ArrayList<Float>();
-                mPlayerPointsHistoryPointsATRound = new ArrayList<Float>();
+                mPlayerPointsHistoryPoints = new ArrayList<>();
+                mPlayerPointsHistoryPointsATRound = new ArrayList<>();
 
                 for(int k=0;k<mPlayerValues.getLength();k++){
 
@@ -642,7 +633,6 @@ public class DokoXMLClass {
 
                             for(int z=0; z<mPlayerValuePointsRound.getLength();z++) {
                                 Node mPlayerPointsHistoryRound = mPlayerValuePointsRound.item(z);
-                                String nodestring = mPlayerPointsHistoryRound.getTextContent()+" "+ mPlayerPointsHistoryRound.getNodeName();
                                 if (mPlayerPointsHistoryRound.getNodeType() != Node.ELEMENT_NODE) continue;
 
                                 if(mPlayerPointsHistoryRound.getNodeName().equalsIgnoreCase(GAME_PLAYER_POINT_HISTORY_POINTS)) {
@@ -689,7 +679,7 @@ public class DokoXMLClass {
         }
 
 
-        // check if all palyers have same history length otherwise kill
+        // check if all players have same history length otherwise kill
         boolean mCheckHistory = true;
         if (mPlayers != null && mPlayers.size() > 0) {
             int mPointsHistoryPointLength = mPlayers.get(0).getPointHistoryLength();
@@ -697,7 +687,7 @@ public class DokoXMLClass {
 
             for (PlayerClass p : mPlayers) {
                 if (p.getPointHistoryLength() != mPointsHistoryPointLength
-                    || p.getPointHistoryAtRoundLength() != mPointsHistoryPointsATRoundLength) {
+                        || p.getPointHistoryAtRoundLength() != mPointsHistoryPointsATRoundLength) {
 
                     mCheckHistory = false;
                     break;
@@ -708,7 +698,7 @@ public class DokoXMLClass {
         if (!mCheckHistory) {
             for (int i = 0; i < mPlayers.size(); i++) {
                 PlayerClass p = mPlayers.get(i);
-                float startPoints = mBackupPlayerPoints.get(i).floatValue();
+                float startPoints = mBackupPlayerPoints.get(i);
                 p.resetPointHistoryAndForceStartAndCurrentPointsTo(startPoints);
             }
         }
@@ -725,8 +715,8 @@ public class DokoXMLClass {
 
             if (mHistoryCnt > 0) {
                 // fill points history only 0.0f
-                mPlayerPointsHistoryPoints = new ArrayList<Float>();
-                mPlayerPointsHistoryPointsATRound = new ArrayList<Float>();
+                mPlayerPointsHistoryPoints = new ArrayList<>();
+                mPlayerPointsHistoryPointsATRound = new ArrayList<>();
                 for (int a = 0; a < mHistoryCnt; a++) {
                     mPlayerPointsHistoryPoints.add(0.0f);
                     mPlayerPointsHistoryPointsATRound.add(0.0f);
@@ -757,7 +747,7 @@ public class DokoXMLClass {
         int mPreID = 0;
         int mBockCount = -1;
 
-        ArrayList<RoundClass> mPreRounds = new ArrayList<RoundClass>();
+        ArrayList<RoundClass> mPreRounds = new ArrayList<>();
         NodeList mPreRoundList = n.getChildNodes();
 
         for(int t=0; t<mPreRoundList.getLength();t++) {
@@ -796,7 +786,7 @@ public class DokoXMLClass {
 
         int valueCnt = 0;
 
-        ArrayList<RoundClass> mRounds = new ArrayList<RoundClass>();
+        ArrayList<RoundClass> mRounds = new ArrayList<>();
         NodeList mRoundList = n.getChildNodes();
 
         for(int t=0; t<mRoundList.getLength();t++) {
@@ -850,55 +840,51 @@ public class DokoXMLClass {
             }
         }
 
-       return mRounds;
+        return mRounds;
     }
 
-    private static String nodeAsText(Node n) {
-        return n.getNodeType()+" -"+n.getNodeName()+" - "+n.getNodeValue()+" - "+n.getTextContent();
+    public static String getAppDir(Context c){
+        return c.getApplicationInfo().dataDir+File.separatorChar;
     }
 
-	public static String getAppDir(Context c){
-		return c.getApplicationInfo().dataDir+File.separatorChar;
-	}
-	
-	public static boolean isAppDirOK(Context c){
-		File file = new File(getAppDir(c));
-		if(!file.isDirectory() || (!file.canWrite() || !file.canRead()) ){
-			return false;
-		}
-		return true;
-	}
-	
-	public static boolean isXMLPresent(Context c,String f,boolean copyXML){
-		try {
-			c.openFileInput(f);
-			return true;
-		} catch (FileNotFoundException e) {
-			Log.d(TAG,e.toString());
-			if(copyXML) return copyXML(c,f);
-		}
-		return false;
-	}
-	
-	public static boolean copyXML(Context c, String f){
-		InputStream ins = c.getResources().openRawResource(R.raw.player_names);
-		
-		byte[] buffer;
-		try {
-			buffer = new byte[ins.available()];
-			ins.read(buffer);
-			ins.close();
-			
-			FileOutputStream fos = c.openFileOutput(f, MODE_PRIVATE);
-			fos.write(buffer);
-			fos.close();
-			return true;
-		} catch (IOException e) {
-			Log.d(TAG,e.toString());
-			return false;
-		}
+    public static boolean isAppDirOK(Context c){
+        File file = new File(getAppDir(c));
+        if(!file.isDirectory() || (!file.canWrite() || !file.canRead()) ){
+            return false;
+        }
+        return true;
+    }
 
-	}
+    public static boolean isXMLPresent(Context c,String f,boolean copyXML){
+        try {
+            c.openFileInput(f);
+            return true;
+        } catch (FileNotFoundException e) {
+            Log.d(TAG,e.toString());
+            if(copyXML) return copyXML(c,f);
+        }
+        return false;
+    }
+
+    private static boolean copyXML(Context c, String f){
+        InputStream ins = c.getResources().openRawResource(R.raw.player_names);
+
+        byte[] buffer;
+        try {
+            buffer = new byte[ins.available()];
+            ins.read(buffer);
+            ins.close();
+
+            FileOutputStream fos = c.openFileOutput(f, MODE_PRIVATE);
+            fos.write(buffer);
+            fos.close();
+            return true;
+        } catch (IOException e) {
+            Log.d(TAG,e.toString());
+            return false;
+        }
+
+    }
 
     private static boolean createAppDirsInStorage(File dir) {
         if (dir != null && dir.exists() && dir.isDirectory() && dir.canRead() && dir.canWrite()) {
@@ -927,31 +913,27 @@ public class DokoXMLClass {
         return false;
     }
 
-	public static boolean isExternalStorageReady() {
+    public static boolean isExternalStorageReady() {
 
         boolean mExternalStorageAvailable;
-        boolean mExternalStorageWriteable;
+        boolean mExternalStorageWritable;
         String state = Environment.getExternalStorageState();
 
 
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             // We can read and write the media
-            mExternalStorageAvailable = mExternalStorageWriteable = true;
+            mExternalStorageAvailable = mExternalStorageWritable = true;
         } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
             // We can only read the media
             mExternalStorageAvailable = true;
-            mExternalStorageWriteable = false;
+            mExternalStorageWritable = false;
         } else {
             // Something else is wrong. It may be one of many other states, but
             // all we need
             // to know is we can neither read nor write
-            mExternalStorageAvailable = mExternalStorageWriteable = false;
+            mExternalStorageAvailable = mExternalStorageWritable = false;
         }
-        if (!((mExternalStorageAvailable) && (mExternalStorageWriteable))) {
-            //Toast.makeText(this, "SD card not present", Toast.LENGTH_LONG).show();
-
-        }
-        return (mExternalStorageAvailable) && (mExternalStorageWriteable);
+        return (mExternalStorageAvailable) && (mExternalStorageWritable);
     }
 
     public static String [] getPossibleExternalStorageDirs() {
@@ -963,81 +945,50 @@ public class DokoXMLClass {
         return sdcardPath;
     }
 
-    private static File getExternalStorageDir(boolean mustBeWritable) {
-        for (String s : getPossibleExternalStorageDirs()) {
-            File sdcard = new File(s);
+    public static boolean getPlayerNamesFromXML(Context c,String f, ArrayList<String> playerNames){
+        Node node;
+        NodeList names;
 
-            if (sdcard.exists() && sdcard.isDirectory() && sdcard.canRead()) {
-                if (mustBeWritable && sdcard.canWrite()) {
-                    return sdcard;
-                } else {
-                    return sdcard;
-                }
+        //InputStream in = null;
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db;
+        Document doc;
+
+        //http://stackoverflow.com/questions/3448145/xml-file-parsing-in-android
+
+        try {
+            FileInputStream in = c.openFileInput(f);
+
+            db = dbf.newDocumentBuilder();
+            doc = db.parse(in);
+            doc.getDocumentElement().normalize();
+            //get MRF node
+            NodeList nodeList = doc.getElementsByTagName(PLAYER_NAMES_NAMES);
+            node = nodeList.item(0);
+
+            if(node == null){
+                Log.d(TAG,"XML Parse Error 1");
+                return false;
             }
+            names = node.getChildNodes();
+            playerNames.clear();
+            for (int i = 0; i < names.getLength(); i++) {
+                if(names.item(i).getNodeType() != Node.ELEMENT_NODE && !names.item(i).getNodeName().equalsIgnoreCase(PLAYER_NAMES_NAME)){
+                    continue;
+                }
+                if(!names.item(i).getTextContent().isEmpty())
+                    playerNames.add(names.item(i).getTextContent());
+
+            }
+            Collections.sort(playerNames);
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
         }
 
-        if (isExternalStorageReady()) {
-            return getExternalStorageDirectory();
-        }
-
-        return null;
+        return false;
     }
-   
-	public static boolean getPlayerNamesFromXML(Context c,String f, ArrayList<String> playerNames){
-		Log.d(TAG,"loadFromXML");
-	
-		Node node;
-		NodeList names;
 
-		//InputStream in = null;
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db;
-		Document doc;
-	
-		//http://stackoverflow.com/questions/3448145/xml-file-parsing-in-android
-
-		try {
-			//in = new FileInputStream(file);
-			
-			FileInputStream in = c.openFileInput(f);
-			
-			db = dbf.newDocumentBuilder();
-			doc = db.parse(in);
-			doc.getDocumentElement().normalize();
-			//Log.d(TAG, ""+configs.getLength() );
-			//get MRF node
-			NodeList nodeList = doc.getElementsByTagName(PLAYER_NAMES_NAMES);
-			node = nodeList.item(0);
-			
-			if(node == null){
-				Log.d(TAG,"XML Parse Error 1");
-				return false;
-			}
-			names = node.getChildNodes();
-			playerNames.clear();
-			for (int i = 0; i < names.getLength(); i++) {	
-				if(names.item(i).getNodeType() != Node.ELEMENT_NODE && !names.item(i).getNodeName().equalsIgnoreCase(PLAYER_NAMES_NAME)){
-					continue;
-				}
-				if(!names.item(i).getTextContent().isEmpty())
-					playerNames.add(names.item(i).getTextContent());
-
-			}
-			Collections.sort(playerNames);
-		} catch (SAXException e) {
-			Log.d(TAG, e.toString());
-		} catch (IOException e) {
-			Log.d(TAG, e.toString());
-		} catch (ParserConfigurationException e) {
-			Log.d(TAG, e.toString());
-		} catch (Exception e){
-			Log.d(TAG, e.toString());
-		}
-
-		return false;
-	}
-
-	public static boolean clearPlayerNamesXML(Context context) {
+    public static boolean clearPlayerNamesXML(Context context) {
         if(DokoXMLClass.isAppDirOK(context)){
             XmlSerializer serializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
@@ -1069,72 +1020,53 @@ public class DokoXMLClass {
         }
         return false;
     }
-	
-	public static boolean savePlayerNamesToXML(Context c, ArrayList<String> playerNames){
-		if(playerNames != null && DokoXMLClass.isAppDirOK(c)){
-			XmlSerializer serializer = Xml.newSerializer();
-		    StringWriter writer = new StringWriter();
-		    try {
-		        serializer.setOutput(writer);
-		        serializer.startDocument("UTF-8", false);
-		        serializer.text("\n");
-		        serializer.startTag("", PLAYER_NAMES_NAMES);
-		        for (String name: playerNames){
-		        	serializer.text("\n");
-		        	serializer.text("\t");
-		            serializer.startTag("", PLAYER_NAMES_NAME);
-		            serializer.text(name);
-		            serializer.endTag("", PLAYER_NAMES_NAME);
-		        }
-		        serializer.text("\n");
-		        serializer.endTag("", PLAYER_NAMES_NAMES);
-		        serializer.endDocument();
-		        try{
-	
-					/*FileOutputStream fos = c.openFileOutput(f,Context.MODE_PRIVATE);
-					fos.write(buffer);
-					fos.close();*/
-		        	//File f = new File(getAppDir(c)+file);
-		        	//f.delete();
-	
-					FileOutputStream fos = c.openFileOutput(DokoData.PLAYER_NAMES_XML, MODE_PRIVATE);
-					OutputStreamWriter osw = new OutputStreamWriter(fos); 
-					
-				    osw.write(writer.toString());
-				    osw.flush();
-	    		    fos.flush();
-	    		    osw.close();
-	    		    fos.close();
-		            return true;
-		         }	
-		         catch(Exception e){
-		        	 Log.d(TAG,e.toString());
-		         }
-		    } catch (Exception e) {
-		    	Log.d(TAG,e.toString());
-		    } 
-		}
-		return false;
-	}
-	
-    public static String convertStreamToString(InputStream is) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line).append("\n");
+
+    public static boolean savePlayerNamesToXML(Context c, ArrayList<String> playerNames){
+        if(playerNames != null && DokoXMLClass.isAppDirOK(c)){
+            XmlSerializer serializer = Xml.newSerializer();
+            StringWriter writer = new StringWriter();
+            try {
+                serializer.setOutput(writer);
+                serializer.startDocument("UTF-8", false);
+                serializer.text("\n");
+                serializer.startTag("", PLAYER_NAMES_NAMES);
+                for (String name: playerNames){
+                    serializer.text("\n");
+                    serializer.text("\t");
+                    serializer.startTag("", PLAYER_NAMES_NAME);
+                    serializer.text(name);
+                    serializer.endTag("", PLAYER_NAMES_NAME);
+                }
+                serializer.text("\n");
+                serializer.endTag("", PLAYER_NAMES_NAMES);
+                serializer.endDocument();
+                try{
+
+                    FileOutputStream fos = c.openFileOutput(DokoData.PLAYER_NAMES_XML, MODE_PRIVATE);
+                    OutputStreamWriter osw = new OutputStreamWriter(fos);
+
+                    osw.write(writer.toString());
+                    osw.flush();
+                    fos.flush();
+                    osw.close();
+                    fos.close();
+                    return true;
+                }
+                catch(Exception e){
+                    Log.d(TAG,e.toString());
+                }
+            } catch (Exception e) {
+                Log.d(TAG,e.toString());
+            }
         }
-        reader.close();
-        return sb.toString();
+        return false;
     }
 
     public static ArrayList<Uri> sendGameViaMail(Context context, GameClass mGame) {
         /* Create the Intent */
         final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
 
-        String mSeperator = ";";
-        String text =  context.getResources().getString(R.string.str_saved_game_via_mail_text_1) + " "
-                +  mGame.getCreateDate("dd.MM.yyyy - HH:mm")+ "\n\n";
+        String mSeparator = ";";
 
 
         if (mGame.currentFilename() != null && mGame.currentFilename().length() > 0) {
@@ -1142,21 +1074,19 @@ public class DokoXMLClass {
             String[] arr = basename.split("_");
             if (arr.length > 5) {
                 String lastDate = arr[0] + "." + arr[1] + "." + arr[2] + " - " + arr[3] + ":" + arr[4] + ":" + arr[5];
-                text = context.getResources().getString(R.string.str_saved_game_via_mail_text_1) + " "
-                        +  lastDate+ "\n\n";
             }
         }
 
         String csv = "";
         if (mGame != null && mGame.getPlayers().size() > 0 && mGame.getRoundList().size() > 0) {
             // header
-            csv += "Nr."+mSeperator;
+            csv += "Nr."+mSeparator;
             for (int u = 0; u < mGame.getPlayerCount(); u++) {
                 PlayerClass p = mGame.getPlayer(u);
-                csv += p.getName()+mSeperator;
+                csv += p.getName()+mSeparator;
             }
-            csv += context.getResources().getString(R.string.str_game_points)+mSeperator;
-            csv += context.getResources().getString(R.string.str_game_points)+" solo"+mSeperator;
+            csv += context.getResources().getString(R.string.str_game_points)+mSeparator;
+            csv += context.getResources().getString(R.string.str_game_points)+" solo"+mSeparator;
             csv += context.getResources().getString(R.string.str_bock);
             csv += "\n";
 
@@ -1166,19 +1096,19 @@ public class DokoXMLClass {
             for (int i = 0; i < mGame.getRoundList().size(); i++) {
                 mRound = mGame.getRoundList().get(i);
 
-                csv += Integer.toString(mRound.getID())+mSeperator;
+                csv += Integer.toString(mRound.getID())+mSeparator;
 
                 for(int u=0; u < mGame.getPlayerCount(); u++) {
                     float mPoints = mGame.getPlayer(u).getPointHistory(mRound.getID());
-                    csv += mPoints + mSeperator;
+                    csv += mPoints + mSeparator;
                 }
 
                 csv += String.valueOf(mRound.getPoints())+",";
                 if (mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.LOSE_SOLO || mRound.getRoundType() == GAME_ROUND_RESULT_TYPE.WIN_SOLO) {
                     csv += String.valueOf(mRound.getPoints()*(mGame.getActivePlayerCount()-1));
-                    csv += mSeperator;
+                    csv += mSeparator;
                 } else {
-                    csv += "-"+mSeperator;
+                    csv += "-"+mSeparator;
                 }
 
                 csv += Functions.getBockCountAsString(mRound.getBockCount());
@@ -1194,7 +1124,7 @@ public class DokoXMLClass {
             emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, context.getResources().getString(R.string.app_name) + " - " + "App" );
 
 
-            // try to add csv as mail attachemnt
+            // try to add csv as mail attachment
             boolean useFile = false;
             String filenameCSV = "doko.csv";
             File file = new File(mGame.currentFilename());
@@ -1207,7 +1137,7 @@ public class DokoXMLClass {
             FileOutputStream fosCSV = null;
             OutputStreamWriter oswCSV = null;
 
-            ArrayList<Uri> URIAttachements = new ArrayList<Uri>();
+            ArrayList<Uri> URIAttachments = new ArrayList<>();
 
 
             // try to save on external storage
@@ -1250,7 +1180,7 @@ public class DokoXMLClass {
                     xmlFileMail.setReadable(true, false);
 
                     Uri u = Uri.fromFile(xmlFileMail);
-                    URIAttachements.add(u);
+                    URIAttachments.add(u);
 
                 } catch (IOException e) {
                     Log.e("Error", e.toString());
@@ -1281,23 +1211,21 @@ public class DokoXMLClass {
 
                 csvTempFile.setReadable(true, false);
                 Uri u = Uri.fromFile(csvTempFile);
-                URIAttachements.add(u);
+                URIAttachments.add(u);
             }
 
-            if (URIAttachements != null && URIAttachements.size() > 0) {
-                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, URIAttachements);
+            if (URIAttachments != null && URIAttachments.size() > 0) {
+                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, URIAttachments);
             }
             /* Send it off to the Activity-Chooser */
             context.startActivity(Intent.createChooser(emailIntent, context.getResources().getString(R.string.str_saved_game_via_mail_intent)));
-            return URIAttachements;
+            return URIAttachments;
         } finally {
 
         }
-
-
     }
 
-    public static void copyFile(File sourceFile, File destFile) throws IOException {
+    private static void copyFile(File sourceFile, File destFile) throws IOException {
         if (!destFile.getParentFile().exists())
             destFile.getParentFile().mkdirs();
 
@@ -1321,5 +1249,4 @@ public class DokoXMLClass {
             }
         }
     }
-
 }

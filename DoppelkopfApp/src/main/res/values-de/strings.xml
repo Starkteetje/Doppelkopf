@@ -6,6 +6,8 @@
     <string name="app_version">Version 3.1</string>
     <string name="start_action_about">Über die App</string>
     <string name="str_saved_game">Speicherstände</string>
+    <string name="str_login">Login</string>
+    <string name="str_login_action">Einloggen</string>
     <string name="str_saved_game_delete_all">Speicherstände löschen</string>
     <string name="str_saved_game_delete_all_q">Sind Sie sicher das sie alle Speicherstände löschen möchten?</string>
     <string name="str_saved_game_delete_q">Sind Sie sicher das sie den Speicherstand löschen möchten?</string>
@@ -21,6 +23,8 @@
     <string name="str_player_add">Spieler hinzufügen</string>
     <string name="str_player_required">Bitte mindestens vier Spieler anlegen</string>
     <string name="str_round_number">Spiel</string>
+    <string name="str_username">Username</string>
+    <string name="str_password">Passwort</string>
     
     <string name="str_game_settings">Einstellungen</string>
     <string name="str_change_game_settings_save">Einstellungen ändern</string>
@@ -102,12 +106,17 @@
     <string name="str_apply">Übernehmen</string>
     <string name="str_hint">Hinweis</string>
     <string name="str_no_bock">keine</string>
-    <string name="str_upload_in_progress">Upload wird ausgeführt...</string>
+    <string name="str_upload_in_progress">Upload wird ausgeführt&#8230;</string>
     <string name="str_upload_successful">Upload erfolgreich</string>
     <string name="str_upload_error">Upload fehlgeschlagen</string>
     <string name="str_upload_error_code">. Statuscode:</string>
     <string name="str_upload_error_not_authenticated">, weil das Logintoken ungültig ist.</string>
     <string name="str_upload_error_already_uploaded">, weil das Spiel bereits hochgeladen wurde.</string>
+    <string name="str_login_successful">Login erfolgreich</string>
+    <string name="str_login_error">Login fehlgeschlagen</string>
+    <string name="str_login_wrong_credentials">. Nutzername oder Password falsch.</string>
+    <string name="str_login_error_code">. Statuscode:</string>
+    <string name="str_login_in_progress">Login wird ausgeführt&#8230;</string>
 
     <string name="str_dev_mode_title">Dev-Mode</string>
     <string name="str_dev_mode_text">Bitte geben Sie das Passowort für den Dev-Mode ein um diese zu akviteren.</string>

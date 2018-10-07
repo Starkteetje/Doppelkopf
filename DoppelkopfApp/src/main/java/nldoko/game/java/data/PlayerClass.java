@@ -7,7 +7,7 @@ public class PlayerClass implements Serializable  {
 
 	private static final long serialVersionUID = 3904343739194363784L;
 	private String mName;
-	private int mID;
+	private final int mID;
 	private float mCurrentPoints;
 	private float mStartPoints;
 	private boolean mIsActive = false;
@@ -104,7 +104,7 @@ public class PlayerClass implements Serializable  {
 		return this.mPointHistroyATRound.size();
 	}
 	
-	public void changePointsForRound(int pos, float newPoints) {
+	private void changePointsForRound(int pos, float newPoints) {
 		mPointHistroyATRound.set(pos, newPoints);
 		if (pos == 0){
 			mPointHistroy.set(pos,newPoints);

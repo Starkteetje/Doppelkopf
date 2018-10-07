@@ -29,7 +29,7 @@
                 android:textColor="@color/table_header_text"
                 android:text="@string/str_round_number"
                 android:ellipsize="marquee"
-                android:lines="1" />
+                android:singleLine="true" />
 
             <View
                 android:layout_width="fill_parent"

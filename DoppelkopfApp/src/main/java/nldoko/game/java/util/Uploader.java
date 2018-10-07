@@ -4,8 +4,10 @@ import android.content.Context;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -24,26 +26,36 @@ import nldoko.game.java.data.PlayerClass;
 
 public class Uploader {
 
-    private static final String UPLOAD_URL = "http://some.url";
-    private static final String REQUEST_PATH = "/addrounds";
-
-    public static void upload(Context context, GameClass game, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public static void requestToken(String url, String username, String password, Context context, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        String token = "someToken";
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", username);
+        params.put("password", password);
 
-        String json = "";
+        DokoRequest request_json = new DokoRequest(Request.Method.POST, url, new JSONObject(params), listener, errorListener);
+
+        queue.add(request_json);
+    }
+
+    public static void uploadGame(String url, Context context, GameClass game, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        String token = context.getSharedPreferences("DokoServerTokenStorage", Context.MODE_PRIVATE).getString("token", "");
+
+        String json;
         try {
             json = getJSONStringFromGame(game);
         } catch (Exception e) {
-            Log.v("error", e.getMessage());
-            //TODO change sth in errorListener
+            VolleyError error = new VolleyError("Game could not be converted to JSON.");
+            errorListener.onErrorResponse(error);
+            return;
         }
         HashMap<String, String> params = new HashMap<>();
         params.put("token", token);
         params.put("json", json);
 
-        DokoUploadRequest request_json = new DokoUploadRequest(UPLOAD_URL + REQUEST_PATH, new JSONObject(params), listener, errorListener);
+        DokoRequest request_json = new DokoRequest(Request.Method.POST, url, new JSONObject(params), listener, errorListener);
 
         queue.add(request_json);
     }

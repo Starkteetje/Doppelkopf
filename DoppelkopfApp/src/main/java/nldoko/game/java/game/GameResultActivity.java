@@ -12,19 +12,19 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import nldoko.game.java.DokoActivity;
 import nldoko.game.R;
+import nldoko.game.java.DokoActivity;
 import nldoko.game.java.data.DokoData;
 
 public class GameResultActivity extends DokoActivity {
-    private String TAG = "GameResult";
+    private final String TAG = "GameResult";
 
 
-    ArrayList<String> playerNames;
-    ArrayList<Float> playerPoints;
+    private ArrayList<String> playerNames;
+    private ArrayList<Float> playerPoints;
 
-    Button mBtnCalc;
-    EditText mFactorField;
+    private Button mBtnCalc;
+    private EditText mFactorField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class GameResultActivity extends DokoActivity {
         Bundle extras = intent.getExtras();
         int mPlayerCnt;
         String mTmp = "";
-        Float mPTmp= 0.0f;
+        Float mPTmp;
         boolean error = false;
 
         if(extras != null){
@@ -163,7 +163,6 @@ public class GameResultActivity extends DokoActivity {
     @Override
     public void onBackPressed(){
         finish();
-        return;
     }
 
     @Override

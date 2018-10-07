@@ -23,30 +23,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import nldoko.game.R;
-
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import nldoko.game.R;
 import nldoko.game.java.data.DokoData;
 import nldoko.game.java.game.NewGameActivity;
 import nldoko.game.java.game.SavedGameListActivity;
+import nldoko.game.java.interconnect.LoginActivity;
 import nldoko.game.java.util.CustomTypefaceSpan;
 import nldoko.game.java.util.TypefaceUtil;
 
 
-public class DokoActivity extends AppCompatActivity {
+public abstract class DokoActivity extends AppCompatActivity {
 
-    public final static boolean YES = true;
+    protected final static boolean YES = true;
     public final static boolean NO = false;
 
     protected Drawer drawer;
@@ -56,6 +52,7 @@ public class DokoActivity extends AppCompatActivity {
 
     protected SecondaryDrawerItem drawerAbout;
     protected SecondaryDrawerItem drawerSavedGames;
+    protected SecondaryDrawerItem drawerLogin;
     protected SecondaryDrawerItem drawerStart;
 
     @Override
@@ -104,13 +101,16 @@ public class DokoActivity extends AppCompatActivity {
 
             drawerStart = new SecondaryDrawerItem().withIdentifier(0).withName(R.string.str_start);
             drawerSavedGames = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.str_saved_game);
+            drawerLogin = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.str_login);
             drawerAbout = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.start_action_about);
 
             drawerStart.withTextColor(mContext.getResources().getColor(R.color.black));
             drawerSavedGames.withTextColor(mContext.getResources().getColor(R.color.black));
+            drawerLogin.withTextColor(mContext.getResources().getColor(R.color.black));
             drawerAbout.withTextColor(mContext.getResources().getColor(R.color.gray_dark));
             drawerStart.withTypeface(TypefaceUtil.getTypefaceLight(this));
             drawerSavedGames.withTypeface(TypefaceUtil.getTypefaceLight(this));
+            drawerLogin.withTypeface(TypefaceUtil.getTypefaceLight(this));
             drawerAbout.withTypeface(TypefaceUtil.getTypefaceLight(this));
 
 
@@ -132,7 +132,8 @@ public class DokoActivity extends AppCompatActivity {
                     .addDrawerItems(
                             drawerStart,
                             drawerSavedGames,
-                             new DividerDrawerItem(),
+                            drawerLogin,
+                            new DividerDrawerItem(),
                             drawerAbout
                     )
                     .withStickyFooterDivider(YES)
@@ -149,6 +150,11 @@ public class DokoActivity extends AppCompatActivity {
 
                             if (drawerItem == drawerSavedGames ){
                                 showSavedGames();
+                                return YES;
+                            }
+
+                            if (drawerItem == drawerLogin) {
+                                showLogin();
                                 return YES;
                             }
 
@@ -189,8 +195,8 @@ public class DokoActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         String password = input.getText().toString();
                                         if (password.trim().equalsIgnoreCase("devdoko")) {
-                                                Toast.makeText(getApplicationContext(), "Password Matched", Toast.LENGTH_SHORT).show();
-                                                DokoData.DEV_MODE = YES;
+                                            Toast.makeText(getApplicationContext(), "Password Matched", Toast.LENGTH_SHORT).show();
+                                            DokoData.DEV_MODE = YES;
                                         } else {
                                             Toast.makeText(getApplicationContext(), "Wrong Password!", Toast.LENGTH_SHORT).show();
                                         }
@@ -277,16 +283,16 @@ public class DokoActivity extends AppCompatActivity {
     }
 
     protected void showAlertDialog(String title, String msg,
-                                          int okbuttonTextID, DialogInterface.OnClickListener okButtonClickListener,
-                                          int negativeButtonTextID,
-                                          DialogInterface.OnClickListener negativeButtonClickListener) {
+                                   int okbuttonTextID, DialogInterface.OnClickListener okButtonClickListener,
+                                   int negativeButtonTextID,
+                                   DialogInterface.OnClickListener negativeButtonClickListener) {
         showAlertDialog(title, msg, okbuttonTextID, okButtonClickListener, negativeButtonTextID, negativeButtonClickListener, this);
     }
 
     public static void showAlertDialog(String title, String msg,
-                                   int okbuttonTextID, DialogInterface.OnClickListener okButtonClickListener,
-                                   int negativeButtonTextID,
-                                   DialogInterface.OnClickListener negativeButtonClickListener, Context context) {
+                                       int okbuttonTextID, DialogInterface.OnClickListener okButtonClickListener,
+                                       int negativeButtonTextID,
+                                       DialogInterface.OnClickListener negativeButtonClickListener, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme);
         builder.setTitle(title);
         builder.setMessage(msg);
@@ -316,6 +322,12 @@ public class DokoActivity extends AppCompatActivity {
 
     private void showSavedGames () {
         Intent i = new Intent(mContext,SavedGameListActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.right_out, R.anim.left_in);
+    }
+
+    private void showLogin() {
+        Intent i = new Intent(mContext, LoginActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.right_out, R.anim.left_in);
     }

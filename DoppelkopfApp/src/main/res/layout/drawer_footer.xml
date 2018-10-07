@@ -5,6 +5,7 @@
     android:layout_alignParentBottom="true"
     android:id="@+id/toolbar_drawer_footer"
     android:clickable="true"
+    android:focusable="true"
     android:padding="15dp">
 
 
