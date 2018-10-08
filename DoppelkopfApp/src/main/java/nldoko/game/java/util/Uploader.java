@@ -1,8 +1,6 @@
 package nldoko.game.java.util;
 
 import android.content.Context;
-import android.provider.Settings;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,9 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,7 +55,7 @@ public class Uploader {
         queue.add(request_json);
     }
 
-    private static JSONObject getJSONFromGame(GameClass game) throws JSONException, NoSuchAlgorithmException {
+    private static JSONObject getJSONFromGame(GameClass game) throws JSONException {
         JSONObject json = new JSONObject();
         List<PlayerClass> players = game.getPlayers();
 
@@ -71,25 +66,7 @@ public class Uploader {
         json.put("players", playerArray);
         json.put("date", game.getCreateDate("YYYY-MM-dd"));
 
-        // Generate a new unique ID, which will be consistent across multiple uploads
-        // Cannot be predicted from a different device, due to device-specific ID
-        String androidId = Settings.Secure.ANDROID_ID;
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(json.toString().getBytes(StandardCharsets.UTF_8));
-        md.update(androidId.getBytes(StandardCharsets.UTF_8));
-        String uniqueGameIdentifier = toHex(md.digest());
-
-        json.put("id", uniqueGameIdentifier);
-
         return json;
-    }
-
-    private static String toHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            sb.append(String.format("%02X", b));
-        }
-        return sb.toString();
     }
 
     private static JSONArray getPlayerJSONArrayFromList(List<PlayerClass> players, int roundCount) throws JSONException {
@@ -112,7 +89,7 @@ public class Uploader {
         return array;
     }
 
-    private static String getJSONStringFromGame(GameClass game) throws JSONException, NoSuchAlgorithmException {
+    private static String getJSONStringFromGame(GameClass game) throws JSONException {
         return getJSONFromGame(game).toString();
     }
 }
