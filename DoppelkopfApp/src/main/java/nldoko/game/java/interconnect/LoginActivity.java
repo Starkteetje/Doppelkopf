@@ -20,7 +20,7 @@ import nldoko.game.java.DokoActivity;
 import nldoko.game.java.util.Uploader;
 
 public class LoginActivity extends DokoActivity {
-    public static final String UPLOAD_URL = "http://93.90.200.34:8080";
+    public static final String UPLOAD_URL = "https://teetje-doko.de";
     public static final String REQUEST_PATH_UPLOAD_GAME = "/api/report";
     public static final String REQUEST_PATH_LOGIN = "/api/login";
 
@@ -33,8 +33,6 @@ public class LoginActivity extends DokoActivity {
     }
 
     private void setClickListener() {
-        String username = ((EditText) findViewById(R.id.user_name)).getText().toString();
-        String password = ((EditText) findViewById(R.id.user_password)).getText().toString();
         Button mBtnLogin = (Button) findViewById(R.id.btn_login);
         mBtnLogin.setOnClickListener(new LoginClickListener());
     }
