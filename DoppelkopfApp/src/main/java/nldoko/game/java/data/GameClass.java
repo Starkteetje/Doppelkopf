@@ -24,6 +24,7 @@ public class GameClass  implements Serializable{
 	private int mPlayerCount;
 	private int mActivePlayerCount;
 	private int mBockRoundLimit;
+	private int mVersteckteHochzeitCount = 0;
 	private String mCurrentFilename;
 
     private java.sql.Timestamp createDate;
@@ -155,7 +156,23 @@ public class GameClass  implements Serializable{
 	public void setBockRoundLimit(int bockRoundLimit){
 		this.mBockRoundLimit = bockRoundLimit;
 	}
-	
+
+	public int getVersteckteHochzeitCount() {
+	    return this.mVersteckteHochzeitCount;
+    }
+
+    public void setVersteckteHochzeitCount(int versteckteHochzeitCount) {
+	    this.mVersteckteHochzeitCount = versteckteHochzeitCount;
+    }
+
+    public void incrementVersteckteHochzeitCount() {
+	    this.mVersteckteHochzeitCount += 1;
+    }
+
+    public void decrementVersteckteHochzeitCount() {
+		this.mVersteckteHochzeitCount -= 1;
+	}
+
 	public int getMAXPlayerCount(){
 		return DokoData.MAX_PLAYER;
 	}
@@ -164,13 +181,11 @@ public class GameClass  implements Serializable{
 		return this.cntVariant;
 	}
 	
-	
-	
 	public boolean isReady(){
 		return mPlayers.size() == getMAXPlayerCount() && mPreRoundList.size() >= getMAXPlayerCount();
 	}
 
-	public void updateBockCountPreRounds(Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount) {
+	private void updateBockCountPreRounds(Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount) {
 		if(mBockRoundLimit == 0) {
 
 		}

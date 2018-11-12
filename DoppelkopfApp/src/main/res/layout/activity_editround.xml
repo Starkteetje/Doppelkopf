@@ -53,7 +53,7 @@
 						android:id="@+id/game_add_round_points_entry"
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
-						android:layout_gravity="left"
+						android:layout_gravity="start"
 						android:layout_weight="0.60"
 						android:clickable="false"
 						android:gravity="center_vertical"
@@ -130,6 +130,12 @@
                 android:text="@string/str_apply"
                 android:background="@drawable/bnt_style_1"
                 android:elevation="4dp"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_versteckte_hochzeit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Versteckte Hochzeit"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

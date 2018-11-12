@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class EditRoundActivity extends DokoActivity {
     private static TextView mTvAddRoundBockPoints;
     private static Button mBtnEditRound;
     private static TextView mEtNewRoundPoints;
+    private static CheckBox mCBVersteckteHochzeit;
 
     private static final ArrayList<TextView> mGameAddRoundPlayerState = new ArrayList<TextView>();
 
@@ -121,21 +123,21 @@ public class EditRoundActivity extends DokoActivity {
 
 
     private static void setUIEditNewRound(View rootView, LayoutInflater inflater) {
-        ImageView mIv;
-        TextView mTv;
         String mStr;
 
         mEtNewRoundPoints = (TextView)rootView.findViewById(R.id.game_add_round_points_entry);
-        mEtNewRoundPoints.setText(""+mRoundPoints);
+        mEtNewRoundPoints.setText("" + mRoundPoints);
 
         loadUINewRoundPlayerSection(rootView, inflater);
 
         mBtnEditRound = (Button)rootView.findViewById(R.id.btn_game_edit_round);
         mBtnEditRound.setOnClickListener(mBtnEditRoundClickListener);
 
+        mCBVersteckteHochzeit = (CheckBox) rootView.findViewById(R.id.checkbox_versteckte_hochzeit);
+
         mTvAddRoundBockPoints = (TextView)rootView.findViewById(R.id.game_add_round_bock_points);
         if(mBockRound > 0){
-            mStr = rootView.getResources().getString(R.string.str_bockround)+" ";
+            mStr = rootView.getResources().getString(R.string.str_bockround)+ " ";
             mStr += Functions.getBockCountAsString(mBockRound);
             mTvAddRoundBockPoints.setText(mStr);
             mTvAddRoundBockPoints.setVisibility(View.VISIBLE);
@@ -244,14 +246,12 @@ public class EditRoundActivity extends DokoActivity {
 
     private boolean isSuspendCntOK(){
         if(mPlayerCnt-mActivePlayers == 0) return true;
-        if(getSuspendCnt() == (mPlayerCnt-mActivePlayers)) return true;
-        return false;
+        return getSuspendCnt() == (mPlayerCnt-mActivePlayers);
     }
 
     private boolean isWinnerCntOK(){
         int mWinnerCnt = getWinnerCnt();
-        if(mWinnerCnt >= mActivePlayers || mWinnerCnt == 0) return false;
-        return true;
+        return mWinnerCnt < mActivePlayers && mWinnerCnt != 0;
     }
 
     private int getSuspendCnt(){
@@ -354,6 +354,7 @@ public class EditRoundActivity extends DokoActivity {
                         }
                         i.putExtra(DokoData.PLAYERS_KEY[k]+"_STATE", mPlayerRoundState.ordinal());
                     }
+                    i.putExtra("isVersteckteHochzeit", ((CheckBox)findViewById(R.id.checkbox_versteckte_hochzeit)).isChecked());
 
                     setResult(RESULT_OK, i);
                     finish();

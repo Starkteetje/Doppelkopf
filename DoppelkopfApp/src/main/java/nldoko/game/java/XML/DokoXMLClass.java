@@ -89,6 +89,7 @@ public class DokoXMLClass {
     private static final String GAME_PRE_ROUNDS = "PreRounds";
     private static final String GAME_PRE_ROUND = "PreRound";
     private static final String GAME_PRE_ROUND_BOCK_COUNT = "bockCount";
+    private static final String GAME_VERSTECKTE_HOCHZEIT_COUNT = "versteckteHochzeitCount";
 
     private static final String PLAYER_NAMES_NAMES = "Names";
     private static final String PLAYER_NAMES_NAME = "name";
@@ -410,6 +411,11 @@ public class DokoXMLClass {
             serializer.text(Boolean.valueOf(game.isMarkSuspendedPlayersEnable()).toString());
             serializer.endTag("", GAME_SETTINGS_MARK_SUSPENDED_PLAYERS);
 
+            serializer.text("\n\t\t");
+            serializer.startTag("", GAME_VERSTECKTE_HOCHZEIT_COUNT);
+            serializer.text(Integer.toString(game.getVersteckteHochzeitCount()));
+            serializer.endTag("", GAME_VERSTECKTE_HOCHZEIT_COUNT);
+
             serializer.text("\n\t");
             serializer.endTag("", GAME_SETTINGS_TAG);
 
@@ -439,8 +445,6 @@ public class DokoXMLClass {
                 Log.d(TAG,"XML Parse Error 1");
                 return null;
             }
-
-            //Log.v(TAG, nodeAsText(mNode));
 
             // check  xml struct version
             String mXMLVersion = null; // null means v1
@@ -531,7 +535,7 @@ public class DokoXMLClass {
             return;
         }
 
-        int mPlayerCnt, mActivePlayers = 0, mBockRoundLimit = 0;
+        int mPlayerCnt, mActivePlayers = 0, mBockRoundLimit = 0, mVersteckteHochzeitCount = 0;
         String mCreateDate;
         GAME_CNT_VARIANT mGameCntVariant;
 
@@ -572,8 +576,11 @@ public class DokoXMLClass {
                 mGameCntVariant = GAME_CNT_VARIANT.valueOf(settingsSubNode.getTextContent());
                 mGame.setGameCntVariant(mGameCntVariant);
             }
+            else if(settingsSubNode.getNodeName().equalsIgnoreCase(GAME_VERSTECKTE_HOCHZEIT_COUNT)) {
+                mVersteckteHochzeitCount = Integer.valueOf(settingsSubNode.getTextContent());
+                mGame.setVersteckteHochzeitCount(mVersteckteHochzeitCount);
+            }
         }
-
     }
 
     private static void setGamePlayersFromNode(Node n, GameClass mGame, boolean loadPointHistory) {
@@ -945,7 +952,7 @@ public class DokoXMLClass {
         return sdcardPath;
     }
 
-    public static boolean getPlayerNamesFromXML(Context c,String f, ArrayList<String> playerNames){
+    public static boolean getPlayerNamesFromXML(Context c, String f, ArrayList<String> playerNames){
         Node node;
         NodeList names;
 
@@ -1068,25 +1075,16 @@ public class DokoXMLClass {
 
         String mSeparator = ";";
 
-
-        if (mGame.currentFilename() != null && mGame.currentFilename().length() > 0) {
-            String basename = mGame.currentFilename().substring( mGame.currentFilename().lastIndexOf('/')+1, mGame.currentFilename().length() );
-            String[] arr = basename.split("_");
-            if (arr.length > 5) {
-                String lastDate = arr[0] + "." + arr[1] + "." + arr[2] + " - " + arr[3] + ":" + arr[4] + ":" + arr[5];
-            }
-        }
-
         String csv = "";
-        if (mGame != null && mGame.getPlayers().size() > 0 && mGame.getRoundList().size() > 0) {
+        if (mGame.getPlayers().size() > 0 && mGame.getRoundList().size() > 0) {
             // header
-            csv += "Nr."+mSeparator;
+            csv += "Nr." + mSeparator;
             for (int u = 0; u < mGame.getPlayerCount(); u++) {
                 PlayerClass p = mGame.getPlayer(u);
-                csv += p.getName()+mSeparator;
+                csv += p.getName() + mSeparator;
             }
-            csv += context.getResources().getString(R.string.str_game_points)+mSeparator;
-            csv += context.getResources().getString(R.string.str_game_points)+" solo"+mSeparator;
+            csv += context.getResources().getString(R.string.str_game_points) + mSeparator;
+            csv += context.getResources().getString(R.string.str_game_points) + " solo" + mSeparator;
             csv += context.getResources().getString(R.string.str_bock);
             csv += "\n";
 
@@ -1096,7 +1094,7 @@ public class DokoXMLClass {
             for (int i = 0; i < mGame.getRoundList().size(); i++) {
                 mRound = mGame.getRoundList().get(i);
 
-                csv += Integer.toString(mRound.getID())+mSeparator;
+                csv += Integer.toString(mRound.getID()) + mSeparator;
 
                 for(int u=0; u < mGame.getPlayerCount(); u++) {
                     float mPoints = mGame.getPlayer(u).getPointHistory(mRound.getID());

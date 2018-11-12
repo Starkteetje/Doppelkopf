@@ -91,6 +91,8 @@ public class GameActivity extends DokoActivity {
 
 
     private static CheckBox mCBNewBockRound;
+    private static CheckBox mCBVersteckteHochzeit;
+    public static boolean isLastRoundVersteckteHochzeit = false;
     private static ImageView mBockRoundInfoIcon;
     private static LinearLayout mGameBockDetailContainer;
 
@@ -235,17 +237,14 @@ public class GameActivity extends DokoActivity {
             mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
 
             if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER
-                    || mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
-                    || (mPlayerCnt == 0 || mActivePlayers == 0))
+                    || mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER)
                 return null;
 
             mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint);
 
             for(int k=0;k<mPlayerCnt;k++){
-                //Log.d(TAG,mTmp+"k:"+k);
                 mTmp = extras.getString(DokoData.PLAYERS_KEY[k],"");
                 if(mTmp == null || mTmp.length() == 0) return null;
-                //Log.d(TAG,mTmp);
                 mGame.getPlayer(k).setName(mTmp);
             }
         }
@@ -350,10 +349,10 @@ public class GameActivity extends DokoActivity {
             setDealer(context);
             if(mGame.getBockRoundLimit() == 0 ) {
                 mBottomInfoBockRoundCount.setVisibility(View.GONE);
-                ((TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_bock_count_label)).setVisibility(View.GONE);
+                rootView.findViewById(R.id.fragment_game_bottom_infos_content_bock_count_label).setVisibility(View.GONE);
                 mBottomInfoBockRoundPreview.setVisibility(View.GONE);
-                ((TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_separator_1)).setVisibility(View.GONE);
-                ((TextView)rootView.findViewById(R.id.fragment_game_bottom_infos_content_separator_2)).setVisibility(View.GONE);
+                rootView.findViewById(R.id.fragment_game_bottom_infos_content_separator_1).setVisibility(View.GONE);
+                rootView.findViewById(R.id.fragment_game_bottom_infos_content_separator_2).setVisibility(View.GONE);
             }
             else {
                 setBottomInfo(context);
@@ -367,7 +366,9 @@ public class GameActivity extends DokoActivity {
         if(mGame != null) {
             int playerCount = mGame.getPlayerCount();
             int roundCount = mGame.getRoundCount();
-            int soloCount = 0;
+            int versteckteHochzeitCount = mGame.getVersteckteHochzeitCount();
+            int soloCount = - versteckteHochzeitCount; // versteckte Hochzeiten will be counted as solos without inhibiting dealer change, so we have to subtract them from the count
+
             ArrayList<RoundClass> rounds = mGame.getRoundList();
             for(RoundClass round : rounds) {
                 if(round.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.LOSE_SOLO ||
@@ -423,6 +424,8 @@ public class GameActivity extends DokoActivity {
         mBtnAddRound = (Button)rootView.findViewById(R.id.btn_game_add_new_round);
         mBtnAddRound.setOnClickListener(mBtnAddRoundClickListener);
 
+        mCBVersteckteHochzeit = (CheckBox) rootView.findViewById(R.id.checkbox_versteckte_hochzeit);
+
         mTvAddRoundBockPoints = (TextView)rootView.findViewById(R.id.game_add_round_bock_points);
 
         mGameBockDetailContainer = (LinearLayout)rootView.findViewById(R.id.game_add_round_bock_details_container);
@@ -460,17 +463,17 @@ public class GameActivity extends DokoActivity {
         mGameBockRoundsCnt = (Spinner)rootView.findViewById(R.id.game_bock_rounds_cnt);
         mGameBockRoundsGameCnt = (Spinner)rootView.findViewById(R.id.game_bock_rounds_game_cnt);
 
-        ArrayList<Integer>mMaxPlayerInteger = new ArrayList<Integer>();
+        ArrayList<Integer>mMaxPlayerInteger = new ArrayList<>();
         for(int k=1;k<=DokoData.MAX_PLAYER;k++) {
             mMaxPlayerInteger.add(k);
         }
 
-        mGameBockRoundsCntAdapter = new ArrayAdapter<Integer>(context, R.layout.spinner_item,R.id.spinner_text,mMaxPlayerInteger);
+        mGameBockRoundsCntAdapter = new ArrayAdapter<>(context, R.layout.spinner_item,R.id.spinner_text,mMaxPlayerInteger);
         mGameBockRoundsCntAdapter.setDropDownViewResource(R.layout.spinner_item);
         mGameBockRoundsCnt.setAdapter(mGameBockRoundsCntAdapter);
         mGameBockRoundsCnt.setSelection(0);
 
-        mGameBockRoundsGameCntAdapter = new ArrayAdapter<Integer>(context, R.layout.spinner_item,R.id.spinner_text,mMaxPlayerInteger);
+        mGameBockRoundsGameCntAdapter = new ArrayAdapter<>(context, R.layout.spinner_item,R.id.spinner_text,mMaxPlayerInteger);
         mGameBockRoundsGameCntAdapter.setDropDownViewResource(R.layout.spinner_item);
         mGameBockRoundsGameCnt.setAdapter(mGameBockRoundsGameCntAdapter);
         mGameBockRoundsGameCnt.setSelection(mGame.getPlayerCount() - 1);
@@ -622,6 +625,12 @@ public class GameActivity extends DokoActivity {
             }
 
             mGame.addNewRound(getNewRoundPoints(),mGameBockRoundsCount, mGameBockRoundsGameCount,mNewRoundPlayerState);
+            boolean isVersteckteHochzeit = mCBVersteckteHochzeit.isChecked();
+            if (isVersteckteHochzeit) {
+                mGame.incrementVersteckteHochzeitCount();
+            }
+            mCBVersteckteHochzeit.setChecked(false); // Reset checkbox
+            isLastRoundVersteckteHochzeit = isVersteckteHochzeit;
             Log.d(TAG,mGame.toString());
             notifyDataSetChanged();
 
@@ -649,7 +658,7 @@ public class GameActivity extends DokoActivity {
 
     private static void createTableHeader(LayoutInflater inflater, Context context) {
         LinearLayout mLl = null;
-        TextView mTv = null;
+        TextView mTv;
         switch(mGame.getPlayerCount()){
             case 4: mLl = (LinearLayout) inflater.inflate(R.layout.fragment_game_round_view_table_4_player_header, null); break;
             case 5: mLl = (LinearLayout) inflater.inflate(R.layout.fragment_game_round_view_table_5_player_header, null); break;
@@ -736,7 +745,6 @@ public class GameActivity extends DokoActivity {
     public static void changePlayerViewState(TextView mTvStateView, Drawable newDrawable, int stringID, boolean animate, Context context) {
         if (animate) {
             Drawable backgrounds[] = new Drawable[2];
-            Resources res = context.getResources();
             backgrounds[0] = mTvStateView.getBackground();
             backgrounds[1] = newDrawable;
 
@@ -764,7 +772,7 @@ public class GameActivity extends DokoActivity {
     }
 
     private static  void resetNewRoundFields(Context context) {
-        TextView mTv = null;
+        TextView mTv;
         mEtNewRoundPoints.setText("");
         loadDefaultPlayerStates(mNewRoundPlayerState);
 
@@ -808,8 +816,6 @@ public class GameActivity extends DokoActivity {
         }
     }
 
-
-
     private boolean isSuspendCntOK(){
         if(mGame.getPlayerCount()-mGame.getActivePlayerCount() == 0){
             return true;
@@ -846,28 +852,6 @@ public class GameActivity extends DokoActivity {
         }
         return m;
     }
-
-    private ArrayList<String> getPlayerNames(){
-        ArrayList<String> mPlayerNames = new ArrayList<String>();
-        View v;
-        AutoCompleteTextView ac;
-        mLayout = (LinearLayout)findViewById(R.id.player_view_holder);
-
-        for(int i=0;i<mLayout.getChildCount();i++){
-            v = mLayout.getChildAt(i);
-            if (v.getId() == R.id.player_entry){
-                ac = (AutoCompleteTextView)v.findViewById(R.id.player_entry_auto_complete);
-                if(!mPlayerNames.contains(ac.getText().toString().trim())){
-                    //Log.d(TAG,ac.getText().toString());
-                    mPlayerNames.add(ac.getText().toString().trim());
-                }
-            }
-        }
-
-        return mPlayerNames;
-    }
-
-
 
     private void saveStateData(Bundle outState){
         if(mGame != null){
@@ -940,23 +924,6 @@ public class GameActivity extends DokoActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         Intent i;
         switch(item.getItemId()) {
-//    		case R.id.menu_switch_game_list_view:
-//    			GAME_VIEW_TYPE mRoundListViewMode = mLvRoundAdapter.getRoundListViewMode();
-//	    		if(mRoundListViewMode == GAME_VIEW_TYPE.ROUND_VIEW_DETAIL){
-//	    			createTableHeader(mInflater, mContext);
-//	    			mLvRoundAdapter.changeRoundListViewMode(GAME_VIEW_TYPE.ROUND_VIEW_TABLE);
-//	    		}
-//	    		else{
-//	    			mGameRoundsInfoSwipe.removeAllViews();
-//	    			mLvRoundAdapter.changeRoundListViewMode(GAME_VIEW_TYPE.ROUND_VIEW_DETAIL);
-//	    		}
-//
-//	    		notifyDataSetChanged();
-//				mLvRounds.requestFocus();
-//
-//				if(mLvRounds.getCount() >= 1)
-//					mLvRounds.setSelection(mLvRounds.getCount()-1);
-//    		break;
 
             case R.id.menu_change_game_settings:
                 i = new Intent(this, ChangeGameSettingActivity.class);
@@ -968,41 +935,6 @@ public class GameActivity extends DokoActivity {
                 i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mGame.getActivePlayerCount());
                 startActivityForResult(i,DokoData.CHANGE_GAME_SETTINGS_ACTIVITY_CODE);
                 break;
-
-//    		case R.id.menu_bock_preview_on_off:
-//    			if(mBockPreviewOnOff){
-//    				mBockPreviewOnOff = false;
-//					mBottomInfos.animate()
-//							.translationY(mBottomInfos.getHeight())
-//							.alpha(0.0f)
-//							.setDuration(300)
-//							.setListener(new AnimatorListenerAdapter() {
-//								@Override
-//								public void onAnimationEnd(Animator animation) {
-//									super.onAnimationEnd(animation);
-//									mBottomInfos.setVisibility(View.GONE);
-//								}
-//							});
-//    			}
-//    			else{
-//    				if(mGame != null && mGame.getBockRoundLimit() == 0){
-//    					Toast.makeText(mContext, getResources().getString(R.string.str_bock_preview_not_posible), Toast.LENGTH_LONG).show();
-//    					return true;
-//    				}
-//    				mBockPreviewOnOff = true;
-//					mBottomInfos.animate()
-//							.translationY(0)
-//							.alpha(1.0f)
-//							.setDuration(300)
-//							.setListener(new AnimatorListenerAdapter() {
-//								@Override
-//								public void onAnimationEnd(Animator animation) {
-//									super.onAnimationEnd(animation);
-//									mBottomInfos.setVisibility(View.VISIBLE);
-//								}
-//							});
-//    			}
-//    		break;
 
             case R.id.menu_edit_round:
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
@@ -1094,8 +1026,16 @@ public class GameActivity extends DokoActivity {
             }
 
             mGame.editLastRound(mNewRoundPoints, mEditRoundRoundPlayerStates);
+            boolean isNewRoundVersteckteHochzeit = extras.getBoolean("isVersteckteHochzeit", false);
+            if (isNewRoundVersteckteHochzeit != isLastRoundVersteckteHochzeit) {
+                if (isNewRoundVersteckteHochzeit) {
+                    mGame.incrementVersteckteHochzeitCount();
+                } else {
+                    mGame.decrementVersteckteHochzeitCount();
+                }
+            }
+            isLastRoundVersteckteHochzeit = isNewRoundVersteckteHochzeit;
             reloadSwipeViews();
-            //Log.d("GA after",mGame.toString());
             DokoXMLClass.saveGameStateToXML(mContext, mGame);
 
             Toast.makeText(mContext, getResources().getString(R.string.str_edit_round_finish), Toast.LENGTH_LONG).show();
@@ -1105,7 +1045,7 @@ public class GameActivity extends DokoActivity {
     private void handleChangeGameSettingsFinish(int requestCode, int resultCode, Intent data) {
         Bundle extras = null;
         int mActivePlayers,mBockLimit,mPlayerCnt,mOldPlayerCnt;
-        String mName = "";
+        String mName;
 
 
         if(data != null) extras = data.getExtras();
@@ -1115,8 +1055,7 @@ public class GameActivity extends DokoActivity {
             mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
 
             if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER
-                    || mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
-                    || (mPlayerCnt == 0 || mActivePlayers == 0))
+                    || mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER)
                 return;
 
             //set new game settings
@@ -1155,6 +1094,4 @@ public class GameActivity extends DokoActivity {
         saveStateData(outState);
         super.onSaveInstanceState(outState);
     }
-
-
 }
