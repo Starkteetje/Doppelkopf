@@ -56,6 +56,26 @@
             android:maxLines="1">
         </EditText>
 
+        <EditText
+            android:padding="10dp"
+            android:layout_marginTop="@dimen/item_space"
+            android:layout_marginLeft="@dimen/item_space"
+            android:layout_marginRight="@dimen/item_space"
+            android:id="@+id/server_url"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/str_server_url"
+            android:fontFamily="sans-serif-light"
+            android:textColorHint="@color/light_gray"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/light_gray"
+            android:popupBackground="@color/activity_background_color"
+            android:inputType="text"
+            android:imeOptions="actionNext"
+            android:maxLines="1">
+        </EditText>
+
         <Button
             android:layout_marginTop="@dimen/item_space"
             android:layout_marginBottom="@dimen/item_space"

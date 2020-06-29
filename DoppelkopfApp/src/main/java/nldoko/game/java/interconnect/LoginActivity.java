@@ -20,7 +20,6 @@ import nldoko.game.java.DokoActivity;
 import nldoko.game.java.util.Uploader;
 
 public class LoginActivity extends DokoActivity {
-    public static final String UPLOAD_URL = "https://teetje-doko.de";
     public static final String REQUEST_PATH_UPLOAD_GAME = "/api/report";
     public static final String REQUEST_PATH_LOGIN = "/api/login";
 
@@ -29,6 +28,8 @@ public class LoginActivity extends DokoActivity {
         super.onCreate(bundle);
         setContentView(R.layout.login);
         setupDrawerAndToolbar(mContext.getResources().getString(R.string.str_login));
+        // Use default local network
+        ((EditText)this.findViewById(R.id.server_url)).setText("http://192.168.56.1:8080");
         setClickListener();
     }
 
@@ -44,6 +45,10 @@ public class LoginActivity extends DokoActivity {
             View parent = (View) v.getParent();
             String username = ((EditText) parent.findViewById(R.id.user_name)).getText().toString();
             String password = ((EditText) parent.findViewById(R.id.user_password)).getText().toString();
+            String uploadUrl = ((EditText) parent.findViewById(R.id.server_url)).getText().toString();
+            // Store URL immediately
+            SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("DokoServerTokenStorage", MODE_PRIVATE);
+            sharedPreferences.edit().putString("url", uploadUrl).apply();
             ProgressDialog dialog = new ProgressDialog(v.getContext());
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage(getResources().getString(R.string.str_login_in_progress));
@@ -92,7 +97,8 @@ public class LoginActivity extends DokoActivity {
             };
 
             dialog.show();
-            Uploader.requestToken(UPLOAD_URL + REQUEST_PATH_LOGIN, username, password, mContext, listener, errorListener);
+            Uploader.requestToken(username, password, mContext, listener, errorListener);
         }
     }
+
 }

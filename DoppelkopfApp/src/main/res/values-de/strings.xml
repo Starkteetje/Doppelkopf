@@ -25,6 +25,7 @@
     <string name="str_round_number">Spiel</string>
     <string name="str_username">Username</string>
     <string name="str_password">Passwort</string>
+    <string name="str_server_url">Server URL</string>
     
     <string name="str_game_settings">Einstellungen</string>
     <string name="str_change_game_settings_save">Einstellungen ändern</string>

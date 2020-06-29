@@ -350,7 +350,7 @@ public class SavedGameListActivity extends DokoActivity {
             };
 
             dialog.show();
-            Uploader.uploadGame(LoginActivity.UPLOAD_URL + LoginActivity.REQUEST_PATH_UPLOAD_GAME, v.getContext(), getGame(v), listener, errorListener);
+            Uploader.uploadGame(v.getContext(), getGame(v), listener, errorListener);
         }
 
         private GameClass getGame(View v) {

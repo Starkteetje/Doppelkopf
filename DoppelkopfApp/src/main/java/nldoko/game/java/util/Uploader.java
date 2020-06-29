@@ -1,6 +1,7 @@
 package nldoko.game.java.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,11 +19,13 @@ import java.util.stream.Collectors;
 
 import nldoko.game.java.data.GameClass;
 import nldoko.game.java.data.PlayerClass;
+import nldoko.game.java.interconnect.LoginActivity;
 
 public class Uploader {
 
-    public static void requestToken(String url, String username, String password, Context context, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public static void requestToken(String username, String password, Context context, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
+        String url = context.getSharedPreferences("DokoServerTokenStorage", Context.MODE_PRIVATE).getString("url", "") + LoginActivity.REQUEST_PATH_LOGIN;
 
         HashMap<String, String> params = new HashMap<>();
         params.put("username", username);
@@ -33,10 +36,11 @@ public class Uploader {
         queue.add(request_json);
     }
 
-    public static void uploadGame(String url, Context context, GameClass game, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public static void uploadGame(Context context, GameClass game, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         String token = context.getSharedPreferences("DokoServerTokenStorage", Context.MODE_PRIVATE).getString("token", "");
+        String url = context.getSharedPreferences("DokoServerTokenStorage", Context.MODE_PRIVATE).getString("url", "") + LoginActivity.REQUEST_PATH_UPLOAD_GAME;
 
         String json;
         try {
