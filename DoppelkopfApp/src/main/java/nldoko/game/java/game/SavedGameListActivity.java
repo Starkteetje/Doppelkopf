@@ -34,7 +34,6 @@ import nldoko.game.java.DokoActivity;
 import nldoko.game.java.XML.DokoXMLClass;
 import nldoko.game.java.data.GameClass;
 import nldoko.game.java.data.PlayerClass;
-import nldoko.game.java.interconnect.LoginActivity;
 import nldoko.game.java.util.Uploader;
 
 public class SavedGameListActivity extends DokoActivity {

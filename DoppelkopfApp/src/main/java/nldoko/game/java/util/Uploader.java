@@ -69,6 +69,7 @@ public class Uploader {
         }
         json.put("players", playerArray);
         json.put("date", game.getCreateDate("YYYY-MM-dd"));
+        json.put("isSeason", game.countsIfInSeason());
 
         return json;
     }

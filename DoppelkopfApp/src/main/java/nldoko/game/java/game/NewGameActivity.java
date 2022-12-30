@@ -37,7 +37,7 @@ public class NewGameActivity extends DokoActivity {
 	private Spinner mSpActivePlayer;
 	private Spinner mSpBockLimit;
 	private Spinner mSpGameCntVariant;
-	private CheckBox mCbSuspendMark;
+	private CheckBox mCountsForSeason;
 	private LinearLayout mGameSettingsEntry;
 	private LinearLayout mGameSettingsList;
 
@@ -74,6 +74,7 @@ public class NewGameActivity extends DokoActivity {
 		mSpActivePlayer	 	= (Spinner)findViewById(R.id.sp_act_player_cnt);
 		mSpBockLimit 		= (Spinner)findViewById(R.id.sp_bock_cnt);
 		mSpGameCntVariant	= (Spinner)findViewById(R.id.sp_game_cnt_variant);
+		mCountsForSeason	= (CheckBox)findViewById(R.id.sp_game_counts);
 
 		mGameSettingsEntry = (LinearLayout)findViewById(R.id.new_game_settings_entry);
 		mGameSettingsEntry.setOnClickListener(new showGameSettingsClickListener());
@@ -216,6 +217,7 @@ public class NewGameActivity extends DokoActivity {
 			i.putExtra(DokoData.PLAYER_CNT_KEY, mPlayerCnt);
 			i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
+			i.putExtra(DokoData.GAME_COUNTS, mCountsForSeason.isChecked());
 			i.putExtra(DokoData.GAME_CNT_VARIANT_KEY, GAME_CNT_VARIANT.values()[mSpGameCntVariant.getSelectedItemPosition()]);
 
 			startActivity(i);

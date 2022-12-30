@@ -57,6 +57,7 @@
     <string name="str_saved_games_load">Load saved games&#8230;</string>
     <string name="str_game">Current game</string>
     <string name="str_game_cnt_variant">Count variant</string>
+    <string name="str_game_counts">Ranked match</string>
     <string name="str_game_add_round_here">Add new round (wipe)</string>
     <string name="str_game_new_round">Add new round</string>
     <string name="str_game_add_new_round">Add round</string>

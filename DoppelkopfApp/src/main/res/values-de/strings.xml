@@ -59,6 +59,7 @@
     <string name="str_saved_games_load">Speicherstände werden geladen&#8230;</string>
     <string name="str_game">Doppelkopf</string>
     <string name="str_game_cnt_variant">Zählvariante</string>
+    <string name="str_game_counts">Gewertetes Spiel</string>
     <string name="str_game_add_round_here">Neue Runde eintragen (wischen)</string>
     <string name="str_game_new_round">Spiel hinzufügen</string>
     <string name="str_game_add_new_round">Hinzufügen</string>

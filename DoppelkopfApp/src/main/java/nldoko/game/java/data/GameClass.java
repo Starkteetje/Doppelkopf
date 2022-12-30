@@ -26,6 +26,7 @@ public class GameClass  implements Serializable{
 	private int mBockRoundLimit;
 	private int mVersteckteHochzeitCount = 0;
 	private String mCurrentFilename;
+	private boolean mCountsForSeason;
 
     private java.sql.Timestamp createDate;
 
@@ -34,13 +35,14 @@ public class GameClass  implements Serializable{
 		this.mCurrentFilename = fromFile;
 	}
 	
-	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant){
+	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant, boolean countsForSeason){
 		this.mPlayers = new ArrayList<PlayerClass>();
 		this.mRoundList = new ArrayList<RoundClass>();
 		this.mPreRoundList = new ArrayList<RoundClass>();
     	this.mPlayerCount = playerCount;
     	this.mActivePlayerCount = activePlayer;    
     	this.mBockRoundLimit = bockLimit;
+    	this.mCountsForSeason = countsForSeason;
 
     	this.cntVariant = cntVariant;
     	
@@ -448,5 +450,7 @@ public class GameClass  implements Serializable{
         this.createDate = timestamp;
     }
 
-
+	public boolean countsIfInSeason() {
+		return this.mCountsForSeason;
+	}
 }

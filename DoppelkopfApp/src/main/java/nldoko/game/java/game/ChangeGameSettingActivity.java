@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -35,6 +36,7 @@ public class ChangeGameSettingActivity extends DokoActivity {
 	private Spinner mSpActivePlayer;
 	private Spinner mSpBockLimit;
 	private Spinner mSpGameCntVariant;
+	private boolean mCountsForSeason = true;
 	private TextView mTvPlayerCnt;
 
 	private Button mBtnChangeGameSettings;
@@ -90,6 +92,7 @@ public class ChangeGameSettingActivity extends DokoActivity {
 			mPlayerCnt = extras.getInt(DokoData.PLAYER_CNT_KEY,0);
 			mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
 			mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
+			boolean mCountsForSeason = extras.getBoolean(DokoData.GAME_COUNTS, this.mCountsForSeason);
 
 			mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
 
@@ -98,7 +101,7 @@ public class ChangeGameSettingActivity extends DokoActivity {
 					(mPlayerCnt == 0 || mActivePlayers == 0))
 				return null;
 
-			mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint);
+			mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint, mCountsForSeason);
 			for(int k=0;k<mPlayerCnt;k++){
 				mTmp = extras.getString(DokoData.PLAYERS_KEY[k],"");
 				if(mTmp == null || mTmp.length() == 0) return null;
@@ -149,6 +152,7 @@ public class ChangeGameSettingActivity extends DokoActivity {
 			mSpGameCntVariant.setSelection(0);
 		}
 
+		mCountsForSeason = ((CheckBox)findViewById(R.id.sp_game_counts)).isChecked();
 		mSpActivePlayer = (Spinner)findViewById(R.id.sp_act_player_cnt);
 		mSpBockLimit = (Spinner)findViewById(R.id.sp_bock_cnt);
 
@@ -428,6 +432,7 @@ public class ChangeGameSettingActivity extends DokoActivity {
 		i.putExtra(DokoData.PLAYER_CNT_KEY, mPlayerCnt);
 		i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 		i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
+		i.putExtra(DokoData.GAME_COUNTS, mCountsForSeason);
 
 		ArrayList<String> mPlayerNames = getPlayerNames();
 		for(int k=0;k<mPlayerCnt && k<mPlayerNames.size();k++){

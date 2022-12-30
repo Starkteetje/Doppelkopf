@@ -149,6 +149,7 @@ public class DokoData {
 	public static final String GAME_CNT_VARIANT_KEY 	= "GAME_CNT_VARIANT";
 	public static final String ROUND_POINTS_KEY 		= "ROUND_POINTS";
 	public static final String ROUND_ID 				= "ROUND_ID";
+	public static final String GAME_COUNTS				= "GAME_COUNTS";
 
 	
 	public static final String[] PLAYERS_KEY  = {"PLAYER_1","PLAYER_2","PLAYER_3","PLAYER_4",

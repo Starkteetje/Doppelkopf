@@ -194,6 +194,7 @@ public class GameActivity extends DokoActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         int mActivePlayers,mBockLimit,mPlayerCnt;
+        boolean mCountsForSeason = true;
         GAME_CNT_VARIANT mGameCntVaraint;
         String mTmp;
         boolean mAutoBockCalc = true;
@@ -234,13 +235,14 @@ public class GameActivity extends DokoActivity {
             mPlayerCnt 		= extras.getInt(DokoData.PLAYER_CNT_KEY,0);
             mActivePlayers 	= extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
             mBockLimit		= extras.getInt(DokoData.BOCKLIMIT_KEY,0);
+            mCountsForSeason = extras.getBoolean(DokoData.GAME_COUNTS, true);
             mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
 
             if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER
                     || mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER)
                 return null;
 
-            mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint);
+            mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint, mCountsForSeason);
 
             for(int k=0;k<mPlayerCnt;k++){
                 mTmp = extras.getString(DokoData.PLAYERS_KEY[k],"");
@@ -249,7 +251,7 @@ public class GameActivity extends DokoActivity {
             }
         }
         else{
-            mGame = new GameClass(5, 4, 1, GAME_CNT_VARIANT.CNT_VARIANT_NORMAL);
+            mGame = new GameClass(5, 4, 1, GAME_CNT_VARIANT.CNT_VARIANT_NORMAL, mCountsForSeason);
 
             mGame.getPlayer(0).setName("Johannes");
             mGame.getPlayer(1).setName("Christoph");
@@ -933,6 +935,7 @@ public class GameActivity extends DokoActivity {
                 i.putExtra(DokoData.PLAYER_CNT_KEY, mGame.getPlayerCount());
                 i.putExtra(DokoData.BOCKLIMIT_KEY, mGame.getBockRoundLimit());
                 i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mGame.getActivePlayerCount());
+                i.putExtra(DokoData.GAME_COUNTS, mGame.countsIfInSeason());
                 startActivityForResult(i,DokoData.CHANGE_GAME_SETTINGS_ACTIVITY_CODE);
                 break;
 
@@ -949,6 +952,7 @@ public class GameActivity extends DokoActivity {
                     i.putExtra(DokoData.PLAYERS_POINTS_KEY[k], mGame.getPlayer(k).getPoints());
                 }
                 i.putExtra(DokoData.PLAYER_CNT_KEY, mGame.getPlayerCount());
+                i.putExtra(DokoData.GAME_COUNTS, mGame.countsIfInSeason());
 
                 startActivityForResult(i,DokoData.GAME_RESULT_ACTIVITY);
                 break;

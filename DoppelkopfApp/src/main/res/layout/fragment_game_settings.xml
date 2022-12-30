@@ -77,6 +77,13 @@
                     android:visibility="gone"
                     layout="@layout/set_game_cnt_variant" />
 
+                <include
+                    layout="@layout/set_game_counts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_space"
+                    android:visibility="gone" />
+
 
             </LinearLayout>
 
