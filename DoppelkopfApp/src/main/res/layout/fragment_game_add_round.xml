@@ -151,7 +151,7 @@
                         />
 
 
-                    <android.support.v7.widget.AppCompatCheckBox
+                    <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/game_add_round_bock_cb"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
