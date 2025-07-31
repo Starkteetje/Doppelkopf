@@ -29,7 +29,7 @@ public class LoginActivity extends DokoActivity {
         setContentView(R.layout.login);
         setupDrawerAndToolbar(mContext.getResources().getString(R.string.str_login));
         // Use default local network
-        ((EditText)this.findViewById(R.id.server_url)).setText("http://192.168.56.1:8080");
+        ((EditText)this.findViewById(R.id.server_url)).setText("http://192.168.0.71:8080");
         setClickListener();
     }
 
@@ -60,10 +60,6 @@ public class LoginActivity extends DokoActivity {
                 public void onResponse(String response) {
                     dialog.cancel();
                     Toast toast = Toast.makeText(v.getContext(), R.string.str_login_successful, Toast.LENGTH_SHORT);
-                    View toastView = toast.getView();
-                    toastView.getBackground().setColorFilter(getResources().getColor(R.color.black, v.getContext().getTheme()), PorterDuff.Mode.SRC_IN);
-                    TextView toastText = (TextView)toastView.findViewById(android.R.id.message);
-                    toastText.setTextColor(getResources().getColor(R.color.white, v.getContext().getTheme()));
                     toast.show();
                     v.setClickable(false);
                     v.setEnabled(false);
@@ -85,13 +81,11 @@ public class LoginActivity extends DokoActivity {
                         } else {
                             errorMessage += getResources().getString(R.string.str_login_error_code) + " " + statusCode;
                         }
+                    } else {
+                        errorMessage += "Non-network error:" + error + error.getMessage();
                     }
 
                     Toast toast = Toast.makeText(v.getContext(), errorMessage, Toast.LENGTH_SHORT);
-                    View toastView = toast.getView();
-                    toastView.getBackground().setColorFilter(getResources().getColor(R.color.black, v.getContext().getTheme()), PorterDuff.Mode.SRC_IN);
-                    TextView toastText = (TextView)toastView.findViewById(android.R.id.message);
-                    toastText.setTextColor(getResources().getColor(R.color.white, v.getContext().getTheme()));
                     toast.show();
                 }
             };

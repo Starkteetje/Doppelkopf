@@ -312,10 +312,6 @@ public class SavedGameListActivity extends DokoActivity {
                 public void onResponse(String response) {
                     dialog.cancel();
                     Toast toast = Toast.makeText(v.getContext(), R.string.str_upload_successful, Toast.LENGTH_SHORT);
-                    View toastView = toast.getView();
-                    toastView.getBackground().setColorFilter(getResources().getColor(R.color.black, v.getContext().getTheme()), PorterDuff.Mode.SRC_IN);
-                    TextView toastText = (TextView)toastView.findViewById(android.R.id.message);
-                    toastText.setTextColor(getResources().getColor(R.color.white, v.getContext().getTheme()));
                     toast.show();
                     v.setVisibility(View.GONE);
                 }
@@ -340,10 +336,6 @@ public class SavedGameListActivity extends DokoActivity {
                     }
 
                     Toast toast = Toast.makeText(v.getContext(), errorMessage, Toast.LENGTH_SHORT);
-                    View toastView = toast.getView();
-                    toastView.getBackground().setColorFilter(getResources().getColor(R.color.black, v.getContext().getTheme()), PorterDuff.Mode.SRC_IN);
-                    TextView toastText = (TextView)toastView.findViewById(android.R.id.message);
-                    toastText.setTextColor(getResources().getColor(R.color.white, v.getContext().getTheme()));
                     toast.show();
                 }
             };

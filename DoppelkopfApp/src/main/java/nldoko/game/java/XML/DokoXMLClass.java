@@ -3,11 +3,11 @@ package nldoko.game.java.XML;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
+import android.provider.Settings;
 import android.util.Log;
 import android.util.Xml;
 
@@ -41,9 +41,11 @@ import nldoko.game.java.data.GameClass;
 import nldoko.game.java.data.PlayerClass;
 import nldoko.game.java.data.RoundClass;
 import nldoko.game.java.util.Functions;
+import nldoko.game.BuildConfig;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.os.Environment.getExternalStorageDirectory;
+import static android.os.Environment.getExternalStoragePublicDirectory;
 
 
 public class DokoXMLClass {
@@ -97,20 +99,7 @@ public class DokoXMLClass {
     private static final int PERMISSION_REQUEST_CODE = 1;
 
     public static boolean checkPermissionWriteExternalStorage(Context context) {
-        int result = ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        return result == PackageManager.PERMISSION_GRANTED;
-    }
-
-    public static boolean isFirstrun(Activity activity) {
-        boolean firstrun = activity.getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstrun", true);
-        if (firstrun) {
-            activity.getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("firstrun", false)
-                    .commit();
-        }
-
-        return firstrun;
+        return Environment.isExternalStorageManager();
     }
 
     private static boolean firstTimePermissionDialog(Activity activity) {
@@ -126,21 +115,22 @@ public class DokoXMLClass {
     }
 
     public static void requestPermission(Activity activity) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if(!Environment.isExternalStorageManager()){
+            Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
+            activity.startActivity(intent);
+        }
 
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, android.Manifest.permission.MANAGE_EXTERNAL_STORAGE)) {
             if (!DokoXMLClass.firstTimePermissionDialog(activity)) {
                 // show dialog only once
                 return;
             }
-
-
-
             DokoActivity.showAlertDialog(activity.getResources().getString(R.string.str_hint),
                     activity.getResources().getString(R.string.str_external_storage),
                     R.string.str_yes, null, 0, null, activity);
-
         } else {
-            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.MANAGE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         }
     }
 
@@ -160,7 +150,7 @@ public class DokoXMLClass {
 
         // try to save on external storage
         boolean access = checkPermissionWriteExternalStorage(c);
-        File externalStorage = getExternalStorageDirectory();
+        File externalStorage = getExternalStoragePublicDirectory(APP_DIR);
 
         if (externalStorage != null && access) {
             boolean dirReady = createAppDirsInStorage(externalStorage);
@@ -185,7 +175,7 @@ public class DokoXMLClass {
 
         // if no external storage or error on external storage use app dir
         if (fos == null || osw == null) {
-            //Log.d(TAG,writer.toString());
+            Log.d(TAG,"usually shouldn't fall back to internal if given permission");
             if (DokoXMLClass.isAppDirOK(c)) {
                 String appDir = getAppDir(c);
                 boolean dirReady = createAppDirsInStorage(new File(appDir));
@@ -894,6 +884,11 @@ public class DokoXMLClass {
     }
 
     private static boolean createAppDirsInStorage(File dir) {
+        if (dir != null && !dir.exists()) {
+            // initially create the AppDir
+            dir.mkdirs();
+        }
+
         if (dir != null && dir.exists() && dir.isDirectory() && dir.canRead() && dir.canWrite()) {
             // app dir
 
