@@ -150,7 +150,7 @@ public class DokoXMLClass {
 
         // try to save on external storage
         boolean access = checkPermissionWriteExternalStorage(c);
-        File externalStorage = getExternalStoragePublicDirectory(APP_DIR);
+        File externalStorage = getExternalStoragePublicDirectory("");
 
         if (externalStorage != null && access) {
             boolean dirReady = createAppDirsInStorage(externalStorage);

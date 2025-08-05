@@ -6,7 +6,7 @@ android {
     compileSdkVersion 36
     defaultConfig {
         applicationId "nldoko.gamewithwebserver"
-        minSdkVersion 36
+        minSdkVersion 32
         targetSdkVersion 36
         versionCode 15
         versionName "3.1.4"
